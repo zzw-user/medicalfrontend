@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>新增备件</title>
+	</head>
+	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
+	<body>
+		<div class="weadmin-body">
+			<form class="layui-form" id="pro">
+				<blockquote class="layui-elem-quote">新增备件</blockquote>
+				<div class="layui-row">
+					<div class="layui-col-md12" style="margin-left: 50px;">
+						<div class="layui-form-item layui-inline">
+							<div style="padding: 10px;">备件编码</div>
+							<div class="layui-input-inline">
+								<input type="text" name="issueCoding" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item layui-inline">
+							<div style="padding: 10px;">备件名称</div>
+							<div class="layui-input-inline">
+								<input type="text" name="issueName" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item layui-inline" style="width: 200px;">
+							<label class="layui-form-label" style="margin-left: -60px;">仓库</label>
+							<div class="layui-input-inline" style="width: 200px">
+								<select name="midtype" lay-verify="required">
+									<option value="启用">启用</option>
+									<option value="停用">停用</option>
+									<option value="暂停">暂停</option>
+								</select>
+
+							</div>
+
+						</div>
+						<div class="layui-form-item layui-inline" style="width: 200px;">
+							<label class="layui-form-label" style="margin-left: -30px;">备件类型</label>
+							<div class="layui-input-inline" style="width: 200px">
+								<select name="midtype" lay-verify="required">
+									<option value="启用">启用</option>
+									<option value="停用">停用</option>
+									<option value="暂停">暂停</option>
+								</select>
+
+							</div>
+
+						</div>
+						<div class="layui-form-item layui-inline">
+							<div style="padding: 10px;">入库时间</div>
+							<div class="layui-input-inline">
+								<input type="text" name="issueName" id="test1" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
+								 class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item layui-inline" style="margin-top: 11%;">
+							<div class="layui-form-item">
+								<button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo2">保存</button>
+								<button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</form>
+		</div>
+	</body>
+	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
+	<script>
+		layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider', 'jquery', 'form'],
+			function() {
+				var laydate = layui.laydate //日期
+					,
+					laypage = layui.laypage //分页
+					,
+					layer = layui.layer //弹层
+					,
+					table = layui.table //表格
+					,
+					carousel = layui.carousel //轮播
+					,
+					upload = layui.upload //上传
+					,
+					element = layui.element //元素操作
+					,
+					$ = layui.jquery,
+					form = layui.form,
+					slider = layui.slider; //滑块//执行一个laydate实例
+				//常规用法
+				laydate.render({
+					elem: '#test1'
+				});
+				$("#informPost").load('http://127.0.0.1:8080/problemstate/getRole', function(result) {
+					const data = eval(result);
+					$(data).each(function(i, o) {
+						$("#informPost").append("<option value='" + o.id + "'>" + o.roleName + "</option>")
+					});
+					form.render("select");
+				});
+				$("#roleList").load('http://127.0.0.1:8080/problemstate/getRole', function(result) {
+					const data = eval(result);
+					$(data).each(function(i, o) {
+						$("#roleList").append("<option value='" + o.id + "'>" + o.roleName + "</option>")
+					});
+					form.render("select");
+				});
+				$("#issueTypeId").load('http://127.0.0.1:8080/problemstate/getIssueType', function(result) {
+					const data = eval(result);
+					$(data).each(function(i, o) {
+						$("#issueTypeId").append("<option value='" + o.id + "'>" + o.issueName + "</option>")
+					});
+					form.render("select");
+				})
+				form.on('submit(formDemo2)', function(data) {
+					$.ajax({
+						url: 'http://127.0.0.1:8080/problemstate/addIssueStaus',
+						type: 'get',
+						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+						data: $("#pro").serialize(),
+						dataType: 'text',
+						success: function(result) {
+
+							if (result == "ok") {
+								layer.alert("新增成功！", function() {
+									x_admin_close()
+								})
+							} else {
+								layer.alert("新增失败！", function() {
+									x_admin_close()
+								})
+							}
+						}
+					})
+					return false;
+				});
+
+			})
+		/*关闭弹出框口*/
+		function x_admin_close() {
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.layer.close(index);
+		}
+
+		function getUrlParam(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			r = window.location.search.substr(1).match(reg); // 匹配目标参数
+			if (r != null) return decodeURI(r[2]); // 返回参数值
+			return null; // 如果不存在，返回null
+		}
+	</script>
+</html>

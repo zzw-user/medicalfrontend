@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>安装派单</title>
+	</head>
+	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<body>
+		 <style>
+		        .layui-btn {
+		            width: 100px;
+		            display: inline-block;
+		            height: 30px;
+		            line-height: 30px;
+		            padding: 0 20px;
+		            background-color: #009688;
+		            color: #fff;
+		            white-space: nowrap;
+		            text-align: center;
+		            font-size: 14px;
+		            border: none;
+		            border-radius: 2px;
+		            cursor: pointer;
+		        }
+		        .layui-nav .layui-nav-more {
+		            content: '';
+		            width: 0;
+		            height: 0;
+		            border-style: solid dashed dashed;
+		            border-color: #fff transparent transparent;
+		            overflow: hidden;
+		            cursor: pointer;
+		            transition: all .2s;
+		            -webkit-transition: all .2s;
+		            position: absolute;
+		            top: 50%;
+		            right: 15px;
+		            margin-top: -3px;
+		            border-width: 6px;
+		            border-top-color: rgba(255,255,255,.7);
+		        }
+		    </style>
+		</head>
+		<body>
+		<div class="weadmin-body" style="margin-left: 3%;">
+		    <form class="layui-form" style="width: 1150px;">
+		        <div class="layui-row">
+		            <div class="layui-col-md8">
+		                <div class="layui-form-item layui-inline">
+		                    <div style="padding: 10px;">安装人</div>
+		                    <div class="layui-input-inline">
+		                        <input type="text" name="issueCoding" id="issueCoding" lay-verify="title" autocomplete="off" class="layui-input">
+		                    </div>
+		                </div>
+		                <div class="layui-form-item layui-inline">
+		                    <div style="padding: 10px;">安装地址</div>
+		                    <div class="layui-input-inline">
+		                        <input type="text" name="issueName" id="issueName" lay-verify="title" autocomplete="off" class="layui-input">
+		                    </div>
+		                </div>
+						</div>
+		            <div class="layui-col-md4">
+		                <div class="layui-form-item layui-inline" style="margin-left: 30px;margin-top: 40px;">
+		                    <button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo">查询</button>
+		                    <button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+							<button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2" onclick="WeAdminShow('新增','./addSendaSingleInstallation.html',550,400)">新增</button>
+		                </div>
+		            </div>
+		        </div>
+		    </form>
+			<script type="text/html" id="barDemo">
+			  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+			  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+			  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+			</script>
+		    <table class="layui-table" id="problem"></table>
+		</div>
+	</body>
+		 <script src="../../../lib/layui-v2.5.5/layui.js"></script>
+	<script>
+		layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider','jquery','form'], function() {
+		    var laydate = layui.laydate //日期
+		        , laypage = layui.laypage //分页
+		        , layer = layui.layer //弹层
+		        , table = layui.table //表格
+		        , carousel = layui.carousel //轮播
+		        , upload = layui.upload //上传
+		        , element = layui.element //元素操作
+		        , $ = layui.jquery
+		        , form = layui.form
+		        , slider = layui.slider; //滑块//执行一个laydate实例
+		    $("#issueTypeId").load('http://127.0.0.1:8080/problemstate/getIssueType',function (result) {
+		        const data=eval(result);
+		        $(data).each(function (i,o) {
+		            $("#issueTypeId").append("<option value='"+o.id+"'>"+o.issueName+"</option>")
+		        });
+		        form.render("select");
+		    })
+		    //执行一个 table 实例
+		    table.render({
+		        elem: '#problem'
+		        ,id:'testReload'
+		        ,height: 450
+				,width:1150
+		        ,url: 'http://127.0.0.1:8080/problemstate/getIssueStaus' //数据接口
+		        ,title: '问题状态表'
+		        ,type:'get'
+		        ,dataType:'json'
+		        ,crossDomain:true
+		        ,cols: [[ //表头
+		            ,{type:'numbers',title:"序号"}
+		            , {field: 'problemTypesName',width:200, title: '安装人'}
+		            , {field: 'chineseRemark',width:200, title: '安装地址'}
+		            , {field: 'englishRemark',width:200, title: '安装时间'}
+		            , {field: 'informPost',width:200, title: '产品编码'}
+		            , {fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}
+		        ]]
+		        ,page: true
+		    });
+		    form.on('submit(formDemo)', function(data){
+		        table.reload('testReload', {
+		            where: { //设定异步数据接口的额外参数，任意设
+		                issueCoding: $("#issueCoding").val()
+		                ,issueTypeId: $("#issueTypeId").val()
+		                ,problemTypes: $("#problemTypes").val()
+		                ,issueName: $("#issueName").val()
+		                ,isStartUsing: $("#isStartUsing").val()
+		                //…
+		            }
+		            ,page: {
+		                curr: 1 //重新从第 1 页开始
+		            }
+		        });
+		})
+		    $('.btnArr .layui-btn').on('click', function(){
+		        var type = $(this).data('type');
+		        active[type] ? active[type].call(this) : '';
+		    });
+			
+			
+			window.WeAdminShow = function(title, url, w, h) {
+					if(title == null || title == '') {
+						title = false;
+					};
+					if(url == null || url == '') {
+						url = "404.html";
+					};
+					if(w == null || w == '') {
+						w = ($(window).width() * 0.9);
+					};
+					if(h == null || h == '') {
+						h = ($(window).height() - 50);
+					};
+					layer.open({
+						type: 2,
+						area: [w + 'px', h + 'px'],
+						fix: false, //不固定
+						width:w,
+						height:h,
+						maxmin: true,
+						shadeClose: true,
+						shade: 0.4,
+						title: title,
+						content: url,
+						success:function () {
+							
+						},end:function () {
+			            }
+					});
+				}
+		})
+	</script>
+</html>
