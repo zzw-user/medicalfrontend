@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>修改产品</title>
+    <link rel="stylesheet" href="layui/layui.js" />
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>修改产品</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品编码</label>
+        <div class="layui-input-block">
+            <input type="text" name="coding" autocomplete="off" placeholder="请输入编码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">bom单名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="bomname" autocomplete="off" placeholder="请输入bom单名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">入库日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="pname" autocomplete="off" placeholder="请输入产品名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">规格型号</label>
+        <div class="layui-input-block">
+            <input type="text" name="model" autocomplete="off" placeholder="请输入规格型号" class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item" align="center">
+        <button class="layui-btn"  lay-submit="" lay-filter="demo2">保存</button>
+        <button class="layui-btn"  lay-submit="" lay-filter="demo2">关闭</button>
+    </div>
+
+</form>
+<script src="./layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+                ,layer = layui.layer
+                ,layedit = layui.layedit
+                ,laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+
+
+    });
+
+</script>
+</body>
+</html>
