@@ -22,27 +22,26 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,id:'testReload'
         ,height: 450
         ,width:1150
-        ,url: 'http://127.0.0.1:8080/problemstate/getIssueStaus' //数据接口
+        ,url: 'http://127.0.0.1:8081/Role/getRolesALL' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'
+        ,limit:5
         ,crossDomain:true
         ,cols: [[ //表头
-            ,{type:'numbers',title:"序号",fixed: 'left'}
+            {type:'numbers',title:"序号",fixed: 'left'}
             , {field: 'rid', title: 'ID'}
             , {field: 'rname', title: '角色名'}
-            , {fixed: 'right', align:'center', toolbar: '#barDemo'}
+            , {field: 'hierarchy', title: '角色等级'}
+            , {fixed: 'right', width:120, align:'center', toolbar: '#barDemo'}
         ]]
         ,page: true
     });
     form.on('submit(formDemo)', function(data){
         table.reload('testReload', {
             where: { //设定异步数据接口的额外参数，任意设
-                issueCoding: $("#issueCoding").val()
-                ,issueTypeId: $("#issueTypeId").val()
-                ,problemTypes: $("#problemTypes").val()
-                ,issueName: $("#issueName").val()
-                ,isStartUsing: $("#isStartUsing").val()
+                rname: $("#rname").val()
+
                 //…
             }
             ,page: {
@@ -50,6 +49,37 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             }
         });
     })
+    //监听行工具事件
+    table.on('tool(problem)', function(obj){
+        var data = obj.data;
+        //console.log(obj)
+        if(obj.event === 'del') {
+            layer.confirm('确定删除吗?', function (index) {
+                $.get('http://127.0.0.1:8081/Role/delRole', {"rid": data.rid}, function (result) {
+                    if (result == true) {
+                        layer.msg('删除成功!',{icon:1},function () {
+                            table.reload('testReload');
+                        });
+
+                    } else {
+                        layer.msg('删除失败！');
+                    }
+                })
+
+            });
+        }
+        // } else if(obj.event === 'edit'){
+        //     layer.prompt({
+        //         formType: 2
+        //         ,value: data.email
+        //     }, function(value, index){
+        //         obj.update({
+        //             email: value
+        //         });
+        //         layer.close(index);
+        //     });
+        // }
+    });
     $('.btnArr .layui-btn').on('click', function(){
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';

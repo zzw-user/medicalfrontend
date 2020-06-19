@@ -9,10 +9,11 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         , $ = layui.jquery
         , form = layui.form
         , slider = layui.slider; //滑块//执行一个laydate实例
-    $("#issueTypeId").load('http://127.0.0.1:8080/problemstate/getIssueType',function (result) {
+    $("#roleid").load('http://127.0.0.1:8081/Role/getRoleId',function (result) {
         var data=eval(result);
+        $("#roleid").append("<option value=''>请选择</option>")
         $(data).each(function (i,o) {
-            $("#issueTypeId").append("<option value='"+o.id+"'>"+o.issueName+"</option>")
+            $("#roleid").append("<option value='"+o.rid+"'>"+o.rname+"</option>")
         });
         form.render("select");
     })
@@ -22,39 +23,64 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,id:'testReload'
         ,height: 450
         ,width:1150
-        ,url: 'http://127.0.0.1:8080/problemstate/getIssueStaus' //数据接口
+        ,url: 'http://127.0.0.1:8081/UserManagement/getUserALL' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'
+        ,limit:5
         ,crossDomain:true
         ,cols: [[ //表头
-            ,{type:'numbers',title:"序号",fixed: 'left'}
-            , {field: 'mname',width:200, title: '姓名'}
-            , {field: 'sex',width:250, title: '性别'}
+            {field: 'mpid',width:38, fixed: 'left',title: 'ID'}
+            , {field: 'mname',width:200, fixed: 'left',title: '用户名'}
+            , {field: 'realname',width:200, title: '姓名'}
+            , {field: 'sex',width:250, title: '性别',templet:function (d) {
+                    if (d.sex===0){
+                        return "男";
+                    }else{
+                        return  "女";
+                    }
+                }}
             , {field: 'address',width:200, title: '居住地址'}
             , {field: 'phone',width:230, title: '手机号码'}
             , {field: 'roleid',width:230, title: '角色'}
             , {field: 'mailbox',width:230, title: '邮箱'}
-            , {field: 'age',width:230, title: '年龄'}
-            , {fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}
+            , {field: 'birthday',width:230, title: '生日'}
+            , {field: 'wechatid',width:230, title: '微信'}
+            , {field: 'qq',width:230, title: 'qq'}
+            , {fixed: 'right', width:120,title:'操作', align:'center', toolbar: '#barDemo'}
         ]]
         ,page: true
     });
     form.on('submit(formDemo)', function(data){
         table.reload('testReload', {
             where: { //设定异步数据接口的额外参数，任意设
-                issueCoding: $("#issueCoding").val()
-                ,issueTypeId: $("#issueTypeId").val()
-                ,problemTypes: $("#problemTypes").val()
-                ,issueName: $("#issueName").val()
-                ,isStartUsing: $("#isStartUsing").val()
-                //…
+                mname: $("#mname").val()
+                ,roleid: $("#roleid").val()
             }
-            ,page: {
-                curr: 1 //重新从第 1 页开始
-            }
+
         });
-    })
+    });
+    //监听行工具事件
+    table.on('tool(problem)', function(obj){
+        var data = obj.data;
+        //console.log(obj)
+        if(obj.event === 'del') {
+            layer.confirm('确定删除吗?', function (index) {
+                $.get('http://127.0.0.1:8081/UserManagement/delUser', {"mpid": data.mpid}, function (result) {
+                    if (result == true) {
+                        layer.msg('删除成功！',{icon:1},function () {
+                            table.reload('testReload');
+                        });
+                    } else {
+                        layer.msg('删除失败！');
+                    }
+                })
+
+            });
+        } else if(obj.event === 'edit'){
+            WeAdminShow('修改用户','./updateUserManagement.html?mpid='+data.mpid,800,400);
+        }
+    });
     $('.btnArr .layui-btn').on('click', function(){
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';

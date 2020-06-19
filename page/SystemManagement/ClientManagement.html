@@ -7,21 +7,7 @@
 <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
 
 <style>
-    .layui-btn {
-        width: 100px;
-        display: inline-block;
-        height: 30px;
-        line-height: 30px;
-        padding: 0 20px;
-        background-color: #009688;
-        color: #fff;
-        white-space: nowrap;
-        text-align: center;
-        font-size: 14px;
-        border: none;
-        border-radius: 2px;
-        cursor: pointer;
-    }
+
     .layui-nav .layui-nav-more {
         content: '';
         width: 0;
@@ -49,7 +35,7 @@
                 <div class="layui-form-item layui-inline">
                     <div style="padding: 10px;">客户名称</div>
                     <div class="layui-input-inline">
-                        <input type="text" name="cname" id="issueCoding" lay-verify="title" autocomplete="off" class="layui-input">
+                        <input type="text" name="cname" id="cname" lay-verify="title" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
@@ -64,11 +50,11 @@
         </div>
     </form>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
-    <table class="layui-table" align="center" id="problem"></table>
+    <table class="layui-table" align="center" id="problem" lay-filter="problem"></table>
 </div>
 </body>
 <script src="../../lib/layui-v2.5.5/layui.js"></script>
