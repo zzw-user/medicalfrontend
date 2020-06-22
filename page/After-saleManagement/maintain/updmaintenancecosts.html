@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+<style>
+
+
+</style>
+<body>
+<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>修改维修费用</b></span></div>
+<br>
+<br>
+<div class="weadmin-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 we-search">
+            <br>
+            <span style="margin-left:80px"><b>维修人员：</b></span>
+            <div class="layui-input-inline" >
+                <select name="cateid">
+                    <option>请选择</option>
+                    <option>管理员角色</option>
+                    <option>操作员角色</option>
+                </select>
+            </div>
+            <span style="margin-left:30px"><b>维修地址：</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input" placeholder="维修地址" name="start" id="">
+            </div><br><br>
+
+            <span style="margin-left:80px"><b>联系电话：</b></span>
+            <div class="layui-input-inline" >
+                <input class="layui-input" placeholder="联系电话" name="start" id="">
+            </div>
+            <span style="margin-left:60px"><b>产品编码：</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input" placeholder="产品编码" name="start" id="">
+            </div><br><br>
+            <span style="margin-left:80px"><b>录入时间：</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input" placeholder="录入时间" name="start" id="">
+            </div>
+            <span style="margin-left:72px"><b>录入人：</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input" placeholder="录入人" name="start" id="">
+            </div>
+            <br><br>
+            <span style="margin-left:80px"><b>备件费用：</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input" placeholder="费用" name="start" id="">
+            </div>
+            <span style="margin-left:70px"><b>总费用：</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input" placeholder="总费用" name="start" id="">
+            </div>
+            <br><br>
+
+            <br>
+            <br>
+            <br>
+            <div style="margin-left: 12.5rem;">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</body>
+<script src="../../../lib/layui-v2.5.5/layui.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate','upload'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,$ = layui.jquery
+            ,upload = layui.upload;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+
+    });
+</script>
+</html>
