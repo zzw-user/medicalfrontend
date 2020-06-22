@@ -1,110 +1,40 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>修改备件类型</title>
-	</head>
-	<link rel="stylesheet" href="./css/layui.css">
-	<body>
-		<div class="weadmin-body">
-		    <form class="layui-form" id="pro">
-		        <blockquote class="layui-elem-quote">修改备件类型</blockquote>
-		        <div class="layui-row">
-		            <!-- <div class="layui-col-md12" style="margin-left: 50px;">
-		                <div class="layui-form-item layui-inline">
-		                    <div style="padding: 10px;">类型名称</div>
-		                    <div class="layui-input-inline">
-		                        <input type="text" name="issueCoding" lay-verify="title" autocomplete="off" class="layui-input">
-		                    </div>
-		                </div>
-		                <div class="layui-form-item layui-inline">
-		                    <div style="padding: 10px;">规格：</div>
-		                    <div class="layui-input-inline">
-		                        <input type="text" name="issueName" lay-verify="title" autocomplete="off" class="layui-input">
-		                    </div>
-		                </div> -->
-		               
-					    <div class="layui-form-item">
-					       <label class="layui-form-label">类型名称</label>
-					       <div class="layui-input-inline">
-					         <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-					       </div>
-		            </div>
-		<div class="layui-form-item">
-		       <label class="layui-form-label">规格</label>
-		       <div class="layui-input-inline">
-		         <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-		       </div>
+<head>
+	<meta charset="utf-8">
+	<title>修改备件类型</title>
+</head>
+<link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
+<body>
+<div class="weadmin-body">
+	<form class="layui-form" id="form" lay-filter="example">
+		<blockquote class="layui-elem-quote">修改备件类型</blockquote>
+		<input type="hidden" name="tid">
+		<div class="layui-row">
+			<div class="layui-form-item">
+				<label class="layui-form-label">备件名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="tname" lay-verify="required" lay-reqtext="备件名称不能为空!" placeholder="请输入备件名称" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">规格</label>
+				<div class="layui-input-block">
+					<input type="text" name="specification" lay-verify="required" lay-reqtext="规格不能为空!" placeholder="请输入规格" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-form-item" align="center">
+					<button class="layui-btn"  lay-submit="" lay-filter="demo">保存</button>
+					<button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
+				</div>
+			</div>
 		</div>
-		            <div class="layui-form-item">
-		               <div class="layui-input-block">
-		                 <button class="layui-btn" lay-submit lay-filter="formDemo">保存</button>
-		                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-		               </div>
-		             </div>
-		    </form>
-		</div>
-	</body>
-	<script>
-		layui.use(['element','jquery','layer','form'], function() {
-		    var $ = layui.jquery
-		        , layer = layui.layer
-		        , form = layui.form;
-		    $("#informPost").load('http://127.0.0.1:8080/problemstate/getRole',function (result) {
-		        const data=eval(result);
-		        $(data).each(function (i,o) {
-		            $("#informPost").append("<option value='"+o.id+"'>"+o.roleName+"</option>")
-		        });
-		        form.render("select");
-		    });
-		    $("#roleList").load('http://127.0.0.1:8080/problemstate/getRole',function (result) {
-		        const data=eval(result);
-		        $(data).each(function (i,o) {
-		            $("#roleList").append("<option value='"+o.id+"'>"+o.roleName+"</option>")
-		        });
-		        form.render("select");
-		    });
-		    $("#issueTypeId").load('http://127.0.0.1:8080/problemstate/getIssueType',function (result) {
-		        const data=eval(result);
-		        $(data).each(function (i,o) {
-		            $("#issueTypeId").append("<option value='"+o.id+"'>"+o.issueName+"</option>")
-		        });
-		        form.render("select");
-		    })
-		    form.on('submit(formDemo2)', function(data){
-		        $.ajax({
-		            url: 'http://127.0.0.1:8080/problemstate/addIssueStaus',
-		            type: 'get',
-		            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
-		            data: $("#pro").serialize(),
-		            dataType:'text',
-		            success: function (result) {
-		
-		                if (result == "ok") {
-		                    layer.alert("新增成功！", function () {
-		                        x_admin_close()
-		                    })
-		                } else {
-		                    layer.alert("新增失败！", function () {
-		                        x_admin_close()
-		                    })
-		                }
-		            }
-		        })
-		        return false;
-		    });
-		
-		})
-		/*关闭弹出框口*/
-		function x_admin_close() {
-		    var index = parent.layer.getFrameIndex(window.name);
-		    parent.layer.close(index);
-		}
-		function getUrlParam(name) {
-		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)") ;
-		    r = window.location.search.substr(1).match(reg);        // 匹配目标参数
-		    if (r != null) return decodeURI(r[2]);  // 返回参数值
-		    return null;  // 如果不存在，返回null
-		}
-	</script>
+	</form>
+</div>
+</body>
+<script src="../../lib/layui-v2.5.5/layui.js"></script>
+<script src="../../static/js/SpareParts/updateSpareParts.js">
+
+</script>
 </html>
