@@ -17,7 +17,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,height: 450
         ,width:1250
         ,url: 'http://127.0.0.1:8081/Type/getTypeAll' //数据接口
-        ,title: '问题状态表'
+        ,title: '备件类型表'
         ,type:'get'
         ,dataType:'json'
         ,limit:5

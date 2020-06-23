@@ -24,7 +24,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,height: 450
         ,width:1150
         ,url: 'http://127.0.0.1:8081/UserManagement/getUserALL' //数据接口
-        ,title: '问题状态表'
+        ,title: '用户表'
         ,type:'get'
         ,dataType:'json'
         ,limit:5
@@ -35,18 +35,19 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             , {field: 'realname',width:200, title: '姓名'}
             , {field: 'sex',width:250, title: '性别',templet:function (d) {
                     if (d.sex===0){
-                        return "男";
+                        return '男';
                     }else{
-                        return  "女";
+                        return  '女';
                     }
-                }}
+                }
+                }
             , {field: 'address',width:200, title: '居住地址'}
             , {field: 'phone',width:230, title: '手机号码'}
-            , {field: 'roleid',width:230, title: '角色'}
+            , {field: 'password',width:230, title: '角色'}
             , {field: 'mailbox',width:230, title: '邮箱'}
             , {field: 'birthday',width:230, title: '生日'}
             , {field: 'wechatid',width:230, title: '微信'}
-            , {field: 'qq',width:230, title: 'qq'}
+            , {field: 'qq',width:230, title: 'QQ'}
             , {fixed: 'right', width:120,title:'操作', align:'center', toolbar: '#barDemo'}
         ]]
         ,page: true
