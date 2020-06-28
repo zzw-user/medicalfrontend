@@ -15,45 +15,43 @@
 <br>
 <div class="weadmin-body">
     <div class="layui-row">
-        <form class="layui-form layui-col-md12 we-search">
+        <form class="layui-form layui-col-md12 we-search" id="form">
             <br>
             <span style="margin-left:80px"><b>维修人员：</b></span>
             <div class="layui-input-inline" >
-                <select name="cateid">
-                    <option>请选择</option>
-                    <option>管理员角色</option>
-                    <option>操作员角色</option>
+                <select lay-filter="aihao" name="operator" id="operator">
+
                 </select>
             </div>
             <span style="margin-left:30px"><b>维修地址：</b></span>
             <div class="layui-inline" >
-                <input class="layui-input" placeholder="维修地址" name="start" id="">
+                <input class="layui-input" placeholder="维修地址" name="address" lay-reqtext="维修地址不能为空！">
             </div><br><br>
 
             <span style="margin-left:80px"><b>联系电话：</b></span>
             <div class="layui-input-inline" >
-                <input class="layui-input" placeholder="联系电话" name="start" id="">
+                <input class="layui-input" placeholder="联系电话" name="phone" lay-verify="required|phone" lay-reqtext="联系电话不能为空！">
             </div>
             <span style="margin-left:60px"><b>产品编码：</b></span>
             <div class="layui-inline" >
-                <input class="layui-input" placeholder="产品编码" name="start" id="">
+                <input class="layui-input" placeholder="产品编码" name="coding" lay-reqtext="产品编码不能为空！" id="coding">
             </div><br><br>
             <span style="margin-left:80px"><b>备件费用：</b></span>
             <div class="layui-inline" >
-                <input class="layui-input" placeholder="费用" name="start" id="">
+                <input class="layui-input" placeholder="费用" name="sparepartcost" lay-reqtext="备件费用不能为空！">
             </div>
             <span style="margin-left:72px"><b>录入人：</b></span>
             <div class="layui-inline" >
-                <input class="layui-input" placeholder="录入人" name="start" id="">
+                <input class="layui-input" placeholder="录入人" name="dataentryclerk" lay-reqtext="录入人不能为空！" value="张某">
             </div>
             <br><br>
 
             <span style="margin-left:95px"><b>总费用：</b></span>
             <div class="layui-inline" >
-                <input class="layui-input" placeholder="总费用" name="start" id="">
+                <input class="layui-input" placeholder="总费用" name="cost" lay-reqtext="总费用不能为空！">
             </div>
             <br><br>
-
+            <input type="hidden" name="aftertype" value="2">
             <br>
             <br>
             <br>
@@ -66,24 +64,6 @@
     </div>
 </body>
 <script src="../../../lib/layui-v2.5.5/layui.js"></script>
-<script>
-    layui.use(['form', 'layedit', 'laydate','upload'], function(){
-        var form = layui.form
-            ,layer = layui.layer
-            ,layedit = layui.layedit
-            ,laydate = layui.laydate
-            ,$ = layui.jquery
-            ,upload = layui.upload;
-
-        //日期
-        laydate.render({
-            elem: '#date'
-        });
-        laydate.render({
-            elem: '#date1'
-        });
-
-
-    });
-</script>
+<script src="../../../static/js/After-saleManagement/maintain/jquery.min.js"></script>
+<script src="../../../static/js/After-saleManagement/maintain/addmaintenancecosts.js"></script>
 </html>

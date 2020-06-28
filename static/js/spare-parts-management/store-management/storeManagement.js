@@ -63,32 +63,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
                 });
             } else if (obj.event === 'upd') {
-                //获取行id
-                var id = obj.data.id;
-                $.ajax({
-                    url : "selecl",
-                    type : "post",
-                    data : {
-                        id: data.wid
-                    },
-                    dataType : "text",
-                    success : function(e) {
-                        if (e == 'yes') {
-                            layer.open({
-                                type: 2,
-                                anim: 1,
-                                area: ['1200px', '500px'],
-                                content: 'updcl',
-                                end:function(){
-                                    table.reload('testReload');
-                                }
-                            });
-                        } else {
-                            layer.alert("查看失败");
-                        }
-                    }
-                });
-
+                WeAdminShow('修改用户','./updateStoreManagement.html?wid='+data.wid,800,400);
             }
         });
     window.WeAdminShow = function(title, url, w, h) {
