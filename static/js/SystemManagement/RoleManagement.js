@@ -23,7 +23,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,height: 450
         ,width:1150
         ,url: 'http://127.0.0.1:8081/Role/getRolesALL' //数据接口
-        ,title: '问题状态表'
+        ,title: '角色表'
         ,type:'get'
         ,dataType:'json'
         ,limit:5
@@ -67,18 +67,9 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                 })
 
             });
+        } else if(obj.event === 'edit'){
+            WeAdminShow('修改角色','./updateRole.html?rid='+data.rid,600,280);
         }
-        // } else if(obj.event === 'edit'){
-        //     layer.prompt({
-        //         formType: 2
-        //         ,value: data.email
-        //     }, function(value, index){
-        //         obj.update({
-        //             email: value
-        //         });
-        //         layer.close(index);
-        //     });
-        // }
     });
     $('.btnArr .layui-btn').on('click', function(){
         var type = $(this).data('type');

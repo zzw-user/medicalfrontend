@@ -12,16 +12,16 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
     laydate.render({
         elem: '#date1'
     });
-    var rid=getUrlParam("rid");
+    var tid=getUrlParam("tid");
 
 
-    $.get('http://127.0.0.1:8081/Role/getRoleOne',{rid:rid},function (result) {
+    $.get('http://127.0.0.1:8081/Type/getTypeOne',{tid:tid},function (result) {
         form.val('example',result);
     });
 
     form.on('submit(demo)', function(data){
 
-        $.get( 'http://127.0.0.1:8081/Role/updateRole',$("#form").serialize(),function (result) {
+        $.get( 'http://127.0.0.1:8081/Type/updatetype',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("修改成功！",{icon:1,time:1000},function(){
                     x_admin_close();
