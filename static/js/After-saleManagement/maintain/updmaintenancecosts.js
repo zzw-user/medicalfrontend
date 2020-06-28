@@ -12,20 +12,39 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
     laydate.render({
         elem: '#date1'
     });
-    var rid=getUrlParam("rid");
+    $("#operator").load('http://127.0.0.1:8081/Maintenancecosts/getMpuserOne',function (result) {
+        var data=eval(result);
+        $(data).each(function (i,o) {
+            $("#operator").append("<option value="+this.mpid+">"+this.mname+"</option>")
+        });
+        form.render("select");
+    })
+    var cid=getUrlParam("cid");
 
 
-    $.get('http://127.0.0.1:8081/Role/getRoleOne',{rid:rid},function (result) {
+    $.get('http://127.0.0.1:8081/Maintenancecosts/getCostOne',{cid:cid},function (result) {
         form.val('example',result);
     });
+    $("#coding").blur(function(){
+        var coding=$("#coding").val();
+        $.post('http://127.0.0.1:8081/Maintenancecosts/getProductOne',{coding:coding},function(result){
+            if (result){
 
-    form.on('submit(demo)', function(data){
+            }else {
+                layer.alert("对不起，没有该产品编码！");
+                var coding=$("#coding").val('');
+            }
 
-        $.get( 'http://127.0.0.1:8081/Role/updateRole',$("#form").serialize(),function (result) {
+        })
+    })
+
+    form.on('submit(demo1)', function(data){
+
+        $.get( 'http://127.0.0.1:8081/Maintenancecosts/updCost',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("修改成功！",{icon:1,time:1000},function(){
                     x_admin_close();
-                    window.parent.location.reload('');
+                    window.parent.location.reload('testReload');
                 });
 
             }else{

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="../layui/css/layui.css"/>
+	<body>
+		<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>新增故障分析</b></span></div>
+		<br>
+		<br=
+		
+		<div class="weadmin-body">
+					<div class="layui-row">
+						<form class="layui-form layui-col-md12 we-search">
+							<br>
+							 <div style="margin-left: 6.75rem;">
+							 <span><b>故障类型：</b></span>
+							 <div class="layui-input-inline" >
+								<select name="cateid">
+									<option>请选择</option>
+									<option>管理员角色</option>
+									<option>操作员角色</option>
+								</select>
+							</div>
+							</div>
+							<br>
+							<div style="margin-left: 6.75rem;">
+								<span><b>故障描述：</b></span>
+							<div class="layui-inline" >
+								<input class="layui-input" placeholder="故障描述" name="start" id="start">
+							</div>
+							</div><br>
+						   <div style="margin-left: 6.75rem;">
+						   	<span><b>故障分析：</b></span>
+						   <div class="layui-inline" >
+						   	<input class="layui-input" placeholder="故障分析" name="start" id="start">
+						   </div>
+						   </div><br>
+							<div style="margin-left: 8.5625rem">
+							<span><b>区域：</b></span>
+							 <div class="layui-input-inline" >
+								<select name="cateid">
+									<option>请选择</option>
+									<option>管理员角色</option>
+									<option>操作员角色</option>
+								</select>
+							</div>
+							</div>
+							<br>
+							<br>
+							<br>
+							<div style="margin-left: 12.5rem;">
+								 <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+								 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+							</div>
+						</form>
+					
+					</div>
+	          </body>     
+	            <script src="../layui/layui.js" charset="utf-8"></script>
+				<script>
+					layui.use(['form', 'layedit', 'laydate'], function(){
+						var form = layui.form
+								,layer = layui.layer
+								,layedit = layui.layedit
+								,laydate = layui.laydate;
+	
+						//日期
+						laydate.render({
+							elem: '#date'
+						});
+						laydate.render({
+							elem: '#date1'
+						});
+	
+	
+					});
+				</script>
+</html>
