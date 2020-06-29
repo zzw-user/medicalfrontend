@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+    <link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<style>
+
+	
+	</style>
+	<body>
+		<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>修改维修回访</b></span></div>
+		<br>
+		<br>
+		<div class="weadmin-body">
+					<div class="layui-row">
+						<form class="layui-form" id="form" lay-filter="example">
+							<br>
+							<span style="margin-left:95px"><b>操作人：</b></span>
+							<div class="layui-input-inline" >
+								<input type="text"   lay-verify="title" autocomplete="off" class="layui-input" value="张某">
+								<input type="hidden"   lay-verify="title" autocomplete="off" class="layui-input" name="operator">
+								<input type="hidden" name="pid">
+							</div>
+							<span style="margin-left:30px"><b>回访人名：</b></span>
+							<div class="layui-inline" >
+								<input class="layui-input" lay-reqtext="回访人名不能为空！" placeholder="回访人名" name="pname">
+							</div><br><br>
+
+							<span style="margin-left:80px"><b>回访方式：</b></span>
+							<div class="layui-input-inline" >
+								<input class="layui-input" lay-reqtext="回访方式不能为空！" placeholder="回访方式" name="way">
+							</div>
+							<span style="margin-left:55px"><b>描述：</b></span>
+							<div class="layui-inline" >
+								<input class="layui-input" lay-reqtext="描述不能为空！" placeholder="描述" name="describe">
+							</div>		<br><br>
+							<input type="hidden" name="aftertype" value="2">
+							<span style="margin-left:80px"><b>回访时间：</b></span>
+							<div class="layui-inline" >
+								<input class="layui-input" id="date1" lay-reqtext="回访时间不能为空！" placeholder="yyyy-mm-dd" name="writetime">
+							</div>
+							<br>
+							<br>
+							<br>
+							<div style="margin-left: 12.5rem;">
+								<button class="layui-btn layui-bg-blue" type="button" lay-submit="" lay-filter="demo">保存</button>
+								<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+							</div>
+						</form>
+					</div>
+					</div>
+	          </body>
+	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
+	<script src="../../../static/js/After-saleManagement/maintain/updrepairback.js"></script>
+</html>

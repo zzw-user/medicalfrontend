@@ -4,11 +4,24 @@
     <meta charset="utf-8">
     <title>用户管理</title>
 </head>
-
-<link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
+<link rel="stylesheet" href=".//layui/css/layui.css">
 
 <style>
+    .layui-btn {
+        width: 100px;
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 20px;
 
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+    }
     .layui-nav .layui-nav-more {
         content: '';
         width: 0;
@@ -42,8 +55,13 @@
                 <div class="layui-form-item layui-inline">
                     <div style="padding: 10px;">角色类型</div>
                     <div class="layui-input-inline">
-                        <select name="roleid" id="roleid" lay-filter="aihao">
-
+                        <select name="roleid" lay-filter="aihao">
+                            <option value=""></option>
+                            <option value="0">写作</option>
+                            <option value="1" selected="">阅读</option>
+                            <option value="2">游戏</option>
+                            <option value="3">音乐</option>
+                            <option value="4">旅行</option>
                         </select> </div>
                 </div>
 
@@ -57,14 +75,109 @@
             </div>
         </div>
     </form>
-
-    <table class="layui-table" align="center" id="problem" lay-filter="problem"></table>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+    <table class="layui-table" align="center" id="problem"></table>
 </div>
 </body>
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+<script src="./layui/layui.js"></script>
+<script>
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider','jquery','form'], function() {
+        var laydate = layui.laydate //日期
+                , laypage = layui.laypage //分页
+                , layer = layui.layer //弹层
+                , table = layui.table //表格
+                , carousel = layui.carousel //轮播
+                , upload = layui.upload //上传
+                , element = layui.element //元素操作
+                , $ = layui.jquery
+                , form = layui.form
+                , slider = layui.slider; //滑块//执行一个laydate实例
+        $("#issueTypeId").load('http://127.0.0.1:8080/problemstate/getIssueType',function (result) {
+            const data=eval(result);
+            $(data).each(function (i,o) {
+                $("#issueTypeId").append("<option value='"+o.id+"'>"+o.issueName+"</option>")
+            });
+            form.render("select");
+        })
+        //执行一个 table 实例
+        table.render({
+            elem: '#problem'
+            ,id:'testReload'
+            ,height: 450
+            ,width:1150
+            ,url: 'http://127.0.0.1:8080/problemstate/getIssueStaus' //数据接口
+            ,title: '问题状态表'
+            ,type:'get'
+            ,dataType:'json'
+            ,crossDomain:true
+            ,cols: [[ //表头
+                ,{type:'numbers',title:"序号",fixed: 'left'}
+                , {field: 'mname',width:200, title: '姓名'}
+                , {field: 'sex',width:250, title: '性别'}
+                , {field: 'address',width:200, title: '居住地址'}
+                , {field: 'phone',width:230, title: '手机号码'}
+                , {field: 'roleid',width:230, title: '角色'}
+                , {field: 'mailbox',width:230, title: '邮箱'}
+                , {field: 'age',width:230, title: '年龄'}
+                , {fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}
+            ]]
+            ,page: true
+        });
+        form.on('submit(formDemo)', function(data){
+            table.reload('testReload', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    issueCoding: $("#issueCoding").val()
+                    ,issueTypeId: $("#issueTypeId").val()
+                    ,problemTypes: $("#problemTypes").val()
+                    ,issueName: $("#issueName").val()
+                    ,isStartUsing: $("#isStartUsing").val()
+                    //…
+                }
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        })
+        $('.btnArr .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+        window.WeAdminShow = function(title, url, w, h) {
+            if(title == null || title == '') {
+                title = false;
+            };
+            if(url == null || url == '') {
+                url = "404.html";
+            };
+            if(w == null || w == '') {
+                w = ($(window).width() * 0.9);
+            };
+            if(h == null || h == '') {
+                h = ($(window).height() - 50);
+            };
+            layer.open({
+                type: 2,
+                area: [w + 'px', h + 'px'],
+                fix: false, //不固定
+                width:w,
+                height:h,
+                maxmin: true,
+                shadeClose: true,
+                shade: 0.4,
+                title: title,
+                content: url,
+                success:function () {
+
+                },end:function () {
+                }
+            });
+        }
+    })
 </script>
-<script src="../../lib/layui-v2.5.5/layui.js"></script>
-<script src="../../static/js/SystemManagement/UserManagement.js"></script>
 </html>

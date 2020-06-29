@@ -15,7 +15,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             $("#issueTypeId").append("<option value='"+o.id+"'>"+o.issueName+"</option>")
         });
         form.render("select");
-    })
+    });
     //执行一个 table 实例
     table.render({
         elem: '#problem'

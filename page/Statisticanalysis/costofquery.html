@@ -2,10 +2,10 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>保养派单</title>
+		<title>费用查询</title>
 	</head>
-	<link rel="stylesheet" href="./css/layui.css">
-
+	<link rel="stylesheet" href="../layui/css/layui.css">
+	<body>
 		 <style>
 		        .layui-btn {
 		            width: 100px;
@@ -43,42 +43,25 @@
 		</head>
 		<body>
 		<div class="weadmin-body" style="margin-left: 3%;">
-		    <form class="layui-form" style="width: 1150px;">
-		        <div class="layui-row">
-		            <div class="layui-col-md8">
-		               
-						<div class="layui-form-item layui-inline">
-						    <div style="padding: 10px;margin-top: 10px;">保养人员：</div>
-						    <div class="layui-input-inline">
-						        <input type="text" name="issueCoding" id="issueCoding" lay-verify="title" autocomplete="off" class="layui-input">
-						    </div>
-						</div>
-						<div class="layui-form-item layui-inline">
-						    <div style="padding: 10px;margin-top: 10px;">保养地址：</div>
-						    <div class="layui-input-inline">
-						        <input type="text" name="issueName" id="issueName" lay-verify="title" autocomplete="off" class="layui-input">
-						    </div>
-						</div>
-							
-		            </div>
-					<div class="layui-col-md4">
-					    <div class="layui-form-item layui-inline">
-					   
-							
-					    </div>
-					</div>
-		            <div class="layui-col-md4">
-		                <div class="layui-form-item layui-inline" style="margin-left: 30px;margin-top: 40px;">
-		                 <button class="layui-btn" lay-submit="" lay-filter="sreach" style="background-color: #01AAED;"" id="reload"><i class="layui-icon">&#xe615;搜索</i></button>
-							
-		                <button type="button" class="layui-btn layui-btn-lg layui-btn-radius layui-btn-normal" style="width: 150px;height: 30px;background-color: #01AAED;">
-							<i class="layui-icon">&#xe608;</i>新增保养派单
-		                </button>
-						
-						</div>
-		            </div>
-		        </div>
-		    </form>
+			 <div class="layui-row">
+				 <form class="layui-form layui-col-md12 we-search layui-form-pane">
+				 <span style="margin-left:30px"><b>费用时间：</b></span>
+				 <div class="layui-inline" >
+				 	<input class="layui-input" placeholder="费用时间" name="start" id="">
+				 </div>
+				 <span style="margin-left:30px"><b>费用类型：</b></span>
+				 <div class="layui-inline" >
+				 	<select name="cateid">
+				 		<option>请选择</option>
+				 		<option>管理员角色</option>
+				 		<option>操作员角色</option>
+				 	</select>
+				 </div>
+			    <button class="layui-btn" lay-submit="" lay-filter="sreach"  id="reload"><i class="layui-icon">&#xe615;搜索</i></button>	 					
+				
+			    </div>
+					 
+			</form>
 			<script type="text/html" id="barDemo">
 			  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
 			  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -87,7 +70,7 @@
 		    <table class="layui-table" id="problem"></table>
 		</div>
 	</body>
-	<script src="layui.js"></script>
+	<script src="../layui/layui.js"></script>
 	<script>
 		layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider','jquery','form'], function() {
 		    var laydate = layui.laydate //日期
@@ -112,7 +95,7 @@
 		        elem: '#problem'
 		        ,id:'testReload'
 		        ,height: 450
-				,width:1250
+				,width:1350
 		        ,url: 'http://127.0.0.1:8080/problemstate/getIssueStaus' //数据接口
 		        ,title: '问题状态表'
 		        ,type:'get'
@@ -120,11 +103,13 @@
 		        ,crossDomain:true
 		        ,cols: [[ //表头
 		            ,{type:'numbers',width:150,title:"序号"}
-		            , {field: 'problemTypesName',width:150, title: '保养地址'}
-		            , {field: 'chineseRemark',width:150, title: '保养人'}
-		            , {field: 'englishRemark',width:150, title: '保养时间'}
-					, {field: 'englishRemark',width:150, title: '产品编码'}
-		            
+		            , {field: 'problemTypesName',width:150, title: '操作员'}
+		            , {field: 'chineseRemark',width:150, title: '地址'}
+		            , {field: 'englishRemark',width:150, title: '费用'}
+					, {field: 'englishRemark',width:150, title: '录入地址'}
+					, {field: 'englishRemark',width:150, title: '录入人'}
+					, {field: 'englishRemark',width:150, title: '产品编号'}
+					, {field: 'englishRemark',width:150, title: '费用类型'}
 		            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
 		        ]]
 		        ,page: true
