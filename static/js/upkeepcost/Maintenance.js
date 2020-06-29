@@ -30,6 +30,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
         ]]
         ,page: true
+        ,limit:2
     });
     $("#sel").on('click',function(){
         table.reload('testReload', {
@@ -67,7 +68,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
                 });
             }else if (obj.event === 'upd') {
-                WeAdminShow('修改用户','./updrepairback.html?pid='+data.pid,800,400);
+                WeAdminShow('修改用户','./UpdateMaintenance.html?pid='+data.pid,700,400);
             }
         });
     window.WeAdminShow = function(title, url, w, h) {
