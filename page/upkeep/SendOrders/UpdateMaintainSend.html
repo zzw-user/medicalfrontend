@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>修改保养派单</title>
+	</head>
+	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+
+	<body>
+		<div class="weadmin-body">
+		    <form class="layui-form" id="pro" lay-filter="example">
+				<input type="hidden" name="did">
+		        <blockquote class="layui-elem-quote">修改备件类型</blockquote>
+						  <div class="layui-form-item">
+						     <label class="layui-form-label">保养人员</label>
+						     <div class="layui-input-inline">
+						       <select name="operator" id="operator" lay-filter="aihao">
+						      
+						      
+						       </select>
+						     </div>
+						   </div>
+			<div class="layui-form-item ">
+
+					<label class="layui-form-label">保养日期</label>
+					<div class="layui-input-inline">
+						<input type="text" name="deliverytime" class="layui-input" lay-verify="required" id="test1" placeholder="yyyy-MM-dd HH:mm:ss">
+					</div>
+				</div>
+				<div class="layui-form-item ">
+
+					<div class="layui-form-item" id="addressDiv">
+						<label class="layui-form-label">保养地址：</label>
+						<div class="layui-input-inline" style="width: 90px;">
+							<select name="P1" lay-filter="province" id="province" style="width: 50px;">
+								<option></option>
+							</select>
+						</div>
+						<div class="layui-input-inline" style="width: 90px;">
+							<select name="C1" lay-filter="city" id="city" style="width: 50px;">
+								<option></option>
+							</select>
+						</div>
+						<div class="layui-input-inline" style="width: 100px;">
+							<select name="A1" lay-filter="area" id="area" style="width: 50px;">
+								<option></option>
+							</select>
+						</div>
+						<div class="layui-input-inline" id="addressDetail" style="width: 150px;">
+							<input id="site" type="text" name="site" style="width: 150px;"  lay-verify="title" autocomplete="off"
+								   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="安装地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
+							<dl id="addressTip" class="addressDl">
+							</dl>
+						</div>
+					</div>
+				</div>
+		<div class="layui-form-item">
+		       <label class="layui-form-label">联系电话： </label>
+		       <div class="layui-input-inline">
+		         <input type="text" name="phone" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		       </div>
+		</div>
+		<div class="layui-form-item">
+		       <label class="layui-form-label">产品编号： </label>
+		       <div class="layui-input-inline">
+		         <input type="text" name="coding" id="coding" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		       </div>
+		</div>
+				<input type="hidden" name="aftertype" value="1">
+				<input type="hidden" name="address" id="address">
+
+		<div class="layui-form-item">
+		
+		            <div class="layui-form-item">
+		               <div class="layui-input-block">
+		                 <button class="layui-btn" lay-submit lay-filter="formDem">保存</button>
+						   <button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
+		               </div>
+		             </div>
+		</div>
+		    </form>
+
+		</div>
+	</body>
+	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
+	<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+	<script src="../../../static/js/distpicker.data.js"></script>
+	<script src="../../../static/js/distpicker.js"></script>
+	<script src="../../../static/js/select.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../static/js/main.js"></script>
+	<script src="../../../static/js/upkeepcost/UpdateMaintainSend.js"></script>
+
+</html>

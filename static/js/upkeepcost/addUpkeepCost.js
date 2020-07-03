@@ -12,9 +12,9 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
         var coding=$("#coding").val();
         $.post('http://127.0.0.1:8081/Cost/getProductOne',{coding:coding},function(result){
             if (result){
-
+                  alert(coding);
             }else {
-                layer.alert("对不起，没有该产品编码！");
+                layer.msg("对不起，没有该产品编码！");
                 var coding=$("#coding").val('');
             }
 
@@ -23,7 +23,7 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
     $.post('http://127.0.0.1:8081/Cost/getMpuser',function(result){
         var str="<option value='0'>--请选择--</option>";
         $(result).each(function() {
-            str+="<option value="+this.mpid+">"+this.mname+"</option>";
+            str+="<option value="+this.mpid+">"+this.realname+"</option>";
 
         })
         $("#cid").append(str);
@@ -31,6 +31,12 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
 
     })
     form.on('submit(formDemo)', function(data){
+        var province = $("#province").val();
+        var area = $("#area").val();
+        var city= $("#city").val();
+        var site = $("#site").val();
+        var str = province+' '+city+' '+area+' '+site;
+        $("#address").val(str);
         var userInfo=$("#form").serialize();
         $.ajax({
             url:"http://127.0.0.1:8081/Cost/addCost",
