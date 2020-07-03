@@ -6,8 +6,9 @@
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
 	<style>
-
-	
+		dl>dd{
+			cursor: pointer;
+		}
 	</style>
 	<body>
 		<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>修改维修派单</b></span></div>
@@ -21,7 +22,7 @@
 							 <div style="margin-left: 6.75rem;">
 							 <span><b>维修人员：</b></span>
 							 <div class="layui-input-inline" style="width:185px">
-								 <select lay-filter="aihao" name="operator" id="operator">
+								 <select lay-filter="aihao" lay-verify="required" lay-reqtext="请选择维修人员" name="operator" id="operator">
 
 								 </select>
 							</div>
@@ -57,21 +58,22 @@
 						   <div style="margin-left: 6.75rem;">
 						   	<span><b>联系电话：</b></span>
 						   <div class="layui-inline" >
-							   <input class="layui-input" placeholder="联系电话" name="phone" lay-verify="required|phone" lay-reqtext="联系电话不能为空！">
+							   <input class="layui-input" lay-verify="required" placeholder="联系电话" name="phone" lay-verify="required|phone" lay-reqtext="联系电话不能为空！">
 						   </div>
 						   </div><br>
 						   <div style="margin-left: 6.75rem;">
 						   	<span><b>产品编号：</b></span>
 						   <div class="layui-inline" >
-							   <input class="layui-input" placeholder="产品编码" name="coding" lay-reqtext="产品编码不能为空！" id="coding">
+							   <input class="layui-input" lay-verify="required" placeholder="产品编码" name="coding" lay-reqtext="产品编码不能为空！" id="coding">
                                <input type="hidden" name="aftertype">
 						   </div>
 						   </div><br>
                             <span style="margin-left:105px"><b>录入时间：</b></span>
                             <div class="layui-inline" >
-                                <input class="layui-input" placeholder="录入时间" name="deliverytime" lay-reqtext="录入时间不能为空！">
+                                <input class="layui-input" lay-verify="required" placeholder="录入时间" name="deliverytime" lay-reqtext="录入时间不能为空！">
 
                             </div>
+							<input type="hidden" id="aftertype" value="2">
 							<br>
 							<br>
 							<br>

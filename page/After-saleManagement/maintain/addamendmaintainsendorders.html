@@ -6,8 +6,9 @@
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
 	<style>
-
-	
+		dl>dd{
+			cursor: pointer;
+		}
 	</style>
 	<body>
 		<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>新增维修派单</b></span></div>
@@ -20,7 +21,7 @@
 							 <div style="margin-left: 6.75rem;">
 							 <span><b>维修人员：</b></span>
 							 <div class="layui-input-inline" style="width:185px">
-								 <select lay-filter="aihao" name="operator" id="operator">
+								 <select lay-filter="aihao" lay-reqtext="请选择维修人员" lay-verify="required" name="operator" id="operator">
 
 								 </select>
 							</div>
@@ -56,18 +57,19 @@
 						   <div style="margin-left: 6.75rem;">
 						   	<span><b>联系电话：</b></span>
 						   <div class="layui-inline" >
-							   <input class="layui-input" placeholder="联系电话" name="phone" lay-verify="required|phone" lay-reqtext="联系电话不能为空！">
+							   <input class="layui-input" lay-verify="required" placeholder="联系电话" name="phone" lay-verify="required|phone" lay-reqtext="联系电话不能为空！">
 						   </div>
 						   </div><br>
 						   <div style="margin-left: 6.75rem;">
 						   	<span><b>产品编号：</b></span>
 						   <div class="layui-inline" >
-							   <input class="layui-input" placeholder="产品编码" name="coding" lay-reqtext="产品编码不能为空！" id="coding">
+							   <input class="layui-input" lay-verify="required" placeholder="产品编码" name="coding" lay-reqtext="产品编码不能为空！" id="coding">
 						   </div>
 						   </div><br>
 							<br>
 							<br>
 							<br>
+							<input type="hidden" id="aftertype" value="2">
 							<div style="margin-left: 12.5rem;">
 								<button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
 								 <button type="reset" class="layui-btn layui-btn-primary">重置</button>

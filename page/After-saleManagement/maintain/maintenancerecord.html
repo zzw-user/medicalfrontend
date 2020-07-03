@@ -36,10 +36,12 @@
 			</form>
 			 </div>
 			<script type="text/html" id="barDemo">
+				<div style="height: 100px;margin-top:50px">
 			  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
 			  <a class="layui-btn layui-btn-xs" lay-event="detail">评估</a>
 			  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 			  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">新增故障</a>
+				</div>
 			</script>
 			<table class="layui-table"  id="test" lay-filter="test"></table>
 		</div>
@@ -83,7 +85,7 @@
 				,id:'testReload'
 				,height: 450
 				,width:1150
-				,url: 'http://127.0.0.1:8081/Maintenancerecord/getAmendrecord' //数据接口
+				,url: 'http://127.0.0.1:8080/Maintenancerecord/getAmendrecord' //数据接口
 				,type:'get'
 				,dataType:'json'
 				,crossDomain:true
@@ -104,7 +106,7 @@
 								return '已完成'
 							}
 						}}
-					,{ title:'操作', toolbar: '#barDemo', width:150}
+					,{ fixed: 'right', align:'center',title:'操作', toolbar: '#barDemo', width:250}
 				]]
 				,page: true
 			});
@@ -132,7 +134,7 @@
 				//console.log(obj)
 				if(obj.event == 'del'){
 					layer.confirm('真的删除行么', function(index){
-						$.get("http://127.0.0.1:8081/Maintenancerecord/delAmendrecord?rid="+data.rid,function (ret) {
+						$.get("http://127.0.0.1:8080/Maintenancerecord/delAmendrecord?rid="+data.rid,function (ret) {
 							if (ret==true){
 								layer.msg("删除成功！")
 								table.reload('testReload');

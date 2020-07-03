@@ -11,7 +11,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         , slider = layui.slider; //滑块//执行一个laydate实例
     //常规用法
     laydate.render({
-        elem: '#test1'
+        elem: '#date1'
     });
 
     form.on('submit(formDemo2)', function(data){
@@ -22,14 +22,14 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         var str = province+' '+city+' '+area+' '+site;
         $("#address").val(str);
         $.ajax({
-            url: 'http://127.0.0.1:8081/Warehouse/addWarehouse',
+            url: 'http://127.0.0.1:8080/Warehouse/addWarehouse',
             type: 'get',
             contentType:'application/x-www-form-urlencoded; charset=UTF-8',
             data: $("#pro").serialize(),
             dataType:'text',
             success: function (result) {
                 if (result) {
-                    layer.alert("新增成功！", function () {
+                    layer.msg("新增成功！", function () {
                         window.parent.location.reload('testReload');
                         x_admin_close()
 

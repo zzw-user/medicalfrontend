@@ -15,19 +15,19 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,id:'testReload'
         ,height: 450
         ,width:1450
-        ,url: 'http://127.0.0.1:8081/Repairback/selePayareturnvisit' //数据接口
+        ,url: 'http://127.0.0.1:8080/Repairback/selePayareturnvisit?aftertype=2' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'
         ,crossDomain:true
         ,cols: [[ //表头
-            {field:'pid',width:180,title:"序号"}
-            , {field: 'pname',width:200, title: '回访人名	'}
+            {type:'numbers',title:"序号"}
+            , {field: 'pname',width:200, title: '回访客户名称'}
             , {field: 'way',width:200, title: '回访方式'}
-            , {field: 'describe',width:230, title: '描述'}
-            , {field: 'mname',width:200, title: '记录人'}
-            , {field: 'writetime',width:230, title: '记录时间'}
-            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
+            , {field: 'describe',width:200, title: '描述'}
+            , {field: 'realname',width:200, title: '记录人员'}
+            , {field: 'writetime',width:200, title: '记录时间'}
+            , {fixed: 'right', width:178, align:'center',title:'操作',toolbar: '#barDemo'}
         ]]
         ,page: true
     });
@@ -49,7 +49,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             if (obj.event === 'del') {
                 layer.confirm('真的删除么?',function(index) {
                     $.ajax({
-                        url : "http://127.0.0.1:8081/Repairback/delPayareturnvisit",
+                        url : "http://127.0.0.1:8080/Repairback/delPayareturnvisit",
                         type : "post",
                         data : {
                             pid: data.pid

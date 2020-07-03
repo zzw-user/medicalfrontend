@@ -19,12 +19,12 @@
 						<input type="hidden" name="rid">
 						<span style="margin-left:30px"><b>维修人员：</b></span>
 						<div class="layui-input-inline" style="width:185px">
-							<select name="operator" id="operator">
+							<select name="operator" lay-verify="required" lay-reqtext="请选择维修人员" id="operator">
 							</select>
 						</div>
 						<span style="margin-left:20px"><b>维修日期：</b></span>
 						<div class="layui-input-inline" >
-							<input class="layui-input" placeholder="维修日期" name="installationtime" id="test1" placeholder="yyyy-MM-dd" lay-reqtext="维修日期不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="维修日期" name="installationtime" id="test1" placeholder="yyyy-MM-dd" lay-reqtext="维修日期不能为空！">
 						</div>
 						<br>
 						<span style="margin-left:28px;"><b>维修地址：</b></span>9
@@ -65,20 +65,20 @@
 						  </div>
 						<span style="margin-left:55px"><b>区域：</b></span>
 						<div class="layui-input-inline" style="width:185px">
-							<select name="did" id="did">
+							<select name="did" id="did" lay-verify="required" lay-reqtext="区域不能为空">
 							</select>
 						</div>
 						<span style="margin-left:28px"><b>备件编码：</b></span>
 						<div class="layui-inline" >
-							<input class="layui-input" placeholder="备件编码" name="arpartcoding" id="arpartcoding" lay-reqtext="备件编码不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="备件编码" name="arpartcoding" id="arpartcoding" lay-reqtext="备件编码不能为空！">
 						</div><br><br>
 						<span style="margin-left:25px"><b>故障类型：</b></span>
 						<div class="layui-input-inline" style="width:185px">
-							<input class="layui-input" placeholder="故障类型" name="faulttype" id="faulttype" lay-reqtext="故障类型不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="故障类型" name="faulttype" id="faulttype" lay-reqtext="故障类型不能为空！">
 						</div>
 						<span style="margin-left:28px"><b>故障描述：</b></span>
 						<div class="layui-inline" >
-							<input class="layui-input" placeholder="故障描述" name="faultdescription" id="faultdescription"lay-reqtext="故障描述不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="故障描述" name="faultdescription" id="faultdescription"lay-reqtext="故障描述不能为空！">
 						</div>
 
 						<br>
@@ -86,11 +86,11 @@
 
 						<span style="margin-left:25px"><b>故障分析：</b></span>
 						<div class="layui-inline" >
-							<input class="layui-input" placeholder="故障分析" name="analyze" id="analyze" lay-reqtext="故障分析不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="故障分析" name="analyze" id="analyze" lay-reqtext="故障分析不能为空！">
 						</div>
 						<span style="margin-left:25px"><b>产品编码：</b></span>
 						<div class="layui-inline" >
-							<input class="layui-input" placeholder="产品编码" name="productcoding" id="productcoding"lay-reqtext="产品编码不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="产品编码" name="productcoding" id="productcoding"lay-reqtext="产品编码不能为空！">
 						</div>
 						<br>
 						<br>
@@ -117,7 +117,7 @@
 						<br>
 						<span style="margin-left:40px"><b>评估：</b></span>
 						<div class="layui-inline" >
-							<input class="layui-input" placeholder="评估" name="assess"  lay-reqtext="评估不能为空！">
+							<input class="layui-input"  placeholder="评估" name="assess"  lay-reqtext="评估不能为空！">
 						</div>
 					</div>
 					<br>
@@ -166,7 +166,7 @@
 				//拖拽上传
 				upload.render({
 					elem: '#beforeinstallationtest'
-					,url: 'http://127.0.0.1:8081/Maintenancerecord/upload' //改成您自己的上传接口
+					,url: 'http://127.0.0.1:8080/Maintenancerecord/upload' //改成您自己的上传接口
 					,multiple: true
 					,before: function(obj){
 						//预读本地文件示例，不支持ie8
@@ -183,13 +183,13 @@
 						}
 						//上传成功
 						layer.msg(res.msg);
-						// alert("上传成功"+res.msg);
+						// msg("上传成功"+res.msg);
 						$("#beforeinstallation").val(res.msg);
 					}
 				});
 				upload.render({
 					elem: '#afterinstallationtest'
-					,url: 'http://127.0.0.1:8081/Maintenancerecord/upload' //改成您自己的上传接口
+					,url: 'http://127.0.0.1:8080/Maintenancerecord/upload' //改成您自己的上传接口
 					,multiple: true
 					,before: function(obj){
 						//预读本地文件示例，不支持ie8
@@ -206,7 +206,7 @@
 						}
 						//上传成功
 						layer.msg(res.msg);
-						// alert("上传成功"+res.msg);
+						// msg("上传成功"+res.msg);
 						$("#afterinstallation").val(res.msg);
 					}
 				});
@@ -214,14 +214,14 @@
 				laydate.render({
 					elem: '#test1'
 				});
-				$("#operator").load('http://127.0.0.1:8081/Maintenancecosts/getMpuserOne',function (result) {
+				$("#operator").load('http://127.0.0.1:8080/Maintenancecosts/getMpuserOne',function (result) {
 					var data=eval(result);
 					$(data).each(function (i,o) {
 						$("#operator").append("<option value="+this.mpid+">"+this.realname+"</option>")
 					});
 					form.render("select");
 				})
-				$("#did").load('http://127.0.0.1:8081/Maintenancerecord/getDistrict',function (result) {
+				$("#did").load('http://127.0.0.1:8080/Maintenancerecord/getDistrict',function (result) {
 					var data=eval(result);
 					$(data).each(function (i,o) {
 						$("#did").append("<option value="+this.did+">"+this.dname+"</option>")
@@ -229,7 +229,7 @@
 					form.render("select");
 				})
 				var rid=getUrlParam("rid");
-				$.get('http://127.0.0.1:8081/Maintenancerecord/getAmendrecordOne',{rid:rid},function (result) {
+				$.get('http://127.0.0.1:8080/Maintenancerecord/getAmendrecordOne',{rid:rid},function (result) {
 					form.val('example',result);
 					var str = result.address;
 					var arr=new Array();
@@ -244,11 +244,11 @@
 				});
 				$("#productcoding").blur(function(){
 					var coding=$("#productcoding").val();
-					$.post('http://127.0.0.1:8081/Maintenancecosts/getProductOne',{coding:coding},function(result){
+					$.post('http://127.0.0.1:8080/Maintenancecosts/getProductOne',{coding:coding},function(result){
 						if (result){
 
 						}else {
-							layer.alert("对不起，没有该产品编码！");
+							layer.msg("对不起，没有该产品编码！");
 							$("#productcoding").val('');
 						}
 
@@ -256,11 +256,11 @@
 				})
 				$("#arpartcoding").blur(function(){
 					var arpartcoding=$("#arpartcoding").val();
-					$.post('http://127.0.0.1:8081/Maintenancerecord/getArpart',{coding:arpartcoding},function(result){
+					$.post('http://127.0.0.1:8080/Maintenancerecord/getArpart',{coding:arpartcoding},function(result){
 						if (result){
 
 						}else {
-							layer.alert("对不起，没有该备件编码！");
+							layer.msg("对不起，没有该备件编码！");
 							$("#arpartcoding").val('');
 						}
 
@@ -274,18 +274,18 @@
 					var str = province+' '+city+' '+area+' '+site;
 					$("#address").val(str);
 					$.ajax({
-						url: 'http://127.0.0.1:8081/Maintenancerecord/updAmendrecord',
+						url: 'http://127.0.0.1:8080/Maintenancerecord/updAmendrecord',
 						type: 'post',
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						data: $("#pro").serialize(),
 						dataType: 'text',
 						success: function(result) {
 							if (result=="true") {
-								layer.alert("修改成功！", function() {
+								layer.msg("修改成功！", function() {
 									x_admin_close()
 								})
 							} else {
-								layer.alert("修改失败！", function() {
+								layer.msg("修改失败！", function() {
 									x_admin_close()
 								})
 							}

@@ -6,8 +6,9 @@
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
 	<style>
-
-	
+		dl>dd{
+			cursor: pointer;
+		}
 	</style>
 	<body>
 		<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>新增维修回访</b></span></div>
@@ -23,17 +24,19 @@
 								 <input type="hidden"   lay-verify="title" autocomplete="off" class="layui-input" value="1" name="operator">
 							</div>
 								<span style="margin-left:30px"><b>回访人名：</b></span>
-							<div class="layui-inline" >
-								<input class="layui-input" lay-reqtext="回访人名不能为空！" placeholder="回访人名" name="pname">
-							</div><br><br>
+
+							<div class="layui-input-inline">
+								<input type="text" name="pname" lay-verify="required" lay-verify="回访人名不能为空" autocomplete="off" class="layui-input">
+							</div>
+							<br><br>
 		
 							<span style="margin-left:80px"><b>回访方式：</b></span>
 							 <div class="layui-input-inline" >
-							   <input class="layui-input" lay-reqtext="回访方式不能为空！" placeholder="回访方式" name="way">
+							   <input class="layui-input" lay-verify="required" lay-reqtext="回访方式不能为空！" placeholder="回访方式" name="way">
 							</div>
 							<span style="margin-left:55px"><b>描述：</b></span>
 							<div class="layui-inline" >
-								<input class="layui-input" lay-reqtext="描述不能为空！" placeholder="描述" name="describe">
+								<input class="layui-input" lay-verify="required" lay-reqtext="描述不能为空！" placeholder="描述" name="describe">
 							</div>		<br><br>
 							<input type="hidden" name="aftertype" value="2">
 

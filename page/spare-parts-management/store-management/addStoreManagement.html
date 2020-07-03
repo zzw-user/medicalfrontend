@@ -4,6 +4,11 @@
 		<meta charset="utf-8">
 		<title>新增仓库</title>
 	</head>
+	<style>
+		dl>dd{
+			cursor: pointer;
+		}
+	</style>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
 	<body>
 		<div class="weadmin-body">
@@ -51,11 +56,17 @@
 		                   <div><b>创建人:</b></div>
 		                   <div class="layui-input-inline">
 		                       <input type="text"   lay-verify="title" autocomplete="off" class="layui-input" value="张某">
-							   <input type="hidden"   lay-verify="title" autocomplete="off" class="layui-input" value="1" name="pid">
+							   <input type="hidden"   lay-verify="title" autocomplete="off" class="layui-input" value="7" name="pid">
 		                   </div>
 		               </div>
+						<div class="layui-form-item layui-inline" style="margin-bottom: 20px">
+							<div><b>创建时间</b></div>
+							<div class="layui-input-inline">
+								<input type="text" name="creationtime" id="date1" placeholder="yyyy-MM-dd" lay-reqtext="创建时间不能为空！" placeholder="请输入创建时间！" lay-verify="required" autocomplete="off" class="layui-input">
+							</div>
+						</div>
 		            </div>
-		
+
 		            <div class="" style="margin-left: 300px;margin-top: 5%;">
 		                <div class="layui-form-item">
 		                    <button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo2">保存</button>

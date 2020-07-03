@@ -8,10 +8,10 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
     laydate.render({
         elem: '#test1'
     });
-    $.post('http://127.0.0.1:8081/Maintenancecosts/getMpuserOne',function(result){
+    $.post('http://127.0.0.1:8080/Maintenancecosts/getMpuserOne',function(result){
         var str="<option value='0'>--请选择--</option>";
         $(result).each(function() {
-            str+="<option value="+this.mpid+">"+this.mname+"</option>";
+            str+="<option value="+this.mpid+">"+this.realname+"</option>";
 
         })
         $("#operator").append(str);
@@ -20,11 +20,11 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
     })
     $("#coding").blur(function(){
         var coding=$("#coding").val();
-        $.post('http://127.0.0.1:8081/Maintenancecosts/getProductOne',{coding:coding},function(result){
+        $.post('http://127.0.0.1:8080/Maintenancecosts/getProductOne',{coding:coding},function(result){
             if (result){
 
             }else {
-                layer.alert("对不起，没有该产品编码！");
+                layer.msg("对不起，没有该产品编码！");
                 var coding=$("#coding").val('');
             }
 
@@ -40,7 +40,7 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
         $("#address").val(str);
         var userInfo=$("#form").serialize();
         $.ajax({
-            url:"http://127.0.0.1:8081/Maintenancecosts/addCost",
+            url:"http://127.0.0.1:8080/Maintenancecosts/addCost",
             type:"post",
             data:userInfo,
             dataType:"text",
@@ -57,7 +57,7 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
                         })
                     });
                 }else{
-                    layer.alert("新增失败");
+                    layer.msg("新增失败");
                 }
             }
         })

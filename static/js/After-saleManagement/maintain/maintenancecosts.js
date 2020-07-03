@@ -15,14 +15,14 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,id:'testReload'
         ,height: 450
         ,width:1450
-        ,url: 'http://127.0.0.1:8081/Maintenancecosts/getCost' //数据接口
+        ,url: 'http://127.0.0.1:8080/Maintenancecosts/getCost' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'
         ,crossDomain:true
         ,cols: [[ //表头
               {field:'cid',width:120,title:"序号"}
-            , {field: 'mname',width:120, title: '维修人	'}
+            , {field: 'realname',width:120, title: '维修人	'}
             , {field: 'address',width:150, title: '维修地址'}
             , {field: 'cost',width:120, title: '总费用'}
             , {field: 'sparepartcost',width:130, title: '备件费用'}
@@ -52,7 +52,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             if (obj.event === 'del') {
                 layer.confirm('真的删除么?',function(index) {
                     $.ajax({
-                        url : "http://127.0.0.1:8081/Maintenancecosts/delCost",
+                        url : "http://127.0.0.1:8080/Maintenancecosts/delCost",
                         type : "post",
                         data : {
                             cid: data.cid

@@ -6,8 +6,9 @@
 </head>
 <link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
 <style>
-
-
+    dl>dd{
+        cursor: pointer;
+    }
 </style>
 <body>
 <div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>修改维修费用</b></span></div>
@@ -19,14 +20,14 @@
             <br>
             <span style="margin-left:80px"><b>维修人员：</b></span>
             <div class="layui-input-inline" style="width:185px">
-                <select name="operator" id="operator">
+                <select name="operator" id="operator" lay-verify="required" lay-reqtext="请选择维修人员">
 
                 </select>
             </div>
             <input type="hidden" name="cid">
             <span style="margin-left:75px"><b>总费用：</b></span>
             <div class="layui-inline" >
-                <input class="layui-input" placeholder="总费用" name="cost" lay-reqtext="总费用不能为空！">
+                <input class="layui-input" placeholder="总费用" name="cost" lay-verify="required" lay-reqtext="总费用不能为空！">
             </div>
             <br><br>
             <span style="margin-left:80px"><b>维修地址：</b></span>
@@ -59,24 +60,24 @@
 
             <span style="margin-left:80px"><b>联系电话：</b></span>
             <div class="layui-input-inline" >
-                <input class="layui-input" placeholder="联系电话" name="phone" lay-reqtext="联系电话不能为空！">
+                <input class="layui-input" lay-verify="required" placeholder="联系电话" name="phone" lay-reqtext="联系电话不能为空！">
             </div>
             <span style="margin-left:60px"><b>产品编码：</b></span>
             <div class="layui-inline" >
-                <input class="layui-input" placeholder="产品编码" name="coding" lay-reqtext="产品编码不能为空！" id="coding">
+                <input class="layui-input" lay-verify="required" placeholder="产品编码" name="coding" lay-reqtext="产品编码不能为空！" id="coding">
             </div><br><br>
             <span style="margin-left:80px"><b>录入时间：</b></span>
             <div class="layui-inline" >
-                <input class="layui-input" placeholder="录入时间" name="inputtime" lay-reqtext="录入时间不能为空！">
+                <input class="layui-input" lay-verify="required" placeholder="录入时间" name="inputtime" lay-reqtext="录入时间不能为空！">
             </div>
             <span style="margin-left:72px"><b>录入人：</b></span>
             <div class="layui-inline" >
-                <input class="layui-input" placeholder="录入人" name="dataentryclerk" lay-reqtext="录入人不能为空！">
+                <input class="layui-input" lay-verify="required" placeholder="录入人" name="dataentryclerk" lay-reqtext="录入人不能为空！">
             </div>
             <br><br>
             <span style="margin-left:80px"><b>备件费用：</b></span>
             <div class="layui-inline" >
-                <input class="layui-input" placeholder="费用" name="sparepartcost" lay-reqtext="备件费用不能为空！">
+                <input class="layui-input" lay-verify="required" placeholder="费用" name="sparepartcost" lay-reqtext="备件费用不能为空！">
             </div>
             <br><br>
             <input type="hidden" name="aftertype" value="2">

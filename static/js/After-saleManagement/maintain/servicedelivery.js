@@ -15,7 +15,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,id:'testReload'
         ,height: 450
         ,width:1395
-        ,url: 'http://127.0.0.1:8081/delivery/getDelivery' //数据接口
+        ,url: 'http://127.0.0.1:8080/delivery/getDelivery' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'
@@ -49,7 +49,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             if (obj.event === 'del') {
                 layer.confirm('真的删除么?',function(index) {
                     $.ajax({
-                        url : "http://127.0.0.1:8081/delivery/delDelivery",
+                        url : "http://127.0.0.1:8080/delivery/delDelivery",
                         type : "post",
                         data : {
                             did: data.did
@@ -57,10 +57,10 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                         dataType : "text",
                         success : function(e) {
                             if (e) {
-                                layer.alert("删除成功");
+                                layer.msg("删除成功");
                                 obj.del();
                             } else {
-                                layer.alert("删除失败");
+                                layer.msg("删除失败");
                             }
                         }
                     });

@@ -27,17 +27,17 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     laydate.render({
         elem: '#date1'
     });
-    $("#operator").load('http://127.0.0.1:8081/Maintenancecosts/getMpuserOne',function (result) {
+    $("#operator").load('http://127.0.0.1:8080/Maintenancecosts/getMpuserOne',function (result) {
         var data=eval(result);
         $(data).each(function (i,o) {
-            $("#operator").append("<option value="+this.mpid+">"+this.mname+"</option>")
+            $("#operator").append("<option value="+this.mpid+">"+this.realname+"</option>")
         });
         form.render("select");
     })
     var did=getUrlParam("did");
 
 
-    $.get('http://127.0.0.1:8081/delivery/getDeliveryOne',{did:did},function (result) {
+    $.get('http://127.0.0.1:8080/delivery/getDeliveryOne',{did:did},function (result) {
         form.val('example',result);
         var str = result.address;
         var arr=new Array();
@@ -51,11 +51,11 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     });
     $("#coding").blur(function(){
         var coding=$("#coding").val();
-        $.post('http://127.0.0.1:8081/Maintenancecosts/getProductOne',{coding:coding},function(result){
+        $.post('http://127.0.0.1:8080/Maintenancecosts/getProductOne',{coding:coding},function(result){
             if (result){
 
             }else {
-                layer.alert("对不起，没有该产品编码！");
+                layer.msg("对不起，没有该产品编码！");
                 var coding=$("#coding").val('');
             }
 
@@ -69,7 +69,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         var site = $("#site").val();
         var str = province+' '+city+' '+area+' '+site;
         $("#address").val(str);
-        $.get( 'http://127.0.0.1:8081/delivery/updDelivery',$("#form").serialize(),function (result) {
+        $.get( 'http://127.0.0.1:8080/delivery/updDelivery',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("修改成功！",{icon:1,time:1000},function(){
                     x_admin_close();

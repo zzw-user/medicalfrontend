@@ -4,6 +4,11 @@
 		<meta charset="utf-8">
 		<title>修改仓库</title>
 	</head>
+	<style>
+		dl>dd{
+			cursor: pointer;
+		}
+	</style>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
 	<body>
 		<div class="weadmin-body">
@@ -15,7 +20,7 @@
 		                    <div style="padding: 10px;">仓库名称</div>
 							<input type="hidden" name="wid">
 		                    <div class="layui-input-inline">
-		                        <input type="text" name="wname" lay-verify="title" autocomplete="off" class="layui-input" lay-reqtext="仓库名不能为空！" placeholder="请输入仓库名！">
+		                        <input type="text" name="wname" lay-verify="required" autocomplete="off" class="layui-input" lay-reqtext="仓库名不能为空！" placeholder="请输入仓库名！">
 		                    </div>
 		                </div>
 						<div class="layui-form-item layui-inline" style="margin-left: 20px">
@@ -57,7 +62,7 @@
 		               <div class="layui-form-item layui-inline" style="margin-bottom: 20px">
 		                   <div >创建时间</div>
 		                   <div class="layui-input-inline">
-		                       <input type="text" name="creationtime" id="date1" placeholder="yyyy-MM-dd" lay-reqtext="创建时间不能为空！" placeholder="请输入创建时间！" lay-verify="title" autocomplete="off" class="layui-input">
+		                       <input type="text" name="creationtime" id="date1" placeholder="yyyy-MM-dd" lay-reqtext="创建时间不能为空！" placeholder="请输入创建时间！" lay-verify="required" autocomplete="off" class="layui-input">
 		                   </div>
 		               </div>
 		            </div>
