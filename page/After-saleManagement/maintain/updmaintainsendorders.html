@@ -27,12 +27,32 @@
 							</div>
 							</div>
 							<br>
-							<div style="margin-left: 6.75rem;">
-								<span><b>维修地址：</b></span>
-							<div class="layui-inline" >
-								<input class="layui-input" placeholder="维修地址" name="address" lay-reqtext="维修地址不能为空！">
-
-							</div>
+							<span style="margin-left:110px"><b>维修地址：</b></span>
+							<div class="layui-form-item layui-inline" style="margin-top: 15px">
+								<div class="layui-form-item" id="addressDiv">
+									<div class="layui-input-inline" style="width: 90px;">
+										<select name="P1" lay-filter="province" id="province" style="width: 50px;">
+											<option></option>
+										</select>
+									</div>
+									<div class="layui-input-inline" style="width: 100px;">
+										<select name="C1" lay-filter="city" id="city" style="width: 50px;">
+											<option></option>
+										</select>
+									</div>
+									<div class="layui-input-inline" style="width: 100px;">
+										<select name="A1" lay-filter="area" id="area" style="width: 50px;">
+											<option></option>
+										</select>
+									</div>
+									<div class="layui-input-inline" id="addressDetail" style="width: 150px;">
+										<input id="site" type="text" name="site" style="width: 150px;"  lay-verify="title" autocomplete="off"
+											   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="安装地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
+										<dl id="addressTip" class="addressDl">
+										</dl>
+									</div>
+								</div>
+								<input type="hidden" name="address" id="address">
 							</div><br>
 						   <div style="margin-left: 6.75rem;">
 						   	<span><b>联系电话：</b></span>
@@ -63,7 +83,13 @@
 					</div>
 					</div>
 	          </body>
-	            <script src="../../../lib/layui-v2.5.5/layui.js"></script>
-	          <script src="../../../static/js/After-saleManagement/maintain/updmaintenancecosts.js"></script>
+	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
+	<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+	<script src="../../../static/js/distpicker.data.js"></script>
+	<script src="../../../static/js/distpicker.js"></script>
+	<script src="../../../static/js/select.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../static/js/main.js"></script>
+	<script src="../../../static/js/After-saleManagement/maintain/updservicedelivery.js"></script>
 
 </html>

@@ -1,9 +1,24 @@
-layui.use(['form', 'layedit', 'laydate','jquery'], function(){
-    var form = layui.form
-        ,layer = layui.layer
-        , $ = layui.jquery
-        ,layedit = layui.layedit
-        ,laydate = layui.laydate;
+layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider', 'jquery', 'form', "pca"],
+    function() {
+        var laydate = layui.laydate //日期
+            ,
+            laypage = layui.laypage //分页
+            ,
+            layer = layui.layer //弹层
+            ,
+            table = layui.table //表格
+            ,
+            carousel = layui.carousel //轮播
+            ,
+            upload = layui.upload //上传
+            ,
+            element = layui.element //元素操作
+            ,
+            $ = layui.jquery,
+            form = layui.form,
+            slider = layui.slider //滑块//执行一个laydate实例
+            ,upload = layui.upload
+            ,pca = layui.pca;
 
     //日期
     laydate.render({
@@ -19,11 +34,20 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
         });
         form.render("select");
     })
-    var did=getUrlParam("did");
+    var cid=getUrlParam("cid");
 
 
-    $.get('http://127.0.0.1:8081/delivery/getDeliveryOne',{did:did},function (result) {
+    $.get('http://127.0.0.1:8081/Maintenancecosts/getCostOne',{cid:cid},function (result) {
         form.val('example',result);
+        var str = result.address;
+        var arr=new Array();
+        arr=str.split(' ');
+        //  $("#province").val(arr[0]);
+        $("#province").val(arr[0]);
+        $("#city").val(arr[1]);
+        $("#area").val(arr[2]);
+        $("#site").val(arr[3]);
+        pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', arr[0], arr[1], arr[2]);
     });
     $("#coding").blur(function(){
         var coding=$("#coding").val();
@@ -39,8 +63,13 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
     })
 
     form.on('submit(demo1)', function(data){
-
-        $.get( 'http://127.0.0.1:8081/delivery/updDelivery',$("#form").serialize(),function (result) {
+        var province = $("#province").val();
+        var area = $("#area").val();
+        var city= $("#city").val();
+        var site = $("#site").val();
+        var str = province+' '+city+' '+area+' '+site;
+        $("#address").val(str);
+        $.get( 'http://127.0.0.1:8081/Maintenancecosts/updCost',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("修改成功！",{icon:1,time:1000},function(){
                     x_admin_close();
