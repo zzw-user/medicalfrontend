@@ -100,7 +100,7 @@
 		        elem: '#problem'
 		        ,id:'testReload'
 		        ,height: 450
-		        ,url: 'http://127.0.0.1:8080/SendaSingleInstallation/getDeliveryByAid' //数据接口
+		        ,url: 'http://127.0.0.1:8081/SendaSingleInstallation/getDeliveryByAid' //数据接口
 		        ,type:'get'
 		        ,dataType:'json'
 		        ,crossDomain:true
@@ -136,7 +136,7 @@
 					WeAdminShow('修改派单','./updateSendaSingleInstallation.html?did='+data.did,550,400);
 				} else if(obj.event === 'del'){
 					layer.confirm('真的删除行么', function(index){
-					    $.get("http://127.0.0.1:8080/SendaSingleInstallation/deleteDeliveryByDid?did="+data.did,function (ret) {
+					    $.get("http://127.0.0.1:8081/SendaSingleInstallation/deleteDeliveryByDid?did="+data.did,function (ret) {
                             if (ret=="ok"){
                                 layer.msg("删除成功！")
                                 table.reload('testReload');
