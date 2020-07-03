@@ -11,12 +11,12 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         , slider = layui.slider; //滑块//执行一个laydate实例
     $("#roleid").load('http://127.0.0.1:8081/Role/getRoleId',function (result) {
         var data=eval(result);
-        $("#roleid").append("<option value=''>请选择</option>")
+        $("#roleid").append("<option value=''>请选择</option>");
         $(data).each(function (i,o) {
             $("#roleid").append("<option value='"+o.rid+"'>"+o.rname+"</option>")
         });
         form.render("select");
-    })
+    });
     //执行一个 table 实例
     table.render({
         elem: '#problem'
@@ -58,7 +58,6 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                 mname: $("#mname").val()
                 ,roleid: $("#roleid").val()
             }
-
         });
     });
     //监听行工具事件
