@@ -106,6 +106,17 @@
 
 					form.val('example',result);
 				});
+				$("#coding").blur(function(){
+					var coding=$("#coding").val();
+					$.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
+						if (result==null || result==''){
+							layer.msg("对不起，没有该产品编码！");
+							var coding=$("#coding").val('');
+						}else {
+						}
+
+					})
+				})
 				form.on('submit(formDemo2)', function(data) {
 					$.ajax({
 						url: 'http://127.0.0.1:8080/SendaSingleInstallation/updateDeliveryByAid',

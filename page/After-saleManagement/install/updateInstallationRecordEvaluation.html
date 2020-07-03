@@ -159,11 +159,12 @@
                     $("#site").val(arr[3]);
                 pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', arr[0], arr[1], arr[2]);
 
-                $("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(result) {
-                    const data = eval(result);
+                $("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(res) {
+                    const data = eval(res);
                     $(data).each(function (i,o) {
                         $("#operator").append("<option value='"+o.mpid+"'>"+o.realname+"</option>")
                     });
+                    $("#operator").val(result.operator);
                     form.render('select');
                 });
 
@@ -230,6 +231,17 @@
             laydate.render({
                 elem: '#test1'
             });
+            $("#coding").blur(function(){
+                var coding=$("#coding").val();
+                $.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
+                    if (result==null || result==''){
+                        layer.msg("对不起，没有该产品编码！");
+                        var coding=$("#coding").val('');
+                    }else {
+                    }
+
+                })
+            })
             form.on('submit(formDemo2)', function(data) {
                 var province = $("#province").val();
                 var area = $("#area").val();
