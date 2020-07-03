@@ -14,28 +14,28 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#problem'
         ,id:'testReload'
         ,height: 450
-        ,width:1450
-        ,url: 'http://127.0.0.1:8081/Repairback/selePayareturnvisit' //数据接口
+        ,width:1395
+        ,url: 'http://127.0.0.1:8081/delivery/getDelivery' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'
         ,crossDomain:true
         ,cols: [[ //表头
-            {field:'pid',width:180,title:"序号"}
-            , {field: 'pname',width:200, title: '回访人名	'}
-            , {field: 'way',width:200, title: '回访方式'}
-            , {field: 'describe',width:230, title: '描述'}
-            , {field: 'mname',width:200, title: '记录人'}
-            , {field: 'writetime',width:230, title: '记录时间'}
-            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
+            {field:'did',width:180,title:"序号"}
+            , {field: 'mname',width:200, title: '操作人'}
+            , {field: 'phone',width:200, title: '联系电话'}
+            , {field: 'address',width:230, title: '联系地址'}
+            , {field: 'coding',width:200, title: '产品编码'}
+            , {field: 'deliverytime',width:225, title: '派送时间'}
+            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
         ]]
         ,page: true
     });
     $("#sel").on('click',function(){
         table.reload('testReload', {
             where : { // 设定异步数据接口的额外参数，任意设
-                pname : $("#pname").val(),
-                way :$("#way").val()
+                mname : $("#mname").val(),
+                address :$("#address").val()
                 // …
             },
             page : {
@@ -49,10 +49,10 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             if (obj.event === 'del') {
                 layer.confirm('真的删除么?',function(index) {
                     $.ajax({
-                        url : "http://127.0.0.1:8081/Repairback/delPayareturnvisit",
+                        url : "http://127.0.0.1:8081/delivery/delDelivery",
                         type : "post",
                         data : {
-                            pid: data.pid
+                            did: data.did
                         },
                         dataType : "text",
                         success : function(e) {
@@ -67,7 +67,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
                 });
             }else if (obj.event === 'upd') {
-                WeAdminShow('修改回访','./updrepairback.html?pid='+data.pid,800,400);
+                WeAdminShow('修改派单','./updmaintainsendorders.html?did='+data.did,800,400);
             }
         });
     window.WeAdminShow = function(title, url, w, h) {

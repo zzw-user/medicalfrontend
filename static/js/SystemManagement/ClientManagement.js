@@ -9,13 +9,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         , $ = layui.jquery
         , form = layui.form
         , slider = layui.slider; //滑块//执行一个laydate实例
-    $("#issueTypeId").load('http://127.0.0.1:8080//getClient',function (result) {
-        var data=eval(result);
-        $(data).each(function (i,o) {
-            $("#issueTypeId").append("<option value='"+o.id+"'>"+o.issueName+"</option>")
-        });
-        form.render("select");
-    });
+
     //执行一个 table 实例
     table.render({
         elem: '#problem'

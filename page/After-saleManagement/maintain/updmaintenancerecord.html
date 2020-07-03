@@ -2,160 +2,305 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>新增安装记录</title>
 	</head>
-    <link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
 	<style>
-
-	
+		dl>dd{
+			cursor: pointer;
+		}
 	</style>
 	<body>
-		<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>维修评估</b></span></div>
-		<br>
-		<br>
 		<div class="weadmin-body">
-					<div class="layui-row">
-						<form class="layui-form layui-col-md12 we-search">
-							<br>
-							 <span style="margin-left:80px"><b>维修人员：</b></span>
-							 <div class="layui-input-inline" >
-								<select name="cateid">
-									<option>请选择</option>
-									<option>管理员角色</option>
-									<option>操作员角色</option>
-								</select>
-							</div>
-								<span style="margin-left:30px"><b>维修地址：</b></span>
-							<div class="layui-inline" >
-								<input class="layui-input" placeholder="维修地址" name="start" id="">
-							</div><br><br><br>
-						       
-								<div class="layui-upload">
-									 <span style="margin-left:65px"><b>维修前拍照：</b></span> 
-								  <button type="button" class="layui-btn" id="test1" style="margin-left:5px">上传图片</button>
-								  <div class="layui-upload-list">
-								    <img class="layui-upload-img" id="demo1">
-								    <p id="demoText"></p>
-								  </div>
+			<form class="layui-form" id="pro" lay-filter="example">
+				<blockquote class="layui-elem-quote">修改维修记录</blockquote>
+				<div class="layui-row">
+					<div class="layui-col-md12" style="margin-left: 90px;">
+						<input type="hidden" name="rid">
+						<span style="margin-left:30px"><b>维修人员：</b></span>
+						<div class="layui-input-inline" style="width:185px">
+							<select name="operator" id="operator">
+							</select>
+						</div>
+						<span style="margin-left:20px"><b>维修日期：</b></span>
+						<div class="layui-input-inline" >
+							<input class="layui-input" placeholder="维修日期" name="installationtime" id="test1" placeholder="yyyy-MM-dd" lay-reqtext="维修日期不能为空！">
+						</div>
+						<br>
+						<span style="margin-left:28px;"><b>维修地址：</b></span>
+						<div class="layui-form-item layui-inline">
+
+							<div class="layui-form-item" id="addressDiv">
+								<div class="layui-input-inline" style="width: 90px;">
+									<select name="P1" lay-filter="province" id="province" style="width: 50px;">
+										<option></option>
+									</select>
 								</div>
-								<div class="layui-upload">
-									 <span style="margin-left:65px"><b>维修后拍照：</b></span> 
-								  <button type="button" class="layui-btn" id="test2" style="margin-left:5px">上传图片</button>
-								  <div class="layui-upload-list">
-								    <img class="layui-upload-img" id="demo2">
-								    <p id="demoTexts"></p>
-								  </div>
-								</div> 
-							<span style="margin-left:80px"><b>维修日期：</b></span>
-							 <div class="layui-input-inline" >
-							   <input class="layui-input" placeholder="维修日期" name="start" id="">
+								<div class="layui-input-inline" style="width: 100px;">
+									<select name="C1" lay-filter="city" id="city" style="width: 50px;">
+										<option></option>
+									</select>
+								</div>
+								<div class="layui-input-inline" style="width: 100px;">
+									<select name="A1" lay-filter="area" id="area" style="width: 50px;">
+										<option></option>
+									</select>
+								</div>
+								<div class="layui-input-inline" id="addressDetail" style="width: 150px;">
+									<input id="site" type="text" name="site" style="width: 150px;"  lay-verify="title" autocomplete="off"
+										   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="维修地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
+									<dl id="addressTip" class="addressDl">
+									</dl>
+								</div>
 							</div>
-								<span style="margin-left:60px"><b>产品编码：</b></span>
-							<div class="layui-inline" >
-								<input class="layui-input" placeholder="产品编码" name="start" id="">
-							</div><br><br>
-							<span style="margin-left:105px"><b>区域：</b></span>
-							 <div class="layui-input-inline" >
-								<select name="cateid">
-									<option>请选择</option>
-									<option>管理员角色</option>
-									<option>操作员角色</option>
-								</select>
+						</div>
+						<input type="hidden" name="address" id="address">
+						<div class="layui-form-item" style="margin-left: -8px;">
+						    <label class="layui-form-label"><b>维修状态:</b></label>
+						    <div class="layui-input-block">
+						      <input type="radio" name="status" value="1" title="未开始" checked="">
+						      <input type="radio" name="status" value="2" title="处理中">
+							  <input type="radio" name="status" value="3" title="已完成">
+						    </div>
+						  </div>
+						<span style="margin-left:55px"><b>区域：</b></span>
+						<div class="layui-input-inline" style="width:185px">
+							<select name="did" id="did">
+							</select>
+						</div>
+						<span style="margin-left:28px"><b>备件编码：</b></span>
+						<div class="layui-inline" >
+							<input class="layui-input" placeholder="备件编码" name="arpartcoding" id="arpartcoding" lay-reqtext="备件编码不能为空！">
+						</div><br><br>
+						<span style="margin-left:25px"><b>故障类型：</b></span>
+						<div class="layui-input-inline" style="width:185px">
+							<input class="layui-input" placeholder="故障类型" name="faulttype" id="faulttype" lay-reqtext="故障类型不能为空！">
+						</div>
+						<span style="margin-left:28px"><b>故障描述：</b></span>
+						<div class="layui-inline" >
+							<input class="layui-input" placeholder="故障描述" name="faultdescription" id="faultdescription"lay-reqtext="故障描述不能为空！">
+						</div>
+
+						<br>
+						<br>
+
+						<span style="margin-left:25px"><b>故障分析：</b></span>
+						<div class="layui-inline" >
+							<input class="layui-input" placeholder="故障分析" name="analyze" id="analyze" lay-reqtext="故障分析不能为空！">
+						</div>
+						<span style="margin-left:25px"><b>产品编码：</b></span>
+						<div class="layui-inline" >
+							<input class="layui-input" placeholder="产品编码" name="productcoding" id="productcoding"lay-reqtext="产品编码不能为空！">
+						</div>
+						<br>
+						<br>
+						<br>
+						<div class="layui-upload-drag" id="beforeinstallationtest" style="width: 100px; margin-left: 100px;">
+							<i class="layui-icon"></i>
+							<p>点击上传维修前图片</p>
+							<div class="layui-hide" id="beforeinstallationdiv">
+								<hr>
+								<img src="" id="beforeinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
 							</div>
-								<span style="margin-left:30px"><b>备件编码：</b></span>
-							<div class="layui-inline" >
-								<input class="layui-input" placeholder="备件编码" name="start" id="">
-							</div><br><br>
-							  <div class="layui-form-item">
-							    <span style="margin-left:80px"><b>维修状态：</b></span>
-							      <input type="radio" name="sex" value="1" title="未开始" checked="">
-							      <input type="radio" name="sex" value="2" title="处理中">
-							      <input type="radio" name="sex" value="3" title="已完成">
-							  </div>
-							  <br>
-							  <span style="margin-left:105px"><b>评估：</b></span>
-							  <div class="layui-inline" >
-							  	<input class="layui-input" placeholder="评估" name="start" id="">
-							  </div>
-							<br>
-							<br>
-							<br>
-							<div style="margin-left: 12.5rem;">
-								 <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
-								 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+						</div>
+						<input type="hidden" id="beforeinstallation" name="beforeinstallation">
+						<div class="layui-upload-drag" id="afterinstallationtest" style="width: 100px;margin-left: 5%">
+							<i class="layui-icon"></i>
+							<p>点击上传维修后图片</p>
+							<div class="layui-hide" id="afterinstallationdiv">
+								<hr>
+								<img src="" id="afterinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
 							</div>
-						</form>
+						</div>
+						<input type="hidden" id="afterinstallation" name="afterinstallation">
 					</div>
-					</div>
-	          </body>
+					<br>
+					<br>
+					<div class="" style="margin-left: 320px;margin-top: 50px;">
+		                <div class="layui-form-item">
+		                    <button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo2">保存</button>
+		                    <button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
+		                </div>
+		            </div>
+
+				</div>
+			</form>
+		</div>
+	</body>
 	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
-				<script>
-					layui.use(['form', 'layedit', 'laydate','upload'], function(){
-						var form = layui.form
-								,layer = layui.layer
-								,layedit = layui.layedit
-								,laydate = layui.laydate
-								,$ = layui.jquery
-                                ,upload = layui.upload;
-	
-						//日期
-						laydate.render({
-							elem: '#date'
+	<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+	<script src="../../../static/js/distpicker.data.js"></script>
+	<script src="../../../static/js/distpicker.js"></script>
+	<script src="../../../static/js/select.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../static/js/main.js"></script>
+	<script>
+		layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider', 'jquery', 'form', "pca"],
+			function() {
+				var laydate = layui.laydate //日期
+					,
+					laypage = layui.laypage //分页
+					,
+					layer = layui.layer //弹层
+					,
+					table = layui.table //表格
+					,
+					carousel = layui.carousel //轮播
+					,
+					upload = layui.upload //上传
+					,
+					element = layui.element //元素操作
+					,
+					$ = layui.jquery,
+					form = layui.form,
+					slider = layui.slider //滑块//执行一个laydate实例
+					 ,upload = layui.upload
+						,pca = layui.pca;
+
+				//拖拽上传
+				upload.render({
+					elem: '#beforeinstallationtest'
+					,url: 'http://127.0.0.1:8081/Maintenancerecord/upload' //改成您自己的上传接口
+					,multiple: true
+					,before: function(obj){
+						//预读本地文件示例，不支持ie8
+						obj.preview(function(index, file, result){
+							$('#beforeinstallationimg').attr('src', result); //图片链接（base64）
+							$('#beforeinstallationdiv').removeClass();
+
+
 						});
-						laydate.render({
-							elem: '#date1'
+					},done: function(res){
+						//如果上传失败
+						if(res.code > 0){
+							return layer.msg('上传失败');
+						}
+						//上传成功
+						layer.msg(res.msg);
+						// alert("上传成功"+res.msg);
+						$("#beforeinstallation").val(res.msg);
+					}
+				});
+				upload.render({
+					elem: '#afterinstallationtest'
+					,url: 'http://127.0.0.1:8081/Maintenancerecord/upload' //改成您自己的上传接口
+					,multiple: true
+					,before: function(obj){
+						//预读本地文件示例，不支持ie8
+						obj.preview(function(index, file, result){
+							$('#afterinstallationimg').attr('src', result); //图片链接（base64）
+							$('#afterinstallationdiv').removeClass();
+
+
 						});
-	                      var uploadInst = upload.render({
-	                        elem: '#test1'
-	                        ,url: 'https://httpbin.org/post' //改成您自己的上传接口
-	                        ,before: function(obj){
-	                          //预读本地文件示例，不支持ie8
-	                          obj.preview(function(index, file, result){
-	                            $('#demo1').attr('src', result); //图片链接（base64）
-	                          });
-	                        }
-	                        ,done: function(res){
-	                          //如果上传失败
-	                          if(res.code > 0){
-	                            return layer.msg('上传失败');
-	                          }
-	                          //上传成功
-	                        }
-	                        ,error: function(){
-	                          //演示失败状态，并实现重传
-	                          var demoText = $('#demoText');
-	                          demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-	                          demoText.find('.demo-reload').on('click', function(){
-	                            uploadInst.upload();
-	                          });
-	                        }
-	                      });
-						  var uploadInsts = upload.render({
-						    elem: '#test2'
-						    ,url: 'https://httpbin.org/post' //改成您自己的上传接口
-						    ,before: function(obj){
-						      //预读本地文件示例，不支持ie8
-						      obj.preview(function(index, file, result){
-						        $('#demo2').attr('src', result); //图片链接（base64）
-						      });
-						    }
-						    ,done: function(res){
-						      //如果上传失败
-						      if(res.code > 0){
-						        return layer.msg('上传失败');
-						      }
-						      //上传成功
-						    }
-						    ,error: function(){
-						      //演示失败状态，并实现重传
-						      var demoTexts = $('#demoTexts');
-						      demoTexts.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-						      demoTexts.find('.demo-reload').on('click', function(){
-						        uploadInst.upload();
-						      });
-						    }
-						  });
-	
+					},done: function(res){
+						//如果上传失败
+						if(res.code > 0){
+							return layer.msg('上传失败');
+						}
+						//上传成功
+						layer.msg(res.msg);
+						// alert("上传成功"+res.msg);
+						$("#afterinstallation").val(res.msg);
+					}
+				});
+				//常规用法
+				laydate.render({
+					elem: '#test1'
+				});
+				$("#operator").load('http://127.0.0.1:8081/Maintenancecosts/；',function (result) {
+					var data=eval(result);
+					$(data).each(function (i,o) {
+						$("#operator").append("<option value="+this.mpid+">"+this.realname+"</option>")
 					});
-				</script>
+					form.render("select");
+				})
+
+				$("#did").load('http://127.0.0.1:8081/Maintenancerecord/getDistrict',function (result) {
+					var data=eval(result);
+					$(data).each(function (i,o) {
+						$("#did").append("<option value="+this.did+">"+this.dname+"</option>")
+					});
+					form.render("select");
+				})
+				var rid=getUrlParam("rid");
+				$.get('http://127.0.0.1:8081/Maintenancerecord/getAmendrecordOne',{rid:rid},function (result) {
+					form.val('example',result);
+					var str = result.address;
+					var arr=new Array();
+					arr=str.split(' ');
+					//  $("#province").val(arr[0]);
+					$("#province").val(arr[0]);
+					$("#city").val(arr[1]);
+					$("#area").val(arr[2]);
+					$("#site").val(arr[3]);
+					pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', arr[0], arr[1], arr[2]);
+
+				});
+				$("#productcoding").blur(function(){
+					var coding=$("#productcoding").val();
+					$.post('http://127.0.0.1:8081/Maintenancecosts/getProductOne',{coding:coding},function(result){
+						if (result){
+
+						}else {
+							layer.alert("对不起，没有该产品编码！");
+							$("#productcoding").val('');
+						}
+
+					})
+				})
+				$("#arpartcoding").blur(function(){
+					var arpartcoding=$("#arpartcoding").val();
+					$.post('http://127.0.0.1:8081/Maintenancerecord/getArpart',{coding:arpartcoding},function(result){
+						if (result){
+
+						}else {
+							layer.alert("对不起，没有该备件编码！");
+							$("#arpartcoding").val('');
+						}
+
+					})
+				})
+				form.on('submit(formDemo2)', function(data) {
+					var province = $("#province").val();
+					var area = $("#area").val();
+					var city= $("#city").val();
+					var site = $("#site").val();
+					var str = province+' '+city+' '+area+' '+site;
+					$("#address").val(str);
+					$.ajax({
+						url: 'http://127.0.0.1:8081/Maintenancerecord/updAmendrecord',
+						type: 'post',
+						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+						data: $("#pro").serialize(),
+						dataType: 'text',
+						success: function(result) {
+							if (result=="true") {
+								layer.alert("修改成功！", function() {
+									x_admin_close()
+								})
+							} else {
+								layer.alert("修改失败！", function() {
+									x_admin_close()
+								})
+							}
+						}
+					})
+					return false;
+				});
+
+			})
+		/*关闭弹出框口*/
+		function x_admin_close() {
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.layer.close(index);
+		}
+
+		function getUrlParam(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			r = window.location.search.substr(1).match(reg); // 匹配目标参数
+			if (r != null) return decodeURI(r[2]); // 返回参数值
+			return null; // 如果不存在，返回null
+		}
+	</script>
 </html>
