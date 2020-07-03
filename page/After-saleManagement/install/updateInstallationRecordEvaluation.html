@@ -5,80 +5,103 @@
     <title>修改安装记录</title>
 </head>
 <link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+<style>
+    dl>dd{
+       cursor: pointer;
+    }
+</style>
 <body>
 <div class="weadmin-body">
-    <form class="layui-form" id="pro">
-        <blockquote class="layui-elem-quote">安装记录评估</blockquote>
+    <form class="layui-form" id="pro" lay-filter="example">
+        <blockquote class="layui-elem-quote">修改安装记录</blockquote>
         <div class="layui-row">
-            <div class="layui-col-md12" style="margin-left: 70px;">
-                <div class="layui-form-item layui-inline" style="width: 200px;">
+            <div class="layui-col-md12" style="margin-left: 90px;">
+                <div class="layui-form-item layui-inline" style="width: 180px;">
                     <label class="layui-form-label" style="margin-left: -30px;">安装人员</label>
-                    <div class="layui-input-inline" style="width: 200px">
-                        <select name="midtype" lay-verify="required">
-                            <option value="启用">启用</option>
-                            <option value="停用">停用</option>
-                            <option value="暂停">暂停</option>
+                    <div class="layui-input-inline" style="width: 180px">
+                        <select name="operator" id="operator" lay-verify="required">
                         </select>
 
                     </div>
 
                 </div>
                 <div class="layui-form-item layui-inline">
-                    <div style="padding: 10px;">安装地址</div>
+                    <div style="padding: 10px;">产品编号</div>
                     <div class="layui-input-inline">
-                        <input type="text" name="issueName" lay-verify="title" autocomplete="off" class="layui-input">
+                        <input type="text" name="coding" id="coding" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
-                </div>
-
-                <div class="layui-form-item layui-inline" style="width: 200px;">
-                    <label class="layui-form-label" style="margin-left: -30px;">备件类型</label>
-                    <div class="layui-input-inline" style="width: 200px">
-                        <select name="midtype" lay-verify="required">
-                            <option value="启用">启用</option>
-                            <option value="停用">停用</option>
-                            <option value="暂停">暂停</option>
-                        </select>
-
-                    </div>
-
                 </div>
                 <div class="layui-form-item layui-inline">
                     <div style="padding: 10px;">安装日期</div>
                     <div class="layui-input-inline">
-                        <input type="text" name="issueName" id="test1" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
+                        <input type="text" name="installationtime" id="test1" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item" style="margin-left: -50px;">
-                    <label class="layui-form-label">单选框</label>
+                <div class="layui-form-item layui-inline">
+
+                    <div class="layui-form-item" id="addressDiv">
+                        <div style="padding: 10px;">安装地址</div>
+                        <div class="layui-input-inline" style="width: 90px;">
+                            <select name="P1" lay-filter="province" onchange="proinve()" lay-filter="province" id="province" style="width: 50px;">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <select name="C1" lay-filter="city" id="city" lay-filter="city" style="width: 50px;">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <select name="A1" lay-filter="area" lay-filter="area" id="area" style="width: 50px;">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline" id="addressDetail" style="width: 260px;">
+                            <input id="site" type="text" name="site" style="width: 260px;"  lay-verify="title" autocomplete="off"
+                                   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="安装地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
+                            <dl id="addressTip" class="addressDl">
+                            </dl>
+                        </div>
+                    </div>
+                    <input type="hidden" id="address" name="address">
+                </div>
+                <div class="layui-form-item" style="margin-left: -30px;">
+                    <label class="layui-form-label">安装状态</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="sex" value="未开始" title="未开始" checked="">
-                        <input type="radio" name="sex" value="处理中" title="处理中">
-                        <input type="radio" name="sex" value="已完成" title="已完成">
+                        <input type="radio" name="status" value="1" title="未开始" checked="">
+                        <input type="radio" name="status" value="2" title="处理中">
+                        <input type="radio" name="status" value="3" title="已完成">
                     </div>
                 </div>
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">安装评估</label>
-                    <div class="layui-input-block" style="width: 200px;">
-                        <textarea placeholder="请输入内容" style="width: 200px;" class="layui-textarea" name="desc"></textarea>
+
+                <div class="layui-form-item" style="margin-left: -60px;">
+                    <label class="layui-form-label">评估</label>
+                    <div class="layui-input-block" style="width: 200px;margin-left: 0px;display: inline-block">
+                        <textarea placeholder="请输入内容" style="width: 200px;" class="layui-textarea" name="assess"></textarea>
                     </div>
                 </div>
-                <div class="layui-upload">
-                    <button type="button" class="layui-btn" id="img1">安装前图片</button>
-                    <div class="layui-upload-list">
-                        <img class="layui-upload-img" id="demo1">
-                        <p id="demoText"></p>
+                <div class="layui-upload-drag" id="beforeinstallationtest" style="width: 100px;">
+                    <i class="layui-icon"></i>
+                    <p>点击上传安装前图片</p>
+                    <div class="layui-hide" id="beforeinstallationdiv">
+                        <hr>
+                        <img src="" id="beforeinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
                     </div>
                 </div>
-                <div class="layui-upload">
-                    <button type="button" class="layui-btn" id="img2">安装后图片</button>
-                    <div class="layui-upload-list">
-                        <img class="layui-upload-img" id="demo1">
-                        <p id="demoText"></p>
+                <input type="hidden" id="beforeinstallation" name="beforeinstallation">
+                <div class="layui-upload-drag" id="afterinstallationtest" style="width: 100px;margin-left: 18%">
+                    <i class="layui-icon"></i>
+                    <p>点击上传安装后图片</p>
+                    <div class="layui-hide" id="afterinstallationdiv">
+                        <hr>
+                        <img src="" id="afterinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
                     </div>
                 </div>
+                <input type="hidden" id="afterinstallation" name="afterinstallation">
+                <input type="hidden" id="rid" name="rid">
             </div>
-            <div class="" style="margin-left: 300px;margin-top: 5%;">
+            <div class="" style="margin-left: 70%;margin-top: 3%;">
                 <div class="layui-form-item">
                     <button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo2">保存</button>
                     <button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
@@ -90,8 +113,14 @@
 </div>
 </body>
 <script src="../../../lib/layui-v2.5.5/layui.js"></script>
+<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+<!--<script src="../../../static/js/distpicker.data.js"></script>-->
+<!--<script src="../../../static/js/distpicker.js"></script>-->
+<script src="../../../static/js/select.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="../../../static/js/main.js"></script>-->
 <script>
-    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider', 'jquery', 'form'],
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider', 'jquery', 'form','pca'],
         function() {
             var laydate = layui.laydate //日期
                 ,
@@ -110,65 +139,106 @@
                 $ = layui.jquery,
                 form = layui.form,
                 slider = layui.slider //滑块//执行一个laydate实例
-                ,upload = layui.upload;
+                ,arrupload = layui.upload
+                 , pca = layui.pca;
+            //带初始值进行初始化text
 
-            //普通图片上传
-            var uploadInst = upload.render({
-                elem: '#img1'
-                ,url: 'https://httpbin.org/post' //改成您自己的上传接口
+            var rid=getUrlParam("rid");
+            $("#rid").val(rid);
+            $.post( 'http://127.0.0.1:8081/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
+                console.log(result);
+                form.val('example',result);
+                var str = result.address;
+                var arr=new Array();
+                arr=str.split(' ');
+
+                  //  $("#province").val(arr[0]);
+                $("#province").val(arr[0]);
+                   $("#city").val(arr[1]);
+                    $("#area").val(arr[2]);
+                    $("#site").val(arr[3]);
+                pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', arr[0], arr[1], arr[2]);
+
+                $("#operator").load('http://127.0.0.1:8081/SendaSingleInstallation/getMpuser', function(result) {
+                    const data = eval(result);
+                    $(data).each(function (i,o) {
+                        $("#operator").append("<option value='"+o.mpid+"'>"+o.realname+"</option>")
+                    });
+                    form.render('select');
+                });
+
+            });
+            $("#operator").change(function () {
+                alert("来啦")
+                $("#site").val('');
+            });
+            $("#city").change(function () {
+                $("#site").val('');
+            });
+            $("#area").change(function () {
+                $("#site").val('');
+            });
+            //拖拽上传
+            upload.render({
+                elem: '#beforeinstallationtest'
+                ,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+                ,multiple: true
                 ,before: function(obj){
                     //预读本地文件示例，不支持ie8
                     obj.preview(function(index, file, result){
-                        $('#demo1').attr('src', result); //图片链接（base64）
+                        $('#beforeinstallationimg').attr('src', result); //图片链接（base64）
+                        $('#beforeinstallationdiv').removeClass();
+
+
                     });
-                }
-                ,done: function(res){
+                },done: function(res){
                     //如果上传失败
                     if(res.code > 0){
                         return layer.msg('上传失败');
                     }
                     //上传成功
-                }
-                ,error: function(){
-                    //演示失败状态，并实现重传
-                    var demoText = $('#demoText');
-                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                    demoText.find('.demo-reload').on('click', function(){
-                        uploadInst.upload();
-                    });
+                    layer.msg(res.msg);
+                    // alert("上传成功"+res.msg);
+                    $("#beforeinstallation").val(res.msg);
                 }
             });
+            upload.render({
+                elem: '#afterinstallationtest'
+                ,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+                ,multiple: true
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#afterinstallationimg').attr('src', result); //图片链接（base64）
+                        $('#afterinstallationdiv').removeClass();
 
 
+                    });
+                },done: function(res){
+                    //如果上传失败
+                    if(res.code > 0){
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功
+                    layer.msg(res.msg);
+                    // alert("上传成功"+res.msg);
+                    $("#afterinstallation").val(res.msg);
+                }
+            });
 
             //常规用法
             laydate.render({
                 elem: '#test1'
             });
-            $("#informPost").load('http://127.0.0.1:8080/problemstate/getRole', function(result) {
-                const data = eval(result);
-                $(data).each(function(i, o) {
-                    $("#informPost").append("<option value='" + o.id + "'>" + o.roleName + "</option>")
-                });
-                form.render("select");
-            });
-            $("#roleList").load('http://127.0.0.1:8080/problemstate/getRole', function(result) {
-                const data = eval(result);
-                $(data).each(function(i, o) {
-                    $("#roleList").append("<option value='" + o.id + "'>" + o.roleName + "</option>")
-                });
-                form.render("select");
-            });
-            $("#issueTypeId").load('http://127.0.0.1:8080/problemstate/getIssueType', function(result) {
-                const data = eval(result);
-                $(data).each(function(i, o) {
-                    $("#issueTypeId").append("<option value='" + o.id + "'>" + o.issueName + "</option>")
-                });
-                form.render("select");
-            })
             form.on('submit(formDemo2)', function(data) {
+                var province = $("#province").val();
+                var area = $("#area").val();
+                var city= $("#city").val();
+                var site = $("#site").val();
+                var str = province+' '+city+' '+area+' '+site;
+                $("#address").val(str);
                 $.ajax({
-                    url: 'http://127.0.0.1:8080/problemstate/addIssueStaus',
+                    url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/updateInstallationRecordEvaluationByRid',
                     type: 'get',
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     data: $("#pro").serialize(),
@@ -176,11 +246,11 @@
                     success: function(result) {
 
                         if (result == "ok") {
-                            layer.alert("新增成功！", function() {
+                            layer.msg("修改成功！",function() {
                                 x_admin_close()
                             })
                         } else {
-                            layer.alert("新增失败！", function() {
+                            layer.msg("修改失败！", function() {
                                 x_admin_close()
                             })
                         }
@@ -202,5 +272,10 @@
         if (r != null) return decodeURI(r[2]); // 返回参数值
         return null; // 如果不存在，返回null
     }
+    function proinve() {
+        alert(123)
+    }
 </script>
+
+
 </html>

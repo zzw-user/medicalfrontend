@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+<style>
+
+
+</style>
+<body>
+<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>新增维修费用</b></span></div>
+<br>
+<br>
+<div class="weadmin-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 we-search" id="form">
+            <br>
+            <span style="margin-left:80px"><b>维修人员：</b></span>
+            <div class="layui-input-inline" style="width:185px">
+                <select lay-filter="aihao" name="operator" id="operator">
+
+                </select>
+            </div>
+            <span style="margin-left:75px"><b>总费用：</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input" placeholder="总费用" name="cost" lay-reqtext="总费用不能为空！">
+            </div>
+            <br><br>
+            <span style="margin-left:80px"><b>维修地址：</b></span>
+            <div class="layui-form-item layui-inline" style="margin-top: 15px">
+                <div class="layui-form-item" id="addressDiv">
+                    <div class="layui-input-inline" style="width: 90px;">
+                        <select name="P1" lay-filter="province" id="province" style="width: 50px;">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <select name="C1" lay-filter="city" id="city" style="width: 50px;">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <select name="A1" lay-filter="area" id="area" style="width: 50px;">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline" id="addressDetail" style="width: 150px;">
+                        <input id="site" type="text" name="site" style="width: 150px;"  lay-verify="title" autocomplete="off"
+                               placeholder="请输入具体地址" lay-verify="required" lay-reqtext="安装地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
+                        <dl id="addressTip" class="addressDl">
+                        </dl>
+                    </div>
+                </div>
+                <input type="hidden" name="address" id="address">
+            </div><br>
+
+            <span style="margin-left:80px"><b>联系电话：</b></span>
+            <div class="layui-input-inline" >
+                <input class="layui-input" placeholder="联系电话" name="phone" lay-verify="required|phone" lay-reqtext="联系电话不能为空！">
+            </div>
+            <span style="margin-left:60px"><b>产品编码：</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input" placeholder="产品编码" name="coding" lay-reqtext="产品编码不能为空！" id="coding">
+            </div><br><br>
+            <span style="margin-left:80px"><b>备件费用：</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input" placeholder="费用" name="sparepartcost" lay-reqtext="备件费用不能为空！">
+            </div>
+            <span style="margin-left:72px"><b>录入人：</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input" placeholder="录入人" name="dataentryclerk" lay-reqtext="录入人不能为空！" value="张某">
+            </div>
+            <br><br>
+
+            <input type="hidden" name="aftertype" value="2">
+            <br>
+            <br>
+            <br>
+            <div style="margin-left: 12.5rem;">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</body>
+<script src="../../../lib/layui-v2.5.5/layui.js"></script>
+<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+<script src="../../../static/js/distpicker.data.js"></script>
+<script src="../../../static/js/distpicker.js"></script>
+<script src="../../../static/js/select.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../static/js/main.js"></script>
+<script src="../../../static/js/After-saleManagement/maintain/addmaintenancecosts.js"></script>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>维修派送</title>
+	</head>
+    <link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+
+		</head>
+		<body>
+		<div class="weadmin-body" style="margin-left: 3%;">
+			 <div class="layui-row">
+				 <form class="layui-form layui-col-md12 we-search layui-form-pane">
+				 <span style="margin-left:30px"><b>操作人：</b></span>
+				 <div class="layui-inline" >
+				 	<input class="layui-input" placeholder="操作人"  id="mname">
+				 </div>
+				 <span style="margin-left:30px"><b>维修地址：</b></span>
+			<div class="layui-inline" >
+				<input class="layui-input" placeholder="类型地址"  id="address">
+			</div>
+					 <button class="layui-btn layui-bg-blue" type="button" id="sel">查询</button>
+					 <button class="layui-btn layui-bg-blue" type="button" style="margin-left: 480px;background-color:#c2c2c2" onclick="WeAdminShow('新增','./addamendmaintainsendorders.html',800,600)">新增回访</button>
+			</form>
+			 </div>
+			<script type="text/html" id="barDemo">
+			  <a class="layui-btn layui-btn-xs" lay-event="upd">编辑</a>
+			  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+			</script>
+		    <table class="layui-table" id="problem" lay-filter="test"></table>
+		</div>
+	</body>
+	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
+	<script src="../../../static/js/After-saleManagement/maintain/servicedelivery.js"></script>
+</html>

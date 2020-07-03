@@ -24,7 +24,7 @@
 			, {field: 'cost',width:150, title: '费用'}
 			, {field: 'inputtime',width:150, title: '录入时间'}
 			, {field: 'dataentryclerk',width:150, title: '录入人'}
-			, {field: 'pname',width:150, title: '产品名称'}
+			, {field: 'coding',width:150, title: '产品编码'}
 			, {field: 'phone',width:150, title: '联系电话'}
 			,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
     ]
@@ -112,18 +112,7 @@
 
 	      });
 	    }else if(obj.event === 'edit'){
-			var i=data.mid;
-	    	  layer.open({
-	    			title : "修改图书",
-					type : 2,
-					content : 'upda', //这里content是一个普通的String
-					area : [ '800px', '500px' ],
-	    	        success:function(layero,index){
-						var iframe=window['layui-layer-iframe'+index];
-						iframe.getId(i);
-
-					}
-	    	  })
+            WeAdminShow('修改保养费用','./UpdateUpkeepCost.html?cid='+data.cid,800,500);
 	}
 	   
 	  //工具栏事件
