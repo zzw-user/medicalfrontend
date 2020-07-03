@@ -13,8 +13,29 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     laydate.render({
         elem: '#test1'
     });
+    $.post('http://127.0.0.1:8081/Maintenancecosts/getMpuserOne',function(result){
+        var str="<option value='0'>--请选择--</option>";
+        $(result).each(function() {
+            str+="<option value="+this.mpid+">"+this.mname+"</option>";
 
-    form.on('submit(formDemo2)', function(data){
+        })
+        $("#operator").append(str);
+        form.render('select');
+
+    })
+    $("#coding").blur(function(){
+        var coding=$("#coding").val();
+        $.post('http://127.0.0.1:8081/Maintenancecosts/getProductOne',{coding:coding},function(result){
+            if (result){
+
+            }else {
+                layer.alert("对不起，没有该产品编码！");
+                var coding=$("#coding").val('');
+            }
+
+        })
+    })
+    form.on('submit(demo1)', function(data){
         var province = $("#province").val();
         var area = $("#area").val();
         var city= $("#city").val();
@@ -22,10 +43,9 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         var str = province+' '+city+' '+area+' '+site;
         $("#address").val(str);
         $.ajax({
-            url: 'http://127.0.0.1:8081/Warehouse/addWarehouse',
-            type: 'get',
-            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
-            data: $("#pro").serialize(),
+            url: 'http://127.0.0.1:8081/delivery/addDelivery',
+            type: 'post',
+            data: $("#form").serialize(),
             dataType:'text',
             success: function (result) {
                 if (result) {

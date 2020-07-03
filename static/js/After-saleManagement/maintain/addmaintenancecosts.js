@@ -32,6 +32,12 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
     })
 
     form.on('submit(demo1)', function(data){
+        var province = $("#province").val();
+        var area = $("#area").val();
+        var city= $("#city").val();
+        var site = $("#site").val();
+        var str = province+' '+city+' '+area+' '+site;
+        $("#address").val(str);
         var userInfo=$("#form").serialize();
         $.ajax({
             url:"http://127.0.0.1:8081/Maintenancecosts/addCost",
