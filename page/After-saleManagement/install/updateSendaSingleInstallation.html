@@ -91,10 +91,10 @@
 					,type: 'datetime'
 				});
 				var did=getUrlParam("did");
-				$.post( 'http://127.0.0.1:8080/SendaSingleInstallation/getDeliveryByDid',{did:did},function (result) {
+				$.post( 'http://127.0.0.1:8081/SendaSingleInstallation/getDeliveryByDid',{did:did},function (result) {
 					console.log(result);
 
-					$("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(result) {
+					$("#operator").load('http://127.0.0.1:8081/SendaSingleInstallation/getMpuser', function(result) {
 						const data = eval(result);
 						$(data).each(function(i, o) {
 							$("#operator").append("<option value=" + o.mpid + ">" + o.realname + "</option>")
@@ -108,7 +108,7 @@
 				});
 				form.on('submit(formDemo2)', function(data) {
 					$.ajax({
-						url: 'http://127.0.0.1:8080/SendaSingleInstallation/updateDeliveryByAid',
+						url: 'http://127.0.0.1:8081/SendaSingleInstallation/updateDeliveryByAid',
 						type: 'get',
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						data: $("#pro").serialize(),
