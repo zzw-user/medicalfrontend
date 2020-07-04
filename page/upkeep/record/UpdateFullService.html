@@ -5,6 +5,12 @@
 		<title>保养记录修改</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<style>
+		dl>dd{
+			cursor: pointer;
+			position: fixed;
+		}
+	</style>
 	<body>
 		<div class="weadmin-body">
 		    <form class="layui-form" id="pro" lay-filter="example">
@@ -134,7 +140,7 @@
 							,arrupload = layui.upload
 							, pca = layui.pca;
 					//带初始值进行初始化text
-					$("#operator").load('http://127.0.0.1:8081/SendaSingleInstallation/getMpuser',function (result) {
+					$("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser',function (result) {
 						var data=eval(result);
 						$(data).each(function (i,o) {
 							$("#operator").append("<option value="+this.mpid+">"+this.realname+"</option>")
@@ -143,8 +149,7 @@
 					});
 					var rid=getUrlParam("rid");
 					$("#rid").val(rid);
-					alert(rid);
-					$.post( 'http://127.0.0.1:8081/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
+					$.post( 'http://127.0.0.1:8080/maintainrecordController/getMaintainrecordByRid',{rid:rid},function (result) {
 						console.log(result);
 						form.val('example',result);
 						var str = result.address;
@@ -174,7 +179,7 @@
 					//拖拽上传
 					upload.render({
 						elem: '#beforeinstallationtest'
-						,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+						,url: 'http://127.0.0.1:8080/maintainrecordController/upload' //改成您自己的上传接口
 						,multiple: true
 						,before: function(obj){
 							//预读本地文件示例，不支持ie8
@@ -197,7 +202,7 @@
 					});
 					upload.render({
 						elem: '#afterinstallationtest'
-						,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+						,url: 'http://127.0.0.1:8080/maintainrecordController/upload' //改成您自己的上传接口
 						,multiple: true
 						,before: function(obj){
 							//预读本地文件示例，不支持ie8
@@ -231,7 +236,7 @@
 						var str = province+' '+city+' '+area+' '+site;
 						$("#address").val(str);
 						$.ajax({
-							url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/updateInstallationRecordEvaluationByRid',
+							url: 'http://127.0.0.1:8080/maintainrecordController/updateMaintainrecordByRid',
 							type: 'get',
 							contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 							data: $("#pro").serialize(),

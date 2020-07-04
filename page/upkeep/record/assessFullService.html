@@ -5,6 +5,12 @@
 	<title>保养记录评估</title>
 </head>
 <link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+<style>
+	dl>dd{
+		cursor: pointer;
+		position: fixed;
+	}
+</style>
 <body>
 <div class="weadmin-body">
 	<form class="layui-form" id="pro" lay-filter="example">
@@ -112,10 +118,10 @@
 							, pca = layui.pca;
 				var rid=getUrlParam("rid");
 				$("#rid").val(rid);
-				$.post( 'http://127.0.0.1:8081/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
+				$.post( 'http://127.0.0.1:8080/maintainrecordController/getMaintainrecordByRid',{rid:rid},function (result) {
 					console.log(result);
 					form.val('example',result);
-					$.post('http://127.0.0.1:8081/SendaSingleInstallation/getMpuser', function(res) {
+					$.post('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(res) {
 
 						const data = eval(res);
 						$(data).each(function(i, o) {
@@ -129,7 +135,7 @@
 				//拖拽上传
 				upload.render({
 					elem: '#beforeinstallationtest'
-					,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+					,url: 'http://127.0.0.1:8080/maintainrecordController/upload' //改成您自己的上传接口
 					,multiple: true
 					,before: function(obj){
 						//预读本地文件示例，不支持ie8
@@ -154,7 +160,6 @@
 
 				//常规用法
 				laydate.render({
-					g
 					elem: '#test1'
 				});
 				form.on('submit(formDemo2)', function(data) {
@@ -165,7 +170,7 @@
 					var str = province+area+city+site;
 					$("#address").val(str);
 					$.ajax({
-						url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/updateInstallrecordByRid',
+						url: 'http://127.0.0.1:8080/maintainrecordController/updateFullMaintainrecordByRid',
 						type: 'get',
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						data: $("#pro").serialize(),

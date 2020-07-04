@@ -67,7 +67,7 @@
 						</div>
 		            <div class="layui-col-md4">
 		                <div class="layui-form-item layui-inline" style="margin-left: 40px;margin-top: 40px;">
-		                    <button class="layui-btn layui-bg-blue" style="width: 100px;" type="button" lay-submit lay-filter="formDemo">查询</button>
+		                    <button class="layui-btn layui-bg-blue" style="width: 100px;" type="button" lay-submit lay-filter="formDemo"><i class="layui-icon">&#xe615;搜索</i></button>
 		                    <button class="layui-btn" type="reset" style="background-color:#c2c2c2;width: 100px;">重置</button>
 							<button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2;width: 100px;" id="xz">新增</button>
 		                </div>
@@ -100,7 +100,7 @@
 		        elem: '#problem'
 		        ,id:'testReload'
 		        ,height: 450
-		        ,url: 'http://127.0.0.1:8081/SendaSingleInstallation/getDeliveryByAid' //数据接口
+		        ,url: 'http://127.0.0.1:8080/SendaSingleInstallation/getDeliveryByAid?aftertype=1' //数据接口
 		        ,type:'get'
 		        ,dataType:'json'
 		        ,crossDomain:true

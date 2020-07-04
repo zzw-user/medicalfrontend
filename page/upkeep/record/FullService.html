@@ -5,10 +5,12 @@
 		<title>保养记录</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
-
-		 <style>
-
-		    </style>
+	<style>
+		dl>dd{
+			cursor: pointer;
+			position: fixed;
+		}
+	</style>
 		</head>
 		<body>
 		<div class="weadmin-body" style="margin-left: 3%;">
@@ -70,9 +72,40 @@
 		<img src="../../../static/img/{{d.afterinstallation}}">
 	</script>
 	<script type="text/html" id="barDemo">
+		<div style="height: 80px;margin-top:40px">
 			<a class="layui-btn layui-btn-primary layui-btn-xs" id="pg" lay-event="detail">评估</a>
 			<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
 			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</div>
+	</script>
+	<script type="text/html" id="progressTpl">
+		{{#  if(d.status == 1){ }}
+		<div class="layui-progress layuiadmin-order-progress" >
+			<div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+		</div>
+		{{#  } }}
+
+		{{#  if(d.status == 2){ }}
+		<div class="layui-progress" >
+			<div class="layui-progress-bar layui-bg-blue"  lay-percent="50%"></div>
+		</div>
+		{{#  } }}
+		{{#  if(d.status == 3){ }}
+		<div class="layui-progress" >
+			<div class="layui-progress-bar layui-bg-green"  lay-percent="100%"></div>
+		</div>
+		{{#  } }}
+	</script>
+	<script type="text/html" id="buttonTpl">
+		{{#  if(d.status == 1){ }}
+		<button class="layui-btn layui-btn-danger layui-btn-xs">未开始</button>
+		{{#  } }}
+		{{#  if(d.status == 2){ }}
+		<button class="layui-btn layui-btn-normal layui-btn-xs">处理中</button>
+		{{#  } }}
+		{{#  if(d.status == 3){ }}
+		<button class="layui-btn layui-btn layui-btn-xs">已完成</button>
+		{{#  } }}
 	</script>
 	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
 
@@ -94,30 +127,26 @@
 			,id:'testReload'
 			,height: 450
 			,width:1250
-			,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/getInstallationRecordEvaluation' //数据接口
+			,url: 'http://127.0.0.1:8080/maintainrecordController/getFullMaintainrecord' //数据接口
 			,type:'get'
 			,dataType:'json'
 			,crossDomain:true
 			,cols: [[ //表头
 				{type:'numbers',title:"序号"}
 				, {field: 'realname',width:200, title: '保养人员名称'}
-				, {field: 'address',width:200, title: '安装地址'}
-				, {field: 'beforeinstallation',width:200, title: '安装前图片',templet:"#beforeimgtmp"}
-				, {field: 'afterinstallation',width:200, title: '安装后图片',templet:"#afterimgtmp"}
-				, {field: 'installationtime',width:200, title: '安装日期'}
+				, {field: 'address',width:200, title: '保养地址'}
+				, {field: 'beforeinstallation',width:200, title: '保养前图片',templet:"#beforeimgtmp"}
+				, {field: 'afterinstallation',width:200, title: '保养后图片',templet:"#afterimgtmp"}
+				, {field: 'installationtime',width:200, title: '保养日期'}
 				, {field: 'coding',width:200, title: '产品编号'}
-				,{field:'status',width:100,title:'保养状态',templet:function(s){
-						if (s.status===1){
-							return '未开始'
-						}else if (s.status===2){
-							return '处理中'
-						}else {
-							return '已完成'
-						}
-					}}
+				,{field:'status',width:150,title:'保养进度',templet:"#progressTpl"}
+				,{field:'status',width:100,title:'保养状态',templet:"#buttonTpl"}
 				, {fixed: 'right', width:170,title:'操作' ,toolbar: '#barDemo'}
 			]]
 			,page: true
+			,done:function (res,curr,count) {
+				element.render();
+			}
 		});
 		$("#xz").click(function(){
 			WeAdminShow('新增安装记录','./addFullService.html',700,500)
@@ -147,7 +176,7 @@
 			//console.log(obj)
 			if(obj.event == 'del'){
 				layer.confirm('真的删除行么', function(index){
-					$.get("http://127.0.0.1:8081/InstallationRecordEvaluation/deleteInstallationRecordEvaluationByRid?rid="+data.rid,function (ret) {
+					$.get("http://127.0.0.1:8080/maintainrecordController/deleteMaintainrecordByRid?rid="+data.rid,function (ret) {
 						if (ret=="ok"){
 							layer.msg("删除成功！")
 							table.reload('testReload');

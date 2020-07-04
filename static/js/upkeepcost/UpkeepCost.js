@@ -6,7 +6,7 @@
             layer = layui.layer;
   table.render({
 	  elem: '#problem'
-	  ,url:'http://127.0.0.1:8081/Cost/getCost'
+	  ,url:'http://127.0.0.1:8080/Cost/getCost'
 	  ,id:'toolbarDemos'
       ,limit:8
 	  ,height:520
@@ -19,7 +19,7 @@
 	  ,cols: [
     	[
 			{field:'cid',width:150,title:"序号"}
-			, {field: 'mname',width:150, title: '保养人'}
+			, {field: 'realname',width:150, title: '保养人'}
 			, {field: 'address',width:150, title: '保养地址'}
 			, {field: 'cost',width:150, title: '费用'}
 			, {field: 'inputtime',width:150, title: '录入时间'}
@@ -95,7 +95,7 @@
 
 	      layer.confirm('真的删除行么', function(index){  
 			 $.ajax({
-			  url:"http://127.0.0.1:8081/Cost/delCost",
+			  url:"http://127.0.0.1:8080/Cost/delCost",
 			  type:"post",
 			  data:{cid:data.cid},
 			  dataType:"text",

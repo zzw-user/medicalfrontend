@@ -8,16 +8,17 @@
 <style>
     dl>dd{
         cursor: pointer;
+        position: fixed;
     }
 </style>
 <body>
 <div class="weadmin-body">
     <form class="layui-form" id="pro">
-        <blockquote class="layui-elem-quote">保养记录评估</blockquote>
+        <blockquote class="layui-elem-quote">维修记录评估</blockquote>
         <div class="layui-row">
             <div class="layui-col-md12" style="margin-left: 90px;">
                 <div class="layui-form-item layui-inline" style="width: 200px;">
-                    <label class="layui-form-label" style="margin-left: -30px;">保养人员</label>
+                    <label class="layui-form-label" style="margin-left: -30px;">维修人员</label>
                     <div class="layui-input-inline" style="width: 200px">
                         <select name="operator" id="operator" lay-verify="required">
                         </select>
@@ -26,17 +27,16 @@
 
                 </div>
                 <div class="layui-form-item layui-inline">
-                    <div style="padding: 10px;">保养日期</div>
+                    <div style="padding: 10px;">维修日期</div>
                     <div class="layui-input-inline">
                         <input type="text" name="installationtime" id="test1" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item layui-inline">
 
                     <div class="layui-form-item" id="addressDiv">
-                        <div style="padding: 10px;">保养地址</div>
-
+                        <div style="padding: 10px;">维修地址</div>
                         <div class="layui-input-inline" style="width: 90px;">
                             <select name="P1" lay-filter="province" id="province" style="width: 50px;">
                                 <option></option>
@@ -62,7 +62,7 @@
                 </div>
                 <input type="hidden" name="address" id="address">
                 <div class="layui-form-item" style="margin-left: -30px;">
-                    <label class="layui-form-label">保养状态</label>
+                    <label class="layui-form-label">维修状态</label>
                     <div class="layui-input-block">
                         <input type="radio" name="status" value="1" title="未开始" checked="">
                         <input type="radio" name="status" value="2" title="处理中">
@@ -77,7 +77,7 @@
                 </div>
                 <div class="layui-upload-drag" id="beforeinstallationtest" style="width: 100px;">
                     <i class="layui-icon"></i>
-                    <p>点击上传安装前图片</p>
+                    <p>点击上传维修前图片</p>
                     <div class="layui-hide" id="beforeinstallationdiv">
                         <hr>
                         <img src="" id="beforeinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
@@ -86,7 +86,7 @@
                 <input type="hidden" id="beforeinstallation" name="beforeinstallation">
                 <div class="layui-upload-drag" id="afterinstallationtest" style="width: 100px;margin-left: 8%">
                     <i class="layui-icon"></i>
-                    <p>点击上传安装后图片</p>
+                    <p>点击上传维修后图片</p>
                     <div class="layui-hide" id="afterinstallationdiv">
                         <hr>
                         <img src="" id="afterinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
@@ -137,7 +137,7 @@
             //拖拽上传
             upload.render({
                 elem: '#beforeinstallationtest'
-                ,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+                ,url: 'http://127.0.0.1:8080/maintainrecordController/upload' //改成您自己的上传接口
                 ,multiple: true
                 ,before: function(obj){
                     //预读本地文件示例，不支持ie8
@@ -160,7 +160,7 @@
             });
             upload.render({
                 elem: '#afterinstallationtest'
-                ,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+                ,url: 'http://127.0.0.1:8080/maintainrecordController/upload' //改成您自己的上传接口
                 ,multiple: true
                 ,before: function(obj){
                     //预读本地文件示例，不支持ie8
@@ -181,7 +181,7 @@
                     $("#afterinstallation").val(res.msg);
                 }
             });
-            $("#operator").load('http://127.0.0.1:8081/SendaSingleInstallation/getMpuser', function(result) {
+            $("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(result) {
                 const data = eval(result);
                 var str;
                 str+="<option value=''>请选择</option>";
@@ -197,7 +197,7 @@
             });
             $("#coding").blur(function(){
                 var coding=$("#coding").val();
-                $.post('http://127.0.0.1:8081/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
+                $.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
                     if (result){
 
                     }else {
@@ -214,8 +214,9 @@
                 var site = $("#site").val();
                 var str = province+' '+city+' '+area+' '+site;
                 $("#address").val(str);
+                console.log($("#pro").serialize())
                 $.ajax({
-                    url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/addInstallationRecordEvaluation',
+                    url: 'http://127.0.0.1:8080/maintainrecordController/addMaintainrecord',
                     type: 'get',
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     data: $("#pro").serialize(),
@@ -223,11 +224,11 @@
                     success: function(result) {
 
                         if (result == "ok") {
-                            layer.alert("新增成功！", function() {
+                            layer.msg("新增成功！", function() {
                                 x_admin_close()
                             })
                         } else {
-                            layer.alert("新增失败！", function() {
+                            layer.msg("新增失败！", function() {
                                 x_admin_close()
                             })
                         }
