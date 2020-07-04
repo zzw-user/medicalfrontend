@@ -7,37 +7,45 @@
 	<link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
 	<body style="padding-top: 30px;background-color: white;">
 	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 0px;text-align: center">
-		<legend><h3>修改故障分析</h3></legend>
+		<legend><h3>修改备件</h3></legend>
 	</fieldset>
 
 		<form class="layui-form layui-form-pane" action="" lay-filter="formFilter"  style="width: 800px;margin:0 auto">
-<input type="hidden" name="fid"/>
+<input type="hidden" name="aid"/>
+
 
 			<div class="layui-form-item ">
-				<label class="layui-form-label">故障类型</label>
+				<label class="layui-form-label">备件编码</label>
 				<div class="layui-input-block">
-					<select name="faulttypeid" id="id">
+					<input type="text" name="coding" id="faultdescription" lay-verify="required" lay-reqtext="故障描述不能为空！" placeholder="请输入故障描述" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<br/>
+			<div class="layui-form-item ">
+				<label class="layui-form-label">备件名称</label>
+				<div class="layui-input-block">
+					<input type="text"  name="aname" id="analyze" lay-verify="required" lay-reqtext="故障分析不能为空！" placeholder="请输入故障分析" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<br/>
+			<div class="layui-form-item ">
+				<label class="layui-form-label">所属仓库</label>
+				<div class="layui-input-block">
+					<select name="wid" id="wid">
 					</select></div>
 			</div>
 			<br/>
 			<div class="layui-form-item ">
-				<label class="layui-form-label">故障描述</label>
+				<label class="layui-form-label">备件类型</label>
 				<div class="layui-input-block">
-					<input type="text" name="faultdescription" id="faultdescription" lay-verify="required" lay-reqtext="故障描述不能为空！" placeholder="请输入故障描述" autocomplete="off" class="layui-input">
-				</div>
+					<select name="tid" id="tid">
+					</select></div>
 			</div>
 			<br/>
 			<div class="layui-form-item ">
-				<label class="layui-form-label">故障分析</label>
+				<label class="layui-form-label">入库日期</label>
 				<div class="layui-input-block">
-					<input type="text"  name="analyze" id="analyze" lay-verify="required" lay-reqtext="故障分析不能为空！" placeholder="请输入故障分析" autocomplete="off" class="layui-input">
-				</div>
-			</div>
-			<br/>
-			<div class="layui-form-item ">
-				<label class="layui-form-label">维修记录</label>
-				<div class="layui-input-block">
-					<input type="text"  name="aid" id="aid" lay-verify="required" autocomplete="off" class="layui-input layui-disabled">
+					<input type="text"  name="intime" id="intime" lay-verify="required" autocomplete="off" class="layui-input ">
 				</div>
 				<div class="layui-form-mid layui-word-aux" id="ts"></div>
 			</div>
@@ -71,27 +79,31 @@
 								, form = layui.form
 								, slider = layui.slider; //滑块//执行一个laydate实例
 						laydate.render({
-							elem: '#installationtime' //指定元素
-						});
-						laydate.render({
-							elem: '#date'
-						});
-						laydate.render({
-							elem: '#date1'
+							elem: '#intime' //指定元素
 						});
 
-						$.get('http://127.0.0.1/allFaulttype', function (result) {
+
+						$.get('http://127.0.0.1/selectTypecyh', function (result) {
 							var str = "<option value=''>请选择</option>";
 							$(result).each(function () {
-								str += "<option value=" + this.id + ">" + this.faulttype + "</option>";
+								str += "<option value=" + this.tid + ">" + this.tname + "</option>";
 							})
-							$("#id").html(str);
+							$("#tid").html(str);
+
+
 							form.render('select');
-							$.post("http://127.0.0.1/selectOneFau", {"fid": fid}, function (result) {
+							$.get('http://127.0.0.1/selectWarehousecyh', function (result) {
+										var str = "<option value=''>请选择</option>";
+										$(result).each(function () {
+											str += "<option value=" + this.wid + ">" + this.wname + "</option>";
+										})
+										$("#wid").html(str);
+								form.render('select');
+									}
+
+							)
+							$.post("http://127.0.0.1/selectOneArpartcyh", {"aid": fid}, function (result) {
 								form.val("formFilter", result);
-
-
-
 							});
 							});
 						form.on('submit(demo1)', function (data) {
@@ -99,7 +111,7 @@
 							$.ajax({
 								type: "post",
 								data: Faultanalysis,
-								url: "http://127.0.0.1/updFau",
+								url: "http://127.0.0.1/updateArpart",
 								dataType: "text",
 								success: function (result) {
 									if (result == 'true') {

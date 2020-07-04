@@ -5,73 +5,60 @@
 		<title>故障分析</title>
 	</head>
 	<link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
-	<body>
-		 <style>
-		        .layui-btn {
-		            width: 100px;
-		            display: inline-block;
-		            height: 30px;
-		            line-height: 30px;
-		            padding: 0 20px;
-		            background-color: #009688;
-		            color: #fff;
-		            white-space: nowrap;
-		            text-align: center;
-		            font-size: 14px;
-		            border: none;
-		            border-radius: 2px;
-		            cursor: pointer;
-		        }
-		        .layui-nav .layui-nav-more {
-		            content: '';
-		            width: 0;
-		            height: 0;
-		            border-style: solid dashed dashed;
-		            border-color: #fff transparent transparent;
-		            overflow: hidden;
-		            cursor: pointer;
-		            transition: all .2s;
-		            -webkit-transition: all .2s;
-		            position: absolute;
-		            top: 50%;
-		            right: 15px;
-		            margin-top: -3px;
-		            border-width: 6px;
-		            border-top-color: rgba(255,255,255,.7);
-		        }
-		    </style>
-	</body>
-		</head>
-		<body>
-		<div class="weadmin-body" style="margin-left: 3%;">
-			 <div class="layui-row">
-				 <form class="layui-form layui-col-md12 we-search layui-form-pane">
-				 <span style="margin-left:30px"><b>故障时间：</b></span>
-				 <div class="layui-inline" >
-					 <input class="layui-input"  placeholder="故障时间" name="installationtime" id="installationtime">
 
-				 </div>
-				 <span style="margin-left:30px"><b>故障类型：</b></span>
-				 <div class="layui-inline" >
-				 	<select name="id" id="id">
+	<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
 
-				 	</select>
-				 </div>
-			    <button class="layui-btn" type="button" id="bth"><i class="layui-icon">&#xe615;搜索</i></button>
-				<button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2" onclick="WeAdminShow('新增客户','./addfaultanalysis.html',800,600)">新增客户</button>
+	</head>
+	<body style="margin: 0 auto ;">
+	<div class="layui-fluid" style="margin: 0 auto ;"	>
+		<div class="layui-card">
+			<div class="layui-form layui-card-header layuiadmin-card-header-auto" >
+				<div class="layui-form-item" >
+					<div class="layui-inline">
+						<label class="layui-form-label">故障时间</label>
+						<div class="layui-input-inline">
+							<input class="layui-input"  placeholder="故障时间" name="installationtime" id="installationtime">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">故障类型</label>
+						<div class="layui-input-inline">
+							<select name="id" id="id">
+
+							</select></div>
+					</div>
+
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-comm" data-type="reload" type="button" id="bth">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+						</button>
+						<button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+					</div>
+				</div>
+
+			</div>
 
 
+			<div class="layui-card-body">
+				<div style="padding-bottom: 10px;">
 
-				 </form>
+				</div>
 
-		    <table class="layui-table"  lay-filter="problem" id="problem"></table>
+				<table class="layui-table" align="center" id="problem" lay-filter="problem"></table>
+				<script type="text/html" id="barDemo">
+					<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+					<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+
+				</script>
+			</div>
+
 		</div>
-		</div>
+	</div>
+	</div>
 
-		<script type="text/html" id="barDemo">
-			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" id="del">删除</a>
-		</script>
+
+
 	</body>
 		 <script src="../../lib/layui-v2.5.5/layui.js"></script>
 	<script>
@@ -93,12 +80,11 @@
 
 			table.render({
 				elem: '#problem'
-				,url:'http://127.0.0.1:8080/selectfau'
+				,url:'http://127.0.0.1/selectfau'
 				,id: 'userTable'
-				,width: 1200
 				,cols: [[ //表头
 					{field: 'fid',width:150, title: '序号'}
-					, {field: 'faultdescription',width:250, title: '故障描述'}
+					, {field: 'faultdescription', title: '故障描述'}
 					, {field: 'faulttype',width:250, title: '故障类型'}
 					, {field: 'analyze',width:250, title: '故障分析'}
 					,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
@@ -108,7 +94,7 @@
 				,limit:3
 			});
 
-			$.get('http://127.0.0.1:8080/allFaulttype',function(result){
+			$.get('http://127.0.0.1/allFaulttype',function(result){
 				var str="<option value=''>请选择</option>";
 				$(result).each(function() {
 					str+="<option value="+this.id+">"+this.faulttype+"</option>";
@@ -170,7 +156,7 @@
 					layer.confirm("确定要删除该行数据吗？",function(index){
 						$.ajax({
 							type:"get",
-							url:"http://127.0.0.1:8080/delOne",
+							url:"http://127.0.0.1/delOne",
 							data:{"fid":data.fid},
 							dataType:"text",
 							success:function(result){
@@ -180,18 +166,21 @@
 									layer.msg("删除失败");
 								}
 							}
+							,end: function(layero, index){
+								table.reload('userTable');
+							}
 						})
 						obj.del();
 						layer.close(index);
 					})
 				}
 				else if(obj.event=='edit'){
-					layer.open({
+					var index =layer.open({
 						type: 2
 						,title: '修改故障分析'
 						,content: "updfaultanalysis.html"
 						,area: ['800px', '600px']
-						,offset: 'auto'
+						,maxmin: true
 						,success:function(layero, index){
 							// 获取子页面的iframe
 							var iframe = window['layui-layer-iframe' + index];
@@ -202,6 +191,7 @@
 							table.reload('userTable');
 						}
 					});
+					layer.full(index);
 				}
 			})
 		})

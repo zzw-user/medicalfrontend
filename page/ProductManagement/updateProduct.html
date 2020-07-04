@@ -5,49 +5,55 @@
     <title>修改产品</title>
     <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
 </head>
-<body>
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-    <legend>修改产品</legend>
+<body style="padding-top: 30px;background-color: white;">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 0px;text-align: center">
+    <legend><h3>修改产品</h3></legend>
 </fieldset>
-<form class="layui-form layui-form-pane" action="" lay-filter="formFilter">
+<form class="layui-form layui-form-pane" action="" lay-filter="formFilter" style="width: 900px;margin:0 auto">
     <div class="layui-form-item">
         <label class="layui-form-label">产品编码</label>
         <div class="layui-input-block">
             <input type="text" name="coding" autocomplete="off" placeholder="请输入编码" class="layui-input">
         </div>
     </div>
+    <br/>
     <div class="layui-form-item">
         <label class="layui-form-label">bom单名称</label>
         <div class="layui-input-block">
             <input type="text" name="bomname" autocomplete="off" placeholder="请输入bom单名称" class="layui-input">
         </div>
     </div>
+    <br/>
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">入库日期</label>
             <div class="layui-input-block">
-                <input type="text" name="createtime" id="date1" autocomplete="off" class="layui-input">
+                <input type="text" name="createtime" placeholder="请选择入库日期" id="date1" style="width: 790px;" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
+    <br/>
     <div class="layui-form-item">
         <label class="layui-form-label">产品名称</label>
         <div class="layui-input-block">
             <input type="text" name="pname" autocomplete="off" placeholder="请输入产品名称" class="layui-input">
         </div>
     </div>
+    <br/>
     <div class="layui-form-item">
         <label class="layui-form-label">规格型号</label>
         <div class="layui-input-block">
             <input type="text" name="model" autocomplete="off" placeholder="请输入规格型号" class="layui-input">
         </div>
     </div>
+    <br/>
     <div class="layui-form-item">
         <label class="layui-form-label">入库金额</label>
         <div class="layui-input-block">
             <input type="text" name="inmoney" autocomplete="off" placeholder="请输入入库金额" class="layui-input">
         </div>
     </div>
+    <br/>
     <div class="layui-form-item">
         <label class="layui-form-label">产品类型</label>
         <div class="layui-input-block">
@@ -56,6 +62,7 @@
             </select>
         </div>
     </div>
+    <br/>
     <div class="layui-form-item">
         <label class="layui-form-label">仓库名称</label>
         <div class="layui-input-block">
@@ -64,7 +71,8 @@
             </select>
         </div>
     </div>
-<input type="hidden" id="pid" name="pid">
+    <br/> <br/>
+    <input type="hidden" id="pid" name="pid">
 
     <div class="layui-form-item" align="center">
         <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
@@ -95,7 +103,7 @@
         });
 
 
-        $.get('http://127.0.0.1:8080/selectProducttype',function(result){
+        $.get('http://127.0.0.1/selectProducttype',function(result){
             var str="<option value=''>请选择</option>";
             $(result).each(function() {
                 str+="<option value="+this.id+">"+this.typename+"</option>";
@@ -103,7 +111,7 @@
             $("#typeid").html(str);
 
             form.render('select');
-            $.get('http://127.0.0.1:8080/selectWarehouse',function(result){
+            $.get('http://127.0.0.1/selectWarehouse',function(result){
                 var str="<option value=''>请选择</option>";
                 $(result).each(function() {
                     str+="<option value="+this.wid+">"+this.wname+"</option>";
@@ -111,7 +119,7 @@
                 $("#wid").html(str);
 
                 form.render('select');
-                $.post("http://127.0.0.1:8080/selectProductOne",{"pid":uid},function(result){
+                $.post("http://127.0.0.1/selectProductOne",{"pid":uid},function(result){
                     form.val("formFilter",result);
                 })
             });
@@ -124,7 +132,7 @@
             $.ajax({
                 type:"post",
                 data:Product,
-                url:"http://127.0.0.1:8080/updProduct",
+                url:"http://127.0.0.1/updProduct",
                 dataType:"text",
                 success:function(result){
                     if(result=='true'){

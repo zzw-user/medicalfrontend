@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>区域故障分析</title>
+	<title>备件管理</title>
 </head>
 <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
 
@@ -10,28 +10,28 @@
 <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
 
 </head>
-<body>
-<div class="layui-fluid">
+<body style="margin: 0 auto ;">
+<div class="layui-fluid" style="margin: 0 auto ;"	>
 	<div class="layui-card">
-		<div class="layui-form layui-card-header layuiadmin-card-header-auto" style="margin: 0 auto ">
+		<div class="layui-form layui-card-header layuiadmin-card-header-auto" >
 			<div class="layui-form-item" >
 				<div class="layui-inline">
-					<label class="layui-form-label">故障时间</label>
+					<label class="layui-form-label">备件编码</label>
 					<div class="layui-input-inline">
-						<input class="layui-input"  placeholder="故障时间" name="installationtime" id="installationtime">
+						<input class="layui-input"  placeholder="备件编码" name="coding" id="coding">
 					</div>
 				</div>
 				<div class="layui-inline">
-					<label class="layui-form-label">故障类型</label>
+					<label class="layui-form-label">备件名称</label>
 					<div class="layui-input-inline">
-						<select name="id" id="id">
-
-						</select></div>
+						<input class="layui-input"  placeholder="备件名称" name="aname" id="aname">
+					</div>
 				</div>
+
 				<div class="layui-inline">
-					<label class="layui-form-label">区域</label>
+					<label class="layui-form-label">备件类型</label>
 					<div class="layui-input-inline">
-						<select name="did" id="did">
+						<select name="tid" id="tid">
 
 						</select></div>
 				</div>
@@ -49,7 +49,7 @@
 
 		<div class="layui-card-body">
 			<div style="padding-bottom: 10px;">
-
+				<button class="layui-btn layuiadmin-btn-list" data-type="add" id="add">添加</button>
 			</div>
 
 			<table class="layui-table" align="center" id="problem" lay-filter="problem"></table>
@@ -84,42 +84,41 @@
 			elem: '#installationtime' //指定元素
 		});
 		//执行一个 table 实例
+		$("#add").click(function(){
+			var index = layer.open({
+				type: 2,
+				content: './xzbj.html',
+				area: ['300px', '300px'],
+				maxmin: true
+			});
+			layer.full(index);
+		})
+
 
 		table.render({
 			elem: '#problem'
-			,url:'http://127.0.0.1/areaselectfau'
+			,url:'http://127.0.0.1/selectArpartAll'
 			,id: 'userTable'
-			,width: 1200
 			,cols: [[ //表头
-				{field: 'fid', title: '序号'}
-				, {field: 'faultdescription',width:220, title: '故障描述'}
-				, {field: 'faulttype',width:220, title: '故障类型'}
-				, {field: 'analyze',width:220, title: '故障分析'}
-				,{field: 'dname',width:220, title: '区域'}
-				,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
+				{type:"numbers",field: 'left',width:80, title: '序号'}
+				, {field: 'coding', title: '备件编码'}
+				, {field: 'aname', title: '备件名称'}
+				, {field: 'wname', title: '备件仓库'}
+				, {field: 'tname', title: '备件类型'}
+				, {field: 'intime',width:250, title: '入库时间'}
+				,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
 			]]
-			,height: 600
+			,height: 450
 			,page:true
-			,limit:3
+			,limit:9
 		});
 
-		$.get('http://127.0.0.1/allFaulttype',function(result){
+		$.get('http://127.0.0.1/selectTypecyh',function(result){
 			var str="<option value=''>请选择</option>";
 			$(result).each(function() {
-				str+="<option value="+this.id+">"+this.faulttype+"</option>";
+				str+="<option value="+this.tid+">"+this.tname+"</option>";
 			})
-			$("#id").html(str);
-			form.render('select');
-
-		});
-
-
-		$.get('http://127.0.0.1/selectdistrict',function(result){
-			var str="<option value=''>请选择</option>";
-			$(result).each(function() {
-				str+="<option value="+this.did+">"+this.dname+"</option>";
-			})
-			$("#did").html(str);
+			$("#tid").html(str);
 			form.render('select');
 
 		});
@@ -127,9 +126,9 @@
 		$("#bth").on("click",function(){
 			table.reload('userTable', {
 				where: { //设定异步数据接口的额外参数，任意设
-					id:$("#id").val(),
-					installationtime:$("#installationtime").val(),
-					did:$("#did").val(),
+					tid:$("#tid").val(),
+					coding:$("#coding").val(),
+					aneme:$("#aneme").val()
 				}
 				,page: {
 					curr: 1 //重新从第 1 页开始
@@ -166,7 +165,8 @@
 				content: url,
 				success:function () {
 
-				},end:function () {
+				},end: function(layero, index){
+					table.reload('userTable');
 				}
 			});
 		}
@@ -176,8 +176,8 @@
 				layer.confirm("确定要删除该行数据吗？",function(index){
 					$.ajax({
 						type:"get",
-						url:"http://127.0.0.1:8080/delOne",
-						data:{"fid":data.fid},
+						url:"http://127.0.0.1/deleteArpart",
+						data:{"aid":data.aid},
 						dataType:"text",
 						success:function(result){
 							if(result=='true'){
@@ -185,6 +185,9 @@
 							}else{
 								layer.msg("删除失败");
 							}
+						}
+						,end: function(layero, index){
+							table.reload('userTable');
 						}
 					})
 					obj.del();
@@ -195,14 +198,14 @@
 				var index =layer.open({
 					type: 2
 					,title: '修改故障分析'
-					,content: "updfaultanalysis.html"
+					,content: "xgbj.html"
 					,area: ['800px', '600px']
 					,maxmin: true
 					,success:function(layero, index){
 						// 获取子页面的iframe
 						var iframe = window['layui-layer-iframe' + index];
 						// 向子页面的全局函数child传参
-						iframe.getId(data.fid);
+						iframe.getId(data.aid);
 					}
 					,end: function(layero, index){
 						table.reload('userTable');

@@ -5,29 +5,55 @@
     <title></title>
 </head>
 <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
+<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+
 <style>
 
 
 </style>
 <body>
-<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>产品库存</b></span></div>
-<br>
-<br>
-<div class="weadmin-body">
-    <div class="layui-row">
-        <form class="layui-form layui-col-md12 we-search">
-            <br>
-            <span style="margin-left:80px"><b>产品名称:</b></span>
-            <div class="layui-inline" >
-                <input class="layui-input" id="pname" placeholder="产品名称" id="serialnumber" name="pname">
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto" style="text-align: center ">
+            <div class="layui-form-item" >
+                <div class="layui-inline">
+                    <label class="layui-form-label">产品名称</label>
+                    <div class="layui-input-inline">
+                        <input class="layui-input" id="pname" placeholder="产品名称" id="serialnumber" name="pname">
+
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-comm" data-type="reload" type="button" id="bth">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+                    </button>
+                    <button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+                </div>
             </div>
 
-            <button type="button" class="layui-btn" lay-filter="demo1" id="bth">搜索</button>
-            <table id="test" lay-filter="test"></table>
-        </form>
+        </div>
+
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+
+            </div>
+
+            <table class="layui-table" align="center" id="test" lay-filter="problem"></table>
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+
+            </script>
+        </div>
 
     </div>
 </div>
+</div>
+
 </body>
 
 <script src="../../lib/layui-v2.5.5/layui.js"></script>
@@ -51,13 +77,13 @@
         table.render({
             elem: '#test'
             , height: 312
-            , url: 'http://127.0.0.1:8080/pageinfoproductAndInventory' //数据接口
+            , url: 'http://127.0.0.1/pageinfoproductAndInventory' //数据接口
             , page: true //开启分页
             , id: "userTable"
             , cols: [[ //表头
-                {field: 'pid', title: '序号', width: 170, sort: true, fixed: 'left'}
-                , {field: 'pname', title: '产品名称', width: 170}
-                , {field: 'quantity', title: '产品数量', width: 170, sort: true}
+                {field: 'pid', title: '序号', width: 300, sort: true, fixed: 'left'}
+                , {field: 'pname', title: '产品名称'}
+                , {field: 'quantity', title: '产品数量', width: 300, sort: true}
 
 
             ]]

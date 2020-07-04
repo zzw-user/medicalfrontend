@@ -5,40 +5,62 @@
 		<title>费用查询</title>
 	</head>
 	<link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
+
+	<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+
+	</head>
 	<body>
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<div class="layui-form layui-card-header layuiadmin-card-header-auto" style="text-align: center ">
+				<div class="layui-form-item" >
+					<div class="layui-inline">
+						<label class="layui-form-label">费用时间</label>
+						<div class="layui-input-inline">
+							<input class="layui-input"  placeholder="费用时间" name="inputtime" id="inputtime">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">费用来源</label>
+						<div class="layui-input-inline">
+							<select name="aftertype" id="aftertype">
+								<option value="0">请选择</option>
+								<option value="1">安装费用</option>
+								<option value="2">维修费用</option>
+								<option value="3">保养费用</option>
+							</select></div>
+					</div>
 
-		</head>
-	</body>
-		<body>
-		<form class="layui-form layui-col-md12 we-search layui-form-pane">
-		<div class="weadmin-body" style="margin-left: 3%;">
-			 <div class="layui-row">
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-comm" data-type="reload" type="button" id="bth">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+						</button>
+						<button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+					</div>
+				</div>
 
-				 <span style="margin-left:30px"><b>费用时间：</b></span>
-				 <div class="layui-inline" >
-				 	<input class="layui-input"  placeholder="费用时间" name="inputtime" id="inputtime">
-				 </div>
-				 <span style="margin-left:30px"><b>费用类型：</b></span>
-				 <div class="layui-inline" >
-				 	<select name="aftertype" id="aftertype">
-				 		<option value="0">请选择</option>
-						<option value="1">安装费用</option>
-						<option value="2">维修费用</option>
-						<option value="3">保养费用</option>
-				 	</select>
-				 </div>
-			    <button class="layui-btn" type="button" lay-filter="sreach"  id="bth"><i class="layui-icon">&#xe615;搜索</i></button>
-				
-				 </div>
+			</div>
 
 
-			<script type="text/html" id="barDemo">
-				<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" id="del">删除</a>
-			</script>
-			<table class="layui-table"  lay-filter="problem" id="problem"></table>
+			<div class="layui-card-body">
+				<div style="padding-bottom: 10px;">
+
+				</div>
+
+				<table class="layui-table" align="center" id="problem" lay-filter="problem"></table>
+				<script type="text/html" id="barDemo">
+					<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+					<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+
+				</script>
+			</div>
+
 		</div>
-		</form>
+	</div>
+	</div>
+
+
 	</body>
 	<script src="../../lib/layui-v2.5.5/layui.js"></script>
 	<script>
@@ -59,9 +81,8 @@
 		    //执行一个 table 实例
 		    table.render({
 				elem: '#problem'
-				,url:'http://127.0.0.1:8080/costselectall'
+				,url:'http://127.0.0.1/costselectall'
 				,id: 'testReload'
-				,width: 1200
 				,cols: [[
 		            {field:'cid',title:"序号"}
 		            , {field: 'mname',width:150, title: '操作员'}
@@ -80,11 +101,10 @@
 							return "保养费用";
 						}
 						}}
-		            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+		            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
 		        ]]
-				,height: 600
+				,height: 450
 		        ,page: true
-				,limit:1
 		    });
 			$("#bth").on("click",function(){
 		        table.reload('testReload', {
@@ -142,7 +162,7 @@
 					layer.confirm("确定要删除该行数据吗？",function(index){
 						$.ajax({
 							type:"get",
-							url:"http://127.0.0.1:8080/delcost",
+							url:"http://127.0.0.1/delcost",
 							data:{"cid":data.cid},
 							dataType:"text",
 							success:function(result){
@@ -151,6 +171,8 @@
 								}else{
 									layer.msg("删除失败");
 								}
+							},end: function(layero, index){
+								table.reload('testReload');
 							}
 						})
 						obj.del();
@@ -158,12 +180,12 @@
 					})
 				}
 				else if(obj.event=='edit'){
-					layer.open({
+					var index =layer.open({
 						type: 2
 						,title: '修改费用信息'
 						,content: "updcost.html"
 						,area: ['800px', '600px']
-						,offset: 'auto'
+						,maxmin: true
 						,success:function(layero, index){
 							// 获取子页面的iframe
 							var iframe = window['layui-layer-iframe' + index];
@@ -174,6 +196,7 @@
 							table.reload('testReload');
 						}
 					});
+					layer.full(index);
 				}
 			})
 		})

@@ -44,7 +44,7 @@
 
 <div id="menu">
     <input name="button1" type="button" id="button1"
-           onClick="map_tag();" value="全国垃圾箱信息查询"
+           onClick="map_tag();" value="全国医疗产品查询"
            style="width: 150px; height: 40px; margin: 0px 0px 0px 5px"/>
 </div>
 <hr>
@@ -98,7 +98,7 @@
                     var marker = new BMap.Marker(point);//按照地图点坐标生成标记
                     marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
                     var iw = createInfoWindow(i);//创建信息窗口对象
-                    var label = new window.BMap.Label("申购价格:"+json.cost+"元/月", { offset: new window.BMap.Size(20, -10) });
+                    var label = new window.BMap.Label("售卖价格:"+json.cost+"元/月", { offset: new window.BMap.Size(20, -10) });
                     marker.setLabel(label);//显示marker的title
                     points.push(marker);
                     map.addOverlay(points[i]);//把标记的点添加到地图上
@@ -136,7 +136,7 @@
             console.log(marker1)
             marker1.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
             var iw = createInfoWindow(i);//创建信息窗口对象
-            var label = new window.BMap.Label("申购价格:"+json1.price+"元/月", { offset: new window.BMap.Size(20, -10) });
+            var label = new window.BMap.Label("售卖价格:"+json1.price+"元/月", { offset: new window.BMap.Size(20, -10) });
             marker1.setLabel(label);//显示marker的title
             points1.push(marker1);
             map.addOverlay(points1[i]);//把标记的点添加到地图上
@@ -154,7 +154,7 @@
 
     //创建InfoWindow
     function createInfoWindow(json){
-        var opts1 = {title : '<span style="font-size:20px;color:#0A8021">垃圾箱信息</span>'};
+        var opts1 = {title : '<span style="font-size:20px;color:#0A8021">售卖产品信息</span>'};
         var iw = new BMap.InfoWindow("<div style='line-height:1.8em;font-size:12px;'><b>估计价格:</b>"+json.cost+"元"+"</br></a></div>", opts1);
         return iw;
     }

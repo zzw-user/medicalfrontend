@@ -91,7 +91,7 @@
       <div class="layui-side layui-side-menu">
         <div class="layui-side-scroll">
           <div class="layui-logo" lay-href="home/console.html">
-            <span>layuiAdmin</span>
+            <span>医疗产品管理系统</span>
           </div>
           
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
@@ -178,6 +178,71 @@
             var layer = layui.layer;
 
     $.ajax({
+      type:"get",
+      data:{},
+      dataType:"json",
+      url:'http://127.0.0.1/findMenu',
+      beforeSend: function(request) {
+        request.setRequestHeader("token",localStorage.getItem("token"));},
+      success:function (result) {
+        $("#LAY-system-side-menu").html("");
+        var a ="";
+        $(result).each(function () {
+
+
+          a+="<li data-name='component' class='layui-nav-item'>";
+          a+="   <a href='javascript:;' lay-tips="+this.title+" lay-direction='2'>";
+          a+="  <i class='layui-icon layui-icon-component'></i>";
+          a+="  <cite>"+this.title+"</cite>";
+          a+="</a>";
+          $(this.child).each(function () {
+
+            if (this.child.length <= 0) {
+              a += " <dl class='layui-nav-child'>";
+              a += " <dd data-name=" + this.nid + "  onclick='fu(this)'><a lay-href=" + this.href + ">" + this.title + "</a>";
+              a += "    </dl>"
+            }
+            else{
+              a += "<dl class='layui-nav-child'>";
+              a += " <dd data-name='grid'>";
+              a += " <a  lay-href=" + this.href + ">" + this.title + "</a>";
+              a += " <dl class='layui-nav-child'>";
+              $(this.child).each(function () {
+                if (this.child.length <= 0) {
+                  a += " <dd data-name=" + this.nid + "  onclick='fu(this)'><a lay-href=" + this.href + ">" + this.title + "</a>";
+
+                }else{
+
+                  a += " <dd data-name=" + this.nid + "><a href='javascript:;'>" + this.title + "</a>";
+                  a += " <dl class='layui-nav-child'>";
+                  $(this.child).each(function () {
+                    a += " <dd data-name=" + this.nid + "  onclick='fu(this)'><a lay-href=" + this.href + ">" + this.title + "</a>";
+                  })
+                  a += "    </dl>"
+                  a += "  </dd>";
+                }
+              })
+
+              a += "    </dl>"
+              a += "  </dd>";
+            }
+
+
+            a+="  </dl>"
+          })
+
+          a+="</li>";
+        })
+        $("#LAY-system-side-menu").html(a);
+
+
+
+
+      }
+    })
+
+
+    $.ajax({
       type: "get",   //提交的方法
       dataType: "json",
       contentType : 'application/json',
@@ -201,69 +266,6 @@
 
 
 
-    $.ajax({
-              type:"get",
-              data:{},
-              dataType:"json",
-              url:'http://127.0.0.1/findMenu',
-      beforeSend: function(request) {
-        request.setRequestHeader("token",localStorage.getItem("token"));},
-              success:function (result) {
-               $("#LAY-system-side-menu").html("");
-               var a ="";
-                $(result).each(function () {
-
-
-                a+="<li data-name='component' class='layui-nav-item'>";
-                  a+="   <a href='javascript:;' lay-tips="+this.title+" lay-direction='2'>";
-                  a+="  <i class='layui-icon layui-icon-component'></i>";
-                  a+="  <cite>"+this.title+"</cite>";
-                  a+="</a>";
-                  $(this.child).each(function () {
-
-                    if (this.child.length <= 0) {
-                      a += " <dl class='layui-nav-child'>";
-                      a += " <dd data-name=" + this.nid + "  onclick='fu(this)'><a lay-href=" + this.href + ">" + this.title + "</a>";
-                      a += "    </dl>"
-                    }
-else{
-                    a += "<dl class='layui-nav-child'>";
-                    a += " <dd data-name='grid'>";
-                    a += " <a  lay-href=" + this.href + ">" + this.title + "</a>";
-                    a += " <dl class='layui-nav-child'>";
-                    $(this.child).each(function () {
-                      if (this.child.length <= 0) {
-                        a += " <dd data-name=" + this.nid + "  onclick='fu(this)'><a lay-href=" + this.href + ">" + this.title + "</a>";
-
-                      }else{
-
-                      a += " <dd data-name=" + this.nid + "><a href='javascript:;'>" + this.title + "</a>";
-                      a += " <dl class='layui-nav-child'>";
-                      $(this.child).each(function () {
-                        a += " <dd data-name=" + this.nid + "  onclick='fu(this)'><a lay-href=" + this.href + ">" + this.title + "</a>";
-                      })
-                      a += "    </dl>"
-                      a += "  </dd>";
-                    }
-                    })
-
-                    a += "    </dl>"
-                    a += "  </dd>";
-                  }
-
-
-                    a+="  </dl>"
-                  })
-
-                  a+="</li>";
-                })
-                $("#LAY-system-side-menu").html(a);
-
-
-
-
-              }
-            })
 
           })
   </script>
