@@ -213,7 +213,7 @@
 
                 }else{
 
-                  a += " <dd data-name=" + this.nid + "><a href='javascript:;'>" + this.title + "</a>";
+                  a += " <dd data-name=" + this.nid + "><a  lay-href=" + this.href + ">" + this.title + "</a>";
                   a += " <dl class='layui-nav-child'>";
                   $(this.child).each(function () {
                     a += " <dd data-name=" + this.nid + "  onclick='fu(this)'><a lay-href=" + this.href + ">" + this.title + "</a>";
