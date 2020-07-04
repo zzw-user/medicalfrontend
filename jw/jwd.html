@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            type:"post",
+            data:{"address":"湖南省长沙市岳麓区杜鹃路772号","key":"389880a06e3f893ea46036f030c94700"},
+            dataJson: "json",
+            url:"http://restapi.amap.com/v3/geocode/geo",
+            success:function (result) {
+                  console.log(result);
+                  var sz=result.geocodes[0].location.split(",");
+                  console.log(sz)
+            }
+        })
+    })
+</script>
+</body>
+</html>

@@ -18,40 +18,37 @@
       <div class="layui-tab layui-tab-brief">
         <ul class="layui-tab-title">
           <li class="layui-this">全部消息</li>
-          <li>通知<span class="layui-badge">6</span></li>
-          <li>私信</li>
+          <li id="xitong">通知<span class="layui-badge" >6</span></li>
+          <li id="sixin">私信</li>
         </ul>
         <div class="layui-tab-content">
         
           <div class="layui-tab-item layui-show">
             <div class="LAY-app-message-btns" style="margin-bottom: 10px;">
-              <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="all" data-events="del">删除</button>
-              <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="all" data-events="ready">标记已读</button>
-              <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="all" data-events="readyAll">全部已读</button>
+              <button class="layui-btn layui-btn-primary layui-btn-sm" id="sc">删除</button>
+              <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="all" id="bjyd" data-events="ready">标记已读</button>
+              <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="all" id="allbj" data-events="readyAll">全部已读</button>
             </div>
-            
-            <table id="LAY-app-message-all" lay-filter="LAY-app-message-all"></table>
+    <table id="test" class="layui-hide" lay-filter="test"></table>
           </div>
-          <div class="layui-tab-item">
-          
+         <!-- <div class="layui-tab-item">
+
             <div class="LAY-app-message-btns" style="margin-bottom: 10px;">
               <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="notice" data-events="del">删除</button>
               <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="notice" data-events="ready">标记已读</button>
               <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="notice" data-events="readyAll">全部已读</button>
             </div>
-            
-            <table id="LAY-app-message-notice" lay-filter="LAY-app-message-notice"></table>
+
           </div>
           <div class="layui-tab-item">
-          
+
             <div class="LAY-app-message-btns" style="margin-bottom: 10px;">
               <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="direct" data-events="del">删除</button>
               <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="direct" data-events="ready">标记已读</button>
               <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="direct" data-events="readyAll">全部已读</button>
             </div>
-            
-            <table id="LAY-app-message-direct" lay-filter="LAY-app-message-direct"></table>
-          </div>
+
+          </div>-->
         </div>
       </div>
     </div>
@@ -63,7 +60,149 @@
     base: '../../../layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'message']);
+  }).use(['index', 'message','table','jquery'],function () {
+    var table = layui.table;
+    var $ = layui.jquery;
+
+    table.render({
+      elem: '#test'
+      ,url:'http://127.0.0.1/getInfoByUserId'
+      ,headers:{"token":localStorage.getItem("token")}
+      ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+      ,cols: [[
+        {type:'checkbox'}
+        ,{field:'title', width:220,  title: '标题'}
+        ,{field:'context',  title: '内容'}
+        ,{field:'sender', width:150,  title: '发送人'}
+        ,{field:'sendtime', width:200, title: '时间', sort: true}
+      ]]
+      ,page: true
+      ,limit:10
+      ,height: 500
+      ,id:'userTable'
+    });
+    $("#xitong").click(function () {
+      table.reload('userTable', {
+        where: { //设定异步数据接口的额外参数，任意设
+          sender :  "系统"
+        }
+        ,page: {
+          curr: 1 //重新从第 1 页开始
+        }
+
+      });
+
+    })
+    $("#sixin").click(function () {
+      table.reload('userTable', {
+        where: { //设定异步数据接口的额外参数，任意设
+          sender :  "系统",
+          sixin : "1"
+        }
+        ,page: {
+          curr: 1 //重新从第 1 页开始
+        }
+
+      });
+
+    })
+    const idsz = new Array();
+    console.log(idsz);
+    var i = 0;
+    table.on('checkbox(test)', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+      console.log(obj.checked); //得到修改后的值
+      console.log(obj.data.id); //所在行的所有相关数据
+
+     if(obj.checked){
+       var l=0;
+       if(idsz.length==0){
+         idsz[idsz.length]=obj.data.id;
+       }else {
+         for (var p = 0; p < idsz.length; p++) {
+           if (idsz[p] != obj.data.id) {
+             l++;
+           }else if(idsz[p] == obj.data.id) {
+             alert("A");
+             idsz.splice(p,1);
+           }
+         }
+         if (l == idsz.length) {
+           idsz[idsz.length] = obj.data.id;
+         }
+       }
+      }else{
+       for (var p = 0; p < idsz.length; p++) {
+        if(idsz[p] == obj.data.id) {
+
+           idsz.splice(p,1);
+         }
+       }
+     }
+     console.log(idsz)
+    });
+    $("#sc").click(function () {
+      layer.confirm("是否删除选择的"+idsz.length+"条数据",{title:"提示",icon:3},function(index){
+        $.ajax({
+          type:"post",
+          url:"http://127.0.0.1/beachDeleteInfo",
+          contentType:"application/json",
+          data:JSON.stringify(idsz),
+          dataType:"json",
+          success:function(result){
+            var count =result.code;
+            layer.msg("你删除了"+count+"条数据",{time:1000,icon:6});
+            table.reload('userTable');
+          }
+        })
+
+        layer.close(index);
+      })
+
+    })
+    $("#bjyd").click(function () {
+      layer.confirm("是否将选择的"+idsz.length+"条数据标记已读",{title:"提示",icon:3},function(index){
+        $.ajax({
+          type:"post",
+          url:"http://127.0.0.1/beachUpdateInfo",
+          contentType:"application/json",
+          data:JSON.stringify(idsz),
+          dataType:"json",
+          success:function(result){
+            var count =result.code;
+            layer.msg("标记成功",{time:1000,icon:6});
+            table.reload('userTable');
+          }
+        })
+
+        layer.close(index);
+      })
+
+    })
+    $("#allbj").click(function () {
+      layer.confirm("是否将所有信息标记已读",{title:"提示",icon:3},function(index){
+        $.ajax({
+          type:"post",
+          url:"http://127.0.0.1/allUpdateInfo",
+          data:{},
+          dataType:"json",
+          beforeSend: function(request) {
+            request.setRequestHeader("token",localStorage.getItem("token"));},
+          success:function(result){
+            var count =result.code;
+            layer.msg("标记成功",{time:1000,icon:6});
+            table.reload('userTable');
+          }
+        })
+
+        layer.close(index);
+      })
+
+    })
+
+  });
+
+
   </script>
+
 </body>
 </html>

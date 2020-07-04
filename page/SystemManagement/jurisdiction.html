@@ -14,28 +14,32 @@
     <div class="layui-form-item">
         <label class="layui-form-label">选择角色</label>
         <div class="layui-input-block">
-            <select name="roleid" lay-filter="aihao">
-                <option value=""></option>
-                <option value="0">写作</option>
-                <option value="1" selected="">阅读</option>
-                <option value="2">游戏</option>
-                <option value="3">音乐</option>
-                <option value="4">旅行</option>
+            <select name="roleid" id="roleid" lay-filter="roleid">
+
             </select>
         </div>
     </div>
-    <h3>请选择模块：</h3>
-    <div id="test7" style="margin-left: 100px" class="demo-tree"></div>
+    <div id="mokuai" style="width: 100%;padding-left: 10%" >
+        <div id="xitong" style="float: left;width: 230px;margin-right: 150px;" ><h3>系统、订单、统计分析模块</h3><br/></div>
+
+        <div id="changping" style="float: left;width: 400px;"><h3>产品、库存、备件模块</h3><br/></div>
+        <div id="shouhou" style="float: left;width: 400px;"><h3>售后模块</h3><br/></div>
+
+    </div>
+
+
+
     <div class="layui-form-item" align="center">
-        <button class="layui-btn"  lay-submit="" lay-filter="demo2">保存</button>
+        <button class="layui-btn"  type="button" id="bc" lay-filter="demo">保存</button>
         <button class="layui-btn"  lay-submit="" lay-filter="demo2">关闭</button>
     </div>
 
 </form>
-<script src="./layui/layui.js" charset="utf-8"></script>
 
+<script src="../../layuiadmin/layui/lay/treeSelect/treeSelect.js"></script>
 <script src="../../static/js/SystemManagement/jurisdiction.js">
 
 </script>
+
 </body>
 </html>

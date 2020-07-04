@@ -70,7 +70,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
                 });
             } else if (obj.event === 'upd') {
-                WeAdminShow('修改用户','./updmaintenancecosts.html?cid='+data.cid,800,500);
+                WeAdminShow('修改费用','./updmaintenancecosts.html?cid='+data.cid,800,500);
             }
         });
     window.WeAdminShow = function(title, url, w, h) {

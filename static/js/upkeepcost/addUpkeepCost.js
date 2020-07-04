@@ -8,16 +8,35 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
     laydate.render({
         elem: '#test1'
     });
-    $.post('findChecktypeinfo',function(result){
+    $("#coding").blur(function(){
+        var coding=$("#coding").val();
+        $.post('http://127.0.0.1:8081/Cost/getProductOne',{coding:coding},function(result){
+            if (result){
+                  alert(coding);
+            }else {
+                layer.msg("对不起，没有该产品编码！");
+                var coding=$("#coding").val('');
+            }
+
+        })
+    })
+    $.post('http://127.0.0.1:8081/Cost/getMpuser',function(result){
         var str="<option value='0'>--请选择--</option>";
         $(result).each(function() {
-            str+="<option value="+this.cid+">"+this.mname+"</option>";
+            str+="<option value="+this.mpid+">"+this.realname+"</option>";
+
         })
         $("#cid").append(str);
         form.render('select');
 
     })
-    form.on('submit(demo)', function(data){
+    form.on('submit(formDemo)', function(data){
+        var province = $("#province").val();
+        var area = $("#area").val();
+        var city= $("#city").val();
+        var site = $("#site").val();
+        var str = province+' '+city+' '+area+' '+site;
+        $("#address").val(str);
         var userInfo=$("#form").serialize();
         $.ajax({
             url:"http://127.0.0.1:8081/Cost/addCost",
@@ -25,7 +44,7 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
             data:userInfo,
             dataType:"text",
             success:function(e){
-                if(e=="yes"){
+                if(e=="true"){
                     layer.msg("新增成功！",{time:1000,icon:6},function(){
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         window.parent.location.reload();

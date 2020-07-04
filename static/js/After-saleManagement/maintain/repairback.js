@@ -67,7 +67,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
                 });
             }else if (obj.event === 'upd') {
-                WeAdminShow('修改用户','./updrepairback.html?pid='+data.pid,800,400);
+                WeAdminShow('修改回访','./updrepairback.html?pid='+data.pid,800,400);
             }
         });
     window.WeAdminShow = function(title, url, w, h) {

@@ -9,39 +9,43 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         , $ = layui.jquery
         , form = layui.form
         , slider = layui.slider; //滑块//执行一个laydate实例
-    $("#issueTypeId").load('http://127.0.0.1:8080//getClient',function (result) {
-        var data=eval(result);
-        $(data).each(function (i,o) {
-            $("#issueTypeId").append("<option value='"+o.id+"'>"+o.issueName+"</option>")
+    element.render();
+    $("#add").click(function(){
+        var index = layer.open({
+            type: 2,
+            content: './addClient.html',
+            area: ['300px', '300px'],
+            maxmin: true
         });
-        form.render("select");
-    });
+        layer.full(index);
+    })
+
+
     //执行一个 table 实例
     table.render({
         elem: '#problem'
         ,id:'testReload'
         ,height: 450
-        ,width:1150
-        ,url: 'http://127.0.0.1:8081/Client/getClientALL' //数据接口
+        ,url: 'http://127.0.0.1/Client/getClientALL' //数据接口
         ,title: '客户表'
         ,type:'get'
-        ,limit:5
         ,dataType:'json'
         ,crossDomain:true
         ,cols: [[ //表头
             {type:'numbers',title:"序号",fixed: 'left'}
-            , {field: 'cid', title: 'ID'}
             , {field: 'cname',title: '姓名'}
             , {field: 'address', title: '地址'}
             , {field: 'phone', title: '手机号'}
-            , {fixed: 'right',width:120, align:'center',title:'操作', toolbar: '#barDemo'}
+            , {field: 'ip', title: 'IP'}
+            , {fixed: 'right',width:200, align:'center',title:'操作', toolbar: '#barDemo'}
         ]]
         ,page: true
     });
     form.on('submit(formDemo)', function(data){
         table.reload('testReload', {
             where: { //设定异步数据接口的额外参数，任意设
-                cname: $("#cname").val()
+                cname: $("#cname").val(),
+                phone: $("#phone").val()
 
                 //…
             }
@@ -56,9 +60,9 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         //console.log(obj)
         if(obj.event === 'del') {
             layer.confirm('确定删除吗?', function (index) {
-                $.get('http://127.0.0.1:8081/Client/delClient', {"cid": data.cid}, function (result) {
+                $.get('http://127.0.0.1/Client/delClient', {"cid": data.cid}, function (result) {
                     if (result == true) {
-                        layer.msg('删除成功!',{icon:1},function () {
+                        layer.msg('删除成功!',{icon:1,time:1000},function () {
                             table.reload('testReload');
                         });
 
@@ -69,7 +73,13 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
             });
         } else if(obj.event === 'edit'){
-            WeAdminShow('修改客户','./updateClient.html?cid='+data.cid,600,400);
+            var index = layer.open({
+                type: 2,
+                content: './updateClient.html?cid='+data.cid,
+                area: ['300px', '300px'],
+                maxmin: true
+            });
+            layer.full(index);
         }
     });
     $('.btnArr .layui-btn').on('click', function(){

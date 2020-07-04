@@ -9,7 +9,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         , $ = layui.jquery
         , form = layui.form
         , slider = layui.slider; //滑块//执行一个laydate实例
-    $("#issueTypeId").load('http://127.0.0.1:8080/problemstate/getIssueType',function (result) {
+    $("#issueTypeId").load('http://127.0.0.1/problemstate/getIssueType',function (result) {
         var data=eval(result);
         $(data).each(function (i,o) {
             $("#issueTypeId").append("<option value='"+o.id+"'>"+o.issueName+"</option>")
@@ -21,26 +21,25 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#problem'
         ,id:'testReload'
         ,height: 450
-        ,width:1150
-        ,url: 'http://127.0.0.1:8081/Role/getRolesALL' //数据接口
+        ,url: 'http://127.0.0.1/Role/getRolesALL' //数据接口
         ,title: '角色表'
         ,type:'get'
         ,dataType:'json'
-        ,limit:5
+        ,limit:9
         ,crossDomain:true
         ,cols: [[ //表头
-            {type:'numbers',title:"序号",fixed: 'left'}
-            , {field: 'rid', title: 'ID'}
+            {type:'numbers',title:"序号",width:100,fixed: 'left'}
             , {field: 'rname', title: '角色名'}
             , {field: 'hierarchy', title: '角色等级'}
-            , {fixed: 'right', width:120, align:'center', toolbar: '#barDemo'}
+            , {fixed: 'right', width:200, align:'center', toolbar: '#barDemo'}
         ]]
         ,page: true
     });
     form.on('submit(formDemo)', function(data){
         table.reload('testReload', {
             where: { //设定异步数据接口的额外参数，任意设
-                rname: $("#rname").val()
+                rname: $("#rname").val(),
+                hierarchy: $("#hierarchy").val()
 
                 //…
             }
@@ -55,9 +54,9 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         //console.log(obj)
         if(obj.event === 'del') {
             layer.confirm('确定删除吗?', function (index) {
-                $.get('http://127.0.0.1:8081/Role/delRole', {"rid": data.rid}, function (result) {
+                $.get('http://127.0.0.1/Role/delRole', {"rid": data.rid}, function (result) {
                     if (result == true) {
-                        layer.msg('删除成功!',{icon:1},function () {
+                        layer.msg('删除成功!',{icon:1, time: 1000},function () {
                             table.reload('testReload');
                         });
 
@@ -68,7 +67,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
             });
         } else if(obj.event === 'edit'){
-            WeAdminShow('修改角色','./updateRole.html?rid='+data.rid,600,280);
+            WeAdminShow('修改角色','./updateRole.html?rid='+data.rid,500,450);
         }
     });
     $('.btnArr .layui-btn').on('click', function(){

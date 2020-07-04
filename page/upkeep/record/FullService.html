@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>保养记录</title>
+	</head>
+	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+
+		 <style>
+
+		    </style>
+		</head>
+		<body>
+		<div class="weadmin-body" style="margin-left: 3%;">
+			 <div class="layui-row">
+				 <form class="layui-form" style="width: 1150px;">
+					 <div class="layui-row">
+						 <div class="layui-col-md8">
+							 <div class="layui-form-item layui-inline">
+								 <div style="padding: 10px;">保养人</div>
+								 <div class="layui-input-inline">
+									 <input type="text" name="realname" id="realname" lay-verify="title" autocomplete="off" class="layui-input">
+								 </div>
+							 </div>
+							 <div class="layui-form-item layui-inline" style="width: 100px;">
+								 <label class="layui-form-label" style="margin-left: -20px">保养状态</label>
+								 <div class="layui-input-inline" style="width: 100px">
+									 <select name="status" id="status" lay-verify="required">
+										 <option value="0">请选择</option>
+										 <option value="1">未开始</option>
+										 <option value="2">处理中</option>
+										 <option value="3">已完成</option>
+									 </select>
+
+								 </div>
+
+							 </div>
+							 <div class="layui-form-item layui-inline">
+								 <div style="padding: 10px;">保养地址</div>
+								 <div class="layui-input-inline">
+									 <input type="text" name="address" id="address" lay-verify="title" autocomplete="off" class="layui-input">
+								 </div>
+							 </div>
+							 <div class="layui-form-item layui-inline">
+								 <div style="padding: 10px;">保养编号</div>
+								 <div class="layui-input-inline">
+									 <input type="text" name="coding" id="coding" lay-verify="title" autocomplete="off" class="layui-input">
+								 </div>
+							 </div>
+						 </div>
+						 <div class="layui-col-md4">
+							 <div class="layui-form-item layui-inline" style="margin-left: 40px;margin-top: 40px;">
+								 <button class="layui-btn layui-bg-blue" style="width: 100px;" type="button" lay-submit lay-filter="formDemo">查询</button>
+								 <button class="layui-btn" type="reset" style="background-color:#c2c2c2;width: 100px;">重置</button>
+								 <button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2;width: 100px;" id="xz">新增</button>
+							 </div>
+						 </div>
+					 </div>
+				 </form>
+
+		</div>
+
+		    <table class="layui-table" id="test" lay-filter="demo"></table>
+		</div>
+	</body>
+	<script type="text/html" id="beforeimgtmp">
+		<img src="../../../static/img/{{d.beforeinstallation}}">
+	</script>
+	<script type="text/html" id="afterimgtmp">
+		<img src="../../../static/img/{{d.afterinstallation}}">
+	</script>
+	<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-primary layui-btn-xs" id="pg" lay-event="detail">评估</a>
+			<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	</script>
+	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
+
+<script>
+	layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider','jquery','form'], function() {
+		var laydate = layui.laydate //日期
+				, laypage = layui.laypage //分页
+				, layer = layui.layer //弹层
+				, table = layui.table //表格
+				, carousel = layui.carousel //轮播
+				, upload = layui.upload //上传
+				, element = layui.element //元素操作
+				, $ = layui.jquery
+				, form = layui.form
+				, slider = layui.slider; //滑块//执行一个laydate实例
+		//执行一个 table 实例
+		table.render({
+			elem: '#test'
+			,id:'testReload'
+			,height: 450
+			,width:1250
+			,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/getInstallationRecordEvaluation' //数据接口
+			,type:'get'
+			,dataType:'json'
+			,crossDomain:true
+			,cols: [[ //表头
+				{type:'numbers',title:"序号"}
+				, {field: 'realname',width:200, title: '保养人员名称'}
+				, {field: 'address',width:200, title: '安装地址'}
+				, {field: 'beforeinstallation',width:200, title: '安装前图片',templet:"#beforeimgtmp"}
+				, {field: 'afterinstallation',width:200, title: '安装后图片',templet:"#afterimgtmp"}
+				, {field: 'installationtime',width:200, title: '安装日期'}
+				, {field: 'coding',width:200, title: '产品编号'}
+				,{field:'status',width:100,title:'保养状态',templet:function(s){
+						if (s.status===1){
+							return '未开始'
+						}else if (s.status===2){
+							return '处理中'
+						}else {
+							return '已完成'
+						}
+					}}
+				, {fixed: 'right', width:170,title:'操作' ,toolbar: '#barDemo'}
+			]]
+			,page: true
+		});
+		$("#xz").click(function(){
+			WeAdminShow('新增安装记录','./addFullService.html',700,500)
+
+		})
+		form.on('submit(formDemo)', function(data){
+			table.reload('testReload', {
+				where: { //设定异步数据接口的额外参数，任意设
+					address: $("#address").val()
+					,status: $("#status").val()
+					,coding: $("#coding").val()
+					,realname: $("#realname").val()
+					//…
+				}
+				,page: {
+					curr: 1 //重新从第 1 页开始
+				}
+			});
+		})
+		$('.btnArr .layui-btn').on('click', function(){
+			var type = $(this).data('type');
+			active[type] ? active[type].call(this) : '';
+		});
+		//监听行工具事件
+		table.on('tool(demo)', function(obj){
+			var data = obj.data;
+			//console.log(obj)
+			if(obj.event == 'del'){
+				layer.confirm('真的删除行么', function(index){
+					$.get("http://127.0.0.1:8081/InstallationRecordEvaluation/deleteInstallationRecordEvaluationByRid?rid="+data.rid,function (ret) {
+						if (ret=="ok"){
+							layer.msg("删除成功！")
+							table.reload('testReload');
+						}else {
+							layer.msg("删除失败！")
+						}
+					})
+				});
+
+
+			} else if(obj.event == 'detail'){
+				WeAdminShow('安装记录评估','./assessFullService.html?rid='+data.rid,700,500);
+			}else if(obj.event == 'edit'){
+				WeAdminShow('安装记录修改','./UpdateFullService.html?rid='+data.rid,800,500);
+			}
+		});
+
+		window.WeAdminShow = function(title, url, w, h) {
+			if(title == null || title == '') {
+				title = false;
+			};
+			if(url == null || url == '') {
+				url = "404.html";
+			};
+			if(w == null || w == '') {
+				w = ($(window).width() * 0.9);
+			};
+			if(h == null || h == '') {
+				h = ($(window).height() - 50);
+			};
+			layer.open({
+				type: 2,
+				area: [w + 'px', h + 'px'],
+				fix: false, //不固定
+				width:w,
+				height:h,
+				maxmin: true,
+				shadeClose: true,
+				shade: 0.4,
+				title: title,
+				content: url,
+				success:function () {
+
+				},end:function () {
+					table.reload('testReload');
+				}
+			});
+		}
+	})
+</script>
+</html>

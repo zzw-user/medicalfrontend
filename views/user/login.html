@@ -12,6 +12,29 @@
   <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
   <link rel="stylesheet" href="../../layuiadmin/style/login.css" media="all">
 </head>
+<style>
+  .code {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .input-val {
+    width: 63%;
+    background: #ffffff;
+    height: 2.8rem;
+    padding: 0 2%;
+    border-radius: 5px;
+    border: none;
+    border: 1px solid rgba(0,0,0,.2);
+    font-size: 0.9rem;
+  }
+  #canvas {
+    float: right;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
 <body>
 
   <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
@@ -24,7 +47,7 @@
       <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
         <div class="layui-form-item">
           <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
-          <input type="text" name="username" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
+          <input type="text" name="mname" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
         </div>
         <div class="layui-form-item">
           <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
@@ -33,13 +56,14 @@
         <div class="layui-form-item">
           <div class="layui-row">
             <div class="layui-col-xs7">
-              <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
-              <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+              <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="yzm"></label>
+              <input type="text" name="vercode" id="yzm" lay-verify="required" placeholder="图形验证码" class="layui-input">
             </div>
             <div class="layui-col-xs5">
               <div style="margin-left: 10px;">
-                <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
-              </div>
+                <canvas id="canvas" width="100" height="43"></canvas>
+             <!--  <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
+              --></div>
             </div>
           </div>
         </div>
@@ -55,7 +79,6 @@
           <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
           <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
           <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
-          
           <a href="reg.html" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
         </div>
       </div>
@@ -88,6 +111,9 @@
 
   <script src="../../layuiadmin/layui/layui.js"></script>  
   <script>
+
+
+
   layui.config({
     base: '../../layuiadmin/' //静态资源所在路径
   }).extend({
@@ -99,43 +125,114 @@
     ,form = layui.form
     ,router = layui.router()
     ,search = router.search;
+    var show_num=[];
+
+    draw(show_num);
+    $("#canvas").click(function () {
+      draw(show_num);
+    })
 
     form.render();
 
     //提交
     form.on('submit(LAY-user-login-submit)', function(obj){
-    
-      //请求登入接口
-      admin.req({
-        url: layui.setter.base + 'json/user/login.js' //实际使用请改成服务端真实接口
+
+      var val=$("#yzm").val().toLowerCase();
+      var num=show_num.join("");
+      if(val==''){
+        layer.msg("请输入验证码",{icon:7,time:2000},function () {
+        })
+        return false;
+      }else if(val==num){
+
+      }else {
+        layer.msg("验证码有误，请重新输入",{icon:5,time:2000},function () {
+        })
+        $("#yzm").val("");
+        draw(show_num);
+        return false;
+      }
+      $.ajax({
+        type:"get"
         ,data: obj.field
-        ,done: function(res){
-        
-          //请求成功后，写入 access_token
-          layui.data(setter.tableName, {
-            key: setter.request.tokenName
-            ,value: res.data.access_token
-          });
-          
-          //登入成功的提示与跳转
-          layer.msg('登入成功', {
-            offset: '15px'
-            ,icon: 1
-            ,time: 1000
-          }, function(){
-            location.href = '../'; //后台主页
-          });
+        ,dataJson:"json"
+        ,url:"http://127.0.0.1/loginVerify"
+        ,success:function (res) {
+
+          if(res.code === "0"){
+            var Token =res.token;
+            localStorage.setItem("token",Token);	//本地存储，存储在客户端
+            //登入成功的提示与跳转
+            layer.msg('登入成功', {
+              offset: '15px'
+              ,icon: 1
+              ,time: 1000
+            }, function(){
+              location.href = '../'; //后台主页
+            });
+          }
+          else {
+            alert(res.message);
+          }
         }
-      });
-      
+      })
+
     });
-    
-    
-    //实际使用时记得删除该代码
-    layer.msg('为了方便演示，用户名密码可随意输入', {
-      offset: '15px'
-      ,icon: 1
-    });
+
+
+    function draw(show_num) {
+      var canvas_width = $('#canvas').width();
+      var canvas_height = $('#canvas').height();
+      var canvas = document.getElementById("canvas");//获取到canvas的对象，演员
+      var context = canvas.getContext("2d");//获取到canvas画图的环境，演员表演的舞台
+      canvas.width = canvas_width;
+      canvas.height = canvas_height;
+      var sCode = "A,B,C,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0";
+      var aCode = sCode.split(",");
+      var aLength = aCode.length;//获取到数组的长度
+
+      for (var i = 0; i <= 3; i++) {
+        var j = Math.floor(Math.random() * aLength);//获取到随机的索引值
+        var deg = Math.random() * 30 * Math.PI / 180;//产生0~30之间的随机弧度
+        var txt = aCode[j];//得到随机的一个内容
+        show_num[i] = txt.toLowerCase();
+        var x = 10 + i * 20;//文字在canvas上的x坐标
+        var y = 20 + Math.random() * 8;//文字在canvas上的y坐标
+        context.font = "bold 23px 微软雅黑";
+
+        context.translate(x, y);
+        context.rotate(deg);
+
+        context.fillStyle = randomColor();
+        context.fillText(txt, 0, 0);
+
+        context.rotate(-deg);
+        context.translate(-x, -y);
+      }
+      for (var i = 0; i <= 5; i++) { //验证码上显示线条
+        context.strokeStyle = randomColor();
+        context.beginPath();
+        context.moveTo(Math.random() * canvas_width, Math.random() * canvas_height);
+        context.lineTo(Math.random() * canvas_width, Math.random() * canvas_height);
+        context.stroke();
+      }
+      for (var i = 0; i <= 30; i++) { //验证码上显示小点
+        context.strokeStyle = randomColor();
+        context.beginPath();
+        var x = Math.random() * canvas_width;
+        var y = Math.random() * canvas_height;
+        context.moveTo(x, y);
+        context.lineTo(x + 1, y + 1);
+        context.stroke();
+      }
+    }
+
+    function randomColor() {//得到随机的颜色值
+      var r = Math.floor(Math.random() * 256);
+      var g = Math.floor(Math.random() * 256);
+      var b = Math.floor(Math.random() * 256);
+      return "rgb(" + r + "," + g + "," + b + ")";
+    }
     
   });
   </script>

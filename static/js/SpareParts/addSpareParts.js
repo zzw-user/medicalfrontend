@@ -6,12 +6,10 @@ layui.use(['element','jquery','layer','form'], function() {
 
     form.on('submit(demo)', function(data){
 
-        $.get( 'http://127.0.0.1:8081/Type/addtype',$("#form").serialize(),function (result) {
+        $.get( 'http://127.0.0.1/Type/addtype',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("新增成功！",{icon:1,time:1000},function(){
-                    x_admin_close();
-                    window.parent.location.reload('');
-
+                    x_admin_close();  parent.layui.table.reload('testReload'); //重载表格
                 });
 
             }else{

@@ -15,6 +15,12 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     });
 
     form.on('submit(formDemo2)', function(data){
+        var province = $("#province").val();
+        var area = $("#area").val();
+        var city= $("#city").val();
+        var site = $("#site").val();
+        var str = province+' '+city+' '+area+' '+site;
+        $("#address").val(str);
         $.ajax({
             url: 'http://127.0.0.1:8081/Warehouse/addWarehouse',
             type: 'get',
