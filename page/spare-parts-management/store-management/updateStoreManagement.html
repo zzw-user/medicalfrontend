@@ -10,6 +10,7 @@
 		}
 	</style>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
 	<body>
 		<div class="weadmin-body">
 		    <form class="layui-form" id="form" lay-filter="example">
@@ -31,7 +32,7 @@
 							</div>
 						</div>
 		                <div class="layui-form-item layui-inline">
-							<span><b>维修地址：</b></span>
+							<div style="padding: 10px;">创建人</div>
 							<div class="layui-form-item layui-inline" style="margin-top: 15px">
 								<div class="layui-form-item" id="addressDiv">
 									<div class="layui-input-inline" style="width: 90px;">
@@ -60,14 +61,14 @@
 							</div>
 		                </div>
 		               <div class="layui-form-item layui-inline" style="margin-bottom: 20px">
-		                   <div >创建时间</div>
+						   <div style="padding: 10px;">创建人</div>
 		                   <div class="layui-input-inline">
 		                       <input type="text" name="creationtime" id="date1" placeholder="yyyy-MM-dd" lay-reqtext="创建时间不能为空！" placeholder="请输入创建时间！" lay-verify="required" autocomplete="off" class="layui-input">
 		                   </div>
 		               </div>
 		            </div>
 		
-		            <div class="" style="margin-left: 300px;">
+		            <div class="" style="margin-left: 330px;margin-top: -10%">
 		                <div class="layui-form-item">
 		                    <button class="layui-btn layui-bg-blue" type="button" lay-submit="" lay-filter="demo">保存</button>
 		                    <button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>

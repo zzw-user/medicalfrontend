@@ -5,10 +5,10 @@
     <title>安装记录评估</title>
 </head>
 <link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
 <style>
     dl>dd{
         cursor: pointer;
-        position: fixed;
     }
 </style>
 <body>
@@ -31,8 +31,14 @@
                     </div>
                 </div>
                 <div class="layui-form-item layui-inline">
+                    <div style="padding: 10px;">产品编号</div>
+                    <div class="layui-input-inline">
+                        <input type="text" name="coding" lay-verify="required" disabled autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
                     <div style="padding: 10px;">安装地址</div>
-                    <div class="layui-input-inline" style="width: 400px;">
+                    <div class="layui-input-inline" style="width: 500px;">
                         <input type="text" name="address" lay-verify="required" disabled autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -44,12 +50,7 @@
                         <input type="radio" name="status" value="3" title="已完成">
                     </div>
                 </div>
-                <div class="layui-form-item layui-inline">
-                    <div style="padding: 10px;">产品编号</div>
-                    <div class="layui-input-inline">
-                        <input type="text" name="coding" lay-verify="required" disabled autocomplete="off" class="layui-input">
-                    </div>
-                </div>
+
                 <div class="layui-form-item">
                     <div style="padding: 10px;">评估</div>
                     <div class="layui-input-block" style="width: 200px;margin-left: 0px">
@@ -63,6 +64,7 @@
                         <hr>
                         <img src="" id="beforeinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
                     </div>
+                    <div id="bimg"></div>
                 </div>
                 <input type="hidden" id="beforeinstallation" name="beforeinstallation">
                 <div class="layui-upload-drag" id="afterinstallationtest" style="width: 100px;margin-left: 8%">
@@ -72,11 +74,12 @@
                         <hr>
                         <img src="" id="afterinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
                     </div>
+                    <div id="aimg"></div>
                 </div>
                 <input type="hidden" id="afterinstallation" name="afterinstallation">
                 <input type="hidden" id="rid" name="rid">
             </div>
-            <div class="" style="margin-left: 320px;margin-top: 3%;">
+            <div class="" style="margin-left: 65%;margin-top: 3%;">
                 <div class="layui-form-item">
                     <button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo2">保存</button>
                     <button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
@@ -120,6 +123,8 @@
             $("#rid").val(rid);
             $.post( 'http://127.0.0.1:8080/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
                 console.log(result);
+                $("#bimg").append("<img src='../../../static/img/"+result.beforeinstallation+"' style=\"max-width: 100px\">")
+                $("#aimg").append("<img src='../../../static/img/"+result.afterinstallation+"' style=\"max-width: 100px\">")
                 form.val('example',result);
                 $.post('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(res) {
 

@@ -5,7 +5,8 @@
 		<title>保养回访</title>
 	</head>
 	<link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
-
+	<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
 		 <style>
 
 			 .layui-nav .layui-nav-more {
@@ -27,7 +28,7 @@
 			 }
 		    </style>
 		</head>
-		<body>
+		<body><!--
 		<div class="weadmin-body" style="margin-left: 3%;">
 			 <div class="layui-row">
 				 <form class="layui-form layui-col-md12 we-search layui-form-pane">
@@ -49,7 +50,7 @@
 					  </button>
 				  		</div>			 	
 				  </div>
-						   <!-- <button class="layui-btn" lay-submit="" lay-filter="sreach" style="background-color: #01AAED;"" id="reload"><i class="layui-icon">&#xe615;搜索</i></button>	 				 -->	
+						   &lt;!&ndash; <button class="layui-btn" lay-submit="" lay-filter="sreach" style="background-color: #01AAED;"" id="reload"><i class="layui-icon">&#xe615;搜索</i></button>	 				 &ndash;&gt;
 				
 
 					  </form>
@@ -61,7 +62,53 @@
 			</script>
 			<table class="layui-table" id="problem" lay-filter="test"></table>
 		</div>
-	</body>
+	-->
+		<div class="layui-fluid">
+			<div class="layui-card">
+				<div class="layui-form layui-card-header layuiadmin-card-header-auto" style="text-align: center;">
+					<div class="layui-form-item" >
+						<div class="layui-inline">
+							<label class="layui-form-label">回访客户</label>
+							<div class="layui-input-inline">
+								<input type="text" name="pname" id="pname" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">回访类型</label>
+							<div class="layui-input-inline">
+								<input type="text" name="way" id="way" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<button class="layui-btn layuiadmin-btn-comm" data-type="reload" id="reload" lay-submit lay-filter="formDemo">
+								<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+							</button>
+							<button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="layui-card-body">
+					<div style="padding-bottom: 10px;">
+						<button type="button" class="layui-btn layui-btn-lg  layui-btn-normal" onclick="WeAdminShow('新增','./addMaintenance.html',750,500)"  style="height: 40px;/*width: 150px;*/background-color: #01AAED;">
+							新增
+						</button>					</div>
+
+					<table class="layui-table" align="center" id="problem" lay-filter="test"></table>
+					<script type="text/html" id="barDemo">
+						<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="upd"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+
+					</script>
+				</div>
+
+			</div>
+		</div>
+		</div>
+
+		</body>
 	<script src="../../lib/layui-v2.5.5/layui.js"></script>
 	<script src="../../static/js/upkeepcost/Maintenance.js"></script>
 </html>

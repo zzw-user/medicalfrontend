@@ -47,7 +47,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     table.on('tool(demo)', function(obj){
         var data = obj.data;
         if(obj.event === 'detail'){
-            WeAdminShow('修改派单','./UpdateMaintainSend.html?did='+data.did,800,500);
+            WeAdminShow('修改派单','./UpdateMaintainSend.html?did='+data.did,600,500);
         } else if(obj.event === 'del'){
             layer.confirm('真的删除行么', function(index){
                 $.get("http://127.0.0.1:8080/SendaSingleInstallation/deleteDeliveryByDid?did="+data.did,function (ret) {

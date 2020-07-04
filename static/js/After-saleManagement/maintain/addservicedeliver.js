@@ -45,7 +45,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         $.ajax({
             url: 'http://127.0.0.1:8080/delivery/addDelivery',
             type: 'post',
-            data: $("#form").serialize(),
+            data: $("#pro").serialize(),
             dataType:'text',
             success: function (result) {
                 if (result) {

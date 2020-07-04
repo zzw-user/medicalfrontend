@@ -10,7 +10,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         , form = layui.form
         , slider = layui.slider; //滑块//执行一个laydate实例
     table.render({
-        elem: '#problem'
+        elem: '#test'
         ,url:'http://127.0.0.1:8080/Warehouse/seleWarehouse'
         ,toolbar: true
         ,cols: [[
@@ -19,13 +19,12 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             , {field: 'address',width:262, title: '仓库地址'}
             , {field: 'mname',width:180, title: '创建人'}
             , {field: 'creationtime',width:260, title: '创建时间'}
-            , {fixed: 'right',title: '操作', width:208, align:'center', toolbar: '#barDemo'}
+            , {fixed: 'right',title: '操作', width:150, align:'center', toolbar: '#barDemo'}
         ]]
         ,id : 'testReload'
         ,page: true
-        ,limit:3
-        ,height:300
-        ,width:1300
+        ,height:450
+        ,width:1150
     });
     $("#sel").on('click',function(){
         table.reload('testReload', {
@@ -63,7 +62,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
                 });
             } else if (obj.event === 'upd') {
-                WeAdminShow('修改用户','./updateStoreManagement.html?wid='+data.wid,800,400);
+                WeAdminShow('修改用户','./updateStoreManagement.html?wid='+data.wid,600,500);
             }
         });
     window.WeAdminShow = function(title, url, w, h) {

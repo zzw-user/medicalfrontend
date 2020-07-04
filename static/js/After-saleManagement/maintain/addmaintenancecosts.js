@@ -30,7 +30,29 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
 
         })
     })
+    $("#site").blur(function () {
+        var province = $("#province").val();
+        var area = $("#area").val();
+        var city= $("#city").val();
+        var site = $("#site").val();
+        var str = province+' '+city+' '+area+' '+site;
+        $("#address").val(str);
 
+        $.ajax({
+            type:"get",
+            data:{"address":str,"key":"389880a06e3f893ea46036f030c94700"},
+            dataJson: "json",
+            url:"http://restapi.amap.com/v3/geocode/geo",
+            success:function (result) {
+                console.log(result);
+                console.log(result.geocodes[0].location);
+                var sz=result.geocodes[0].location.split(",");
+                $("#longitude").val(sz[0]);
+                $("#latitude").val(sz[1]);
+            }
+        })
+        console.log(address);
+    })
     form.on('submit(demo1)', function(data){
         var province = $("#province").val();
         var area = $("#area").val();

@@ -25,7 +25,8 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#date'
     });
     laydate.render({
-        elem: '#date1'
+        elem: '#test1'
+        ,type:'datetime'
     });
     $("#operator").load('http://127.0.0.1:8080/Maintenancecosts/getMpuserOne',function (result) {
         var data=eval(result);

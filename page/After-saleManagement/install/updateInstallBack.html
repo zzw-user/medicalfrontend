@@ -5,10 +5,10 @@
 		<title>修改安装回访记录</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
 	<style>
 		dl>dd{
 			cursor: pointer;
-			position: fixed;
 		}
 	</style>
 	<body>
@@ -32,8 +32,8 @@
 						</div>
 						<div class="layui-form-item layui-inline" >
 							<div style="padding: 10px;">操作人</div>
-							<input type="text" id="operator" name="operator"  lay-verify="title" autocomplete="off" class="layui-input">
-
+							<input type="text" id="realname" disabled name="realname"  lay-verify="title" autocomplete="off" class="layui-input">
+							<input type="hidden" id="operator" name="operator">
 							<input type="hidden" name="pid">
 						</div>
 						<input type="hidden" name="aftertype" value="1">
@@ -89,12 +89,13 @@
 					elem: '#test1'
 				});
 				var pid=getUrlParam("pid");
+				$("#pid").val(pid);
 				$.get('http://127.0.0.1:8080/Repairback/getPayareturnvisitOne',{pid:pid},function (result) {
 					$("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(res) {
 						const data = eval(res);
 						$(data).each(function(i, o) {
 							if(result.operator==o.mpid){
-								$("#operator").val(o.realname);
+								$("#realname").val(o.realname);
 							}
 						});
 					});

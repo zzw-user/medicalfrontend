@@ -5,11 +5,12 @@
 		<title>新增安装费用</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+
+	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
 	<body>
 	<style>
 		dl>dd{
 			cursor: pointer;
-			position: fixed;
 		}
 	</style>
 		<div class="weadmin-body">
@@ -39,6 +40,26 @@
 							</div>
 						</div>
 						<div class="layui-form-item layui-inline">
+							<div style="padding: 10px;">录入日期</div>
+							<div class="layui-input-inline">
+								<input type="text" name="inputtime" lay-verify="required" id="test1" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
+									   class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item layui-inline">
+							<div style="padding: 10px;">录入人</div>
+							<div class="layui-input-inline">
+								<input type="text" name="dataentryclerk" lay-verify="required" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<input name="aftertype" type="hidden" value="1">
+						<div class="layui-form-item layui-inline">
+							<div style="padding: 10px;">费用</div>
+							<div class="layui-input-inline">
+								<input type="text" name="cost" lay-verify="required" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item layui-inline">
 
 							<div class="layui-form-item" id="addressDiv">
 								<div style="padding: 10px;">安装地址</div>
@@ -57,10 +78,10 @@
 										<option></option>
 									</select>
 								</div>
-								<div class="layui-input-inline" id="addressDetail" style="width: 270px;">
-									<input id="site" type="text" name="site" style="width: 270px;"  lay-verify="title" autocomplete="off"
-										   placeholder="请输入具体地址"  lay-verify="required" lay-reqtext="安装地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
-									<dl id="addressTip" class="addressDl" style="position: fixed">
+								<div class="layui-input-inline" id="addressDetail" style="width: 280px;">
+									<input id="site" type="text" name="site" style="width: 280px;"  lay-verify="title" autocomplete="off"
+										   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="安装地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
+									<dl id="addressTip" class="addressDl">
 									</dl>
 								</div>
 								<input type="hidden" name="address" id="address">
@@ -68,26 +89,7 @@
 						</div>
 
 
-						<div class="layui-form-item layui-inline">
-							<div style="padding: 10px;">录入日期</div>
-							<div class="layui-input-inline">
-								<input type="text" name="inputtime" lay-verify="required" id="test1" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
-								 class="layui-input">
-							</div>
-						</div>
-						<div class="layui-form-item layui-inline">
-							<div style="padding: 10px;">录入人</div>
-							<div class="layui-input-inline">
-								<input type="text" name="dataentryclerk" lay-verify="required" lay-verify="title" autocomplete="off" class="layui-input">
-							</div>
-						</div>
-						<input name="aftertype" type="hidden" value="1">
-						<div class="layui-form-item layui-inline">
-							<div style="padding: 10px;">费用</div>
-							<div class="layui-input-inline">
-								<input type="text" name="cost" lay-verify="required" lay-verify="title" autocomplete="off" class="layui-input">
-							</div>
-						</div>
+
 						<input type="hidden" name="longitude" id="longitude">
 						<input type="hidden" name="latitude" id="latitude">
 						<div class="layui-form-item layui-inline" style="margin-top: 4%;margin-left: 65%">
@@ -161,13 +163,13 @@
 					})
 				})
 				$("#site").blur(function () {
-					document.getElementById("addressTip").style.display = "none";
 					var province = $("#province").val();
 					var area = $("#area").val();
 					var city= $("#city").val();
 					var site = $("#site").val();
 					var str = province+' '+city+' '+area+' '+site;
 					$("#address").val(str);
+
 					$.ajax({
 						type:"get",
 						data:{"address":str,"key":"389880a06e3f893ea46036f030c94700"},
@@ -177,12 +179,19 @@
 							console.log(result);
 							console.log(result.geocodes[0].location);
 							var sz=result.geocodes[0].location.split(",");
-
+							$("#longitude").val(sz[0]);
+							$("#latitude").val(sz[1]);
 						}
 					})
+					console.log(address);
 				})
 				form.on('submit(formDemo2)', function(data) {
-
+					var province = $("#province").val();
+					var area = $("#area").val();
+					var city= $("#city").val();
+					var site = $("#site").val();
+					var str = province+' '+city+' '+area+' '+site;
+					$("#address").val(str);
 					$.ajax({
 						url: 'http://127.0.0.1:8080/Cost/addCost',
 						type: 'get',

@@ -14,6 +14,14 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
     });
     var pid=getUrlParam("pid");
     $.get('http://127.0.0.1:8080/Repairback/getPayareturnvisitOne',{pid:pid},function (result) {
+        $("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(res) {
+            const data = eval(res);
+            $(data).each(function(i, o) {
+                if(result.operator==o.mpid){
+                    $("#realname").val(o.realname);
+                }
+            });
+        });
         form.val('example',result);
     });
 

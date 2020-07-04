@@ -5,12 +5,76 @@
     <title>安装记录</title>
 </head>
 <link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
-
+<link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
 <style>
 
 </style>
 </head>
 <body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto" style="text-align: center;">
+            <div class="layui-form-item" >
+                <div class="layui-inline">
+                    <label class="layui-form-label">安装人员</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="realname" id="realname" lay-verify="title" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">安装地址</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="address" id="address" lay-verify="title" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">安装状态</label>
+                    <div class="layui-input-inline">
+                        <select name="status" id="status" lay-filter="aihao">
+                            <option value="0">请选择</option>
+                            <option value="1">未开始</option>
+                            <option value="2">处理中</option>
+                            <option value="3">已完成</option>
+                        </select> </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">产品编码</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="coding" id="coding" lay-verify="title" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="formDemo">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+                    </button>
+                    <button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2;width: 100px;" id="xz">新增</button>
+            </div>
+
+            <table class="layui-table" align="center" id="test" lay-filter="test"></table>
+            <script type="text/html" id="barDemo">
+                <div style="height: 80px;margin-top:40px">
+                <a class="layui-btn layui-btn-primary layui-btn-xs" id="pg" lay-event="detail"><i class="layui-icon layui-icon-list"></i>评估</a>
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+
+                </div>
+            </script>
+        </div>
+
+    </div>
+</div>
+</div>
+<!--
 <div class="weadmin-body" style="margin-left: 3%;">
     <form class="layui-form" style="width: 1150px;">
         <div class="layui-row">
@@ -63,45 +127,17 @@
 
 
 
-</body>
+--></body>
 <script type="text/html" id="beforeimgtmp">
     <img src="../../../static/img/{{d.beforeinstallation}}">
 </script>
 <script type="text/html" id="afterimgtmp">
     <img src="../../../static/img/{{d.afterinstallation}}">
 </script>
-<script type="text/html" id="barDemo">
-    <div style="height: 80px;margin-top:40px">
-        <a class="layui-btn layui-btn-primary layui-btn-xs" id="pg" lay-event="detail">评估</a>
-        <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    </div>
-</script>
-<!--<script type="text/html" id="b">
 
-    &lt;!&ndash;<div  style="position: relative;
-	height: 6px;
-	border-radius: 20px;
-	background-color: red">
-        <div style="position: absolute;
-	left: 0;
-	top: 0;
-	width: 0;
-	max-width: 100%;
-	height: 6px;
-	border-radius: 20px;
-	text-align: right;
-	background-color: #5FB878;
-	transition: all .3s;
-	-webkit-transition: all .3s"></div>
-    </div>&ndash;&gt;
-    <div class="layui-progress layuiadmin-order-progress" style="background-color: red">
-        <div class="layui-progress-bar layui-bg-red" lay-percent="20%"></div>
-    </div>
-</script>-->
 <script type="text/html" id="progressTpl">
     {{#  if(d.status == 1){ }}
-    <div class="layui-progress layuiadmin-order-progress" >
+    <div class="layui-progress" >
         <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
     </div>
     {{#  } }}
@@ -160,7 +196,7 @@
             ,id:'testReload'
             ,height: 450
             ,width:1150
-            ,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/getInstallationRecordEvaluation' //数据接口
+            ,url: 'http://127.0.0.1:8080/InstallationRecordEvaluation/getInstallationRecordEvaluation' //数据接口
             ,type:'get'
             ,dataType:'json'
             ,crossDomain:true
@@ -172,9 +208,10 @@
                 , {field: 'afterinstallation',width:200, title: '安装后图片',templet:"#afterimgtmp"}
                 , {field: 'installationtime',width:200, title: '安装日期'}
                 , {field: 'coding',width:200, title: '产品编号'}
+                ,{field:'assess',width:100,title:'评估'}
                 ,{field:'status',width:150,title:'安装进度',templet:"#progressTpl"}
                 ,{field:'status',width:100,title:'安装状态',templet:"#buttonTpl"}
-                , {fixed: 'right', width:170,align:'center',title:'操作' ,toolbar: '#barDemo'}
+                , {fixed: 'right', width:230,align:'center',title:'操作' ,toolbar: '#barDemo'}
             ]]
             ,page: true
             ,done:function (res,curr,count) {
@@ -182,19 +219,8 @@
             }
         });
         $("#xz").click(function(){
-            WeAdminShow('新增安装记录','./addInstallationRecordEvaluation.html',700,500)
+            WeAdminShow('新增安装记录','./addInstallationRecordEvaluation.html',800,600)
 
-        })
-        $("#coding").blur(function(){
-            var coding=$("#coding").val();
-            $.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
-                if (result==null || result==''){
-                    layer.msg("对不起，没有该产品编码！");
-                    var coding=$("#coding").val('');
-                }else {
-                }
-
-            })
         })
         form.on('submit(formDemo)', function(data){
             table.reload('testReload', {
@@ -220,7 +246,7 @@
             //console.log(obj)
             if(obj.event == 'del'){
                 layer.confirm('真的删除行么', function(index){
-                        $.get("http://127.0.0.1:8081/InstallationRecordEvaluation/deleteInstallationRecordEvaluationByRid?rid="+data.rid,function (ret) {
+                        $.get("http://127.0.0.1:8080/InstallationRecordEvaluation/deleteInstallationRecordEvaluationByRid?rid="+data.rid,function (ret) {
                             if (ret=="ok"){
                                 layer.msg("删除成功！")
                                 table.reload('testReload');
@@ -232,9 +258,9 @@
 
 
             } else if(obj.event == 'detail'){
-                WeAdminShow('安装记录评估','./assessment.html?rid='+data.rid,700,500);
+                WeAdminShow('安装记录评估','./assessment.html?rid='+data.rid,800,600);
             }else if(obj.event == 'edit'){
-                WeAdminShow('安装记录修改','./updateInstallationRecordEvaluation.html?rid='+data.rid,700,500);
+                WeAdminShow('安装记录修改','./updateInstallationRecordEvaluation.html?rid='+data.rid,800,600);
             }
         });
 

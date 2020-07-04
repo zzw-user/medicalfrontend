@@ -5,44 +5,10 @@
 		<title>安装派单</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
 	<body>
-		 <style>
-		        /*.layui-btn {
-		            width: 100px;
-		            display: inline-block;
-		            height: 30px;
-		            line-height: 30px;
-		            padding: 0 20px;
-		            background-color: #009688;
-		            color: #fff;
-		            white-space: nowrap;
-		            text-align: center;
-		            font-size: 14px;
-		            border: none;
-		            border-radius: 2px;
-		            cursor: pointer;
-		        }
-		        .layui-nav .layui-nav-more {
-		            content: '';
-		            width: 0;
-		            height: 0;
-		            border-style: solid dashed dashed;
-		            border-color: #fff transparent transparent;
-		            overflow: hidden;
-		            cursor: pointer;
-		            transition: all .2s;
-		            -webkit-transition: all .2s;
-		            position: absolute;
-		            top: 50%;
-		            right: 15px;
-		            margin-top: -3px;
-		            border-width: 6px;
-		            border-top-color: rgba(255,255,255,.7);
-		        }*/
-		    </style>
-		</head>
-		<body>
-		<div class="weadmin-body" style="margin-left: 3%;">
+		<!--<div class="weadmin-body" style="margin-left: 3%;">
 		    <form class="layui-form" style="width: 1150px;">
 		        <div class="layui-row">
 		            <div class="layui-col-md8">
@@ -80,6 +46,55 @@
 				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 			</script>
 		    <table class="layui-table" id="problem" lay-filter="demo"></table>
+		</div>-->
+		<div class="layui-fluid">
+			<div class="layui-card">
+				<div class="layui-form layui-card-header layuiadmin-card-header-auto" style="text-align: center;">
+					<div class="layui-form-item" >
+						<div class="layui-inline">
+							<label class="layui-form-label">安装人</label>
+							<div class="layui-input-inline">
+								<input type="text" name="realname" id="realname" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">安装地址</label>
+							<div class="layui-input-inline">
+								<input type="text" name="address" id="address" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">产品编号</label>
+							<div class="layui-input-inline">
+								<input type="text" name="coding" id="coding" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="formDemo">
+								<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+							</button>
+							<button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="layui-card-body">
+					<div style="padding-bottom: 10px;">
+						<button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2;width: 100px;" id="xz">新增</button>
+					</div>
+
+					<table class="layui-table" align="center" id="problem" lay-filter="test"></table>
+					<script type="text/html" id="barDemo">
+						<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+
+					</script>
+				</div>
+
+			</div>
+		</div>
 		</div>
 	</body>
 		 <script src="../../../lib/layui-v2.5.5/layui.js"></script>
@@ -107,8 +122,8 @@
 				,width:1139
 		        ,cols: [[ //表头
 		            {type:'numbers',title:"序号",width:100}
-		            , {field: 'realname',width:150, title: '安装人'}
-		            , {field: 'address',width:200, title: '安装地址'}
+		            , {field: 'realname',width:100, title: '安装人'}
+		            , {field: 'address',width:300, title: '安装地址'}
 		            , {field: 'deliverytime',width:200, title: '安装时间'}
 		            , {field: 'coding',width:150, title: '产品编码'}
                     , {field: 'phone',width:180, title: '联系电话'}
@@ -129,22 +144,30 @@
 		            }
 		        });
 		})
-
-			table.on('tool(demo)', function(obj){
+			table.on('tool(test)',function(obj) {
 				var data = obj.data;
-				if(obj.event === 'detail'){
-					WeAdminShow('修改派单','./updateSendaSingleInstallation.html?did='+data.did,550,400);
-				} else if(obj.event === 'del'){
-					layer.confirm('真的删除行么', function(index){
-					    $.get("http://127.0.0.1:8081/SendaSingleInstallation/deleteDeliveryByDid?did="+data.did,function (ret) {
-                            if (ret=="ok"){
-                                layer.msg("删除成功！")
-                                table.reload('testReload');
-                            }else {
-                                layer.msg("删除失败！")
-                            }
-                        })
+				if (obj.event === 'del') {
+					layer.confirm('真的删除么?',function(index) {
+						$.ajax({
+							url : "http://127.0.0.1:8080/SendaSingleInstallation/deleteDeliveryByDid",
+							type : "post",
+							data : {
+								did: data.did
+							},
+							dataType : "text",
+							success : function(e) {
+								if (e) {
+									layer.msg("删除成功");
+									table.reload('testReload');
+								} else {
+									layer.msg("删除失败");
+								}
+							}
+						});
+
 					});
+				}else if (obj.event === 'edit') {
+					WeAdminShow('修改派单','./updateSendaSingleInstallation.html?did='+data.did,600,500);
 				}
 			});
 		    $('.btnArr .layui-btn').on('click', function(){

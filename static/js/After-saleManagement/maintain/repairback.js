@@ -14,7 +14,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#problem'
         ,id:'testReload'
         ,height: 450
-        ,width:1450
+        ,width:1150
         ,url: 'http://127.0.0.1:8080/Repairback/selePayareturnvisit?aftertype=2' //数据接口
         ,title: '问题状态表'
         ,type:'get'
@@ -57,17 +57,17 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                         dataType : "text",
                         success : function(e) {
                             if (e) {
-                                layer.alert("删除成功");
+                                layer.msg("删除成功");
                                 obj.del();
                             } else {
-                                layer.alert("删除失败");
+                                layer.msg("删除失败");
                             }
                         }
                     });
 
                 });
             }else if (obj.event === 'upd') {
-                WeAdminShow('修改回访','./updrepairback.html?pid='+data.pid,800,400);
+                WeAdminShow('修改回访','./updrepairback.html?pid='+data.pid,600,400);
             }
         });
     window.WeAdminShow = function(title, url, w, h) {

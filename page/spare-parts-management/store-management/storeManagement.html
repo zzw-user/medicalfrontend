@@ -5,6 +5,8 @@
 		<title>仓库管理</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
 		 <style>
 		        .layui-nav .layui-nav-more {
 		            content: '';
@@ -25,7 +27,7 @@
 		        }
 		    </style>
 		</head>
-		<body>
+		<body><!--
 		<div class="weadmin-body" style="margin-left: 3%;">
 		    <form class="layui-form" style="width: 1150px;">
 		        <div class="layui-row">
@@ -60,7 +62,51 @@
 			</script>
 
 		</div>
-	</body>
+	-->
+
+		<div class="layui-fluid">
+			<div class="layui-card">
+				<div class="layui-form layui-card-header layuiadmin-card-header-auto" style="text-align: center;">
+					<div class="layui-form-item" >
+						<div class="layui-inline">
+							<label class="layui-form-label">仓库名称</label>
+							<div class="layui-input-inline">
+								<input type="text" name="issueCoding" lay-verify="title" autocomplete="off" class="layui-input" id="wname">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">区域</label>
+							<div class="layui-input-inline">
+								<input type="text" name="issueName"  lay-verify="title" autocomplete="off" class="layui-input" id="address">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit data-id="sel" lay-filter="formDemo" id="sel">
+								<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+							</button>
+							<button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="layui-card-body">
+					<div style="padding-bottom: 10px;">
+						<button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2" onclick="WeAdminShow('新增','./addStoreManagement.html',600,500)">新增仓库</button>
+					</div>
+
+					<table class="layui-table"  id="test" lay-filter="test"></table>
+					<script type="text/html" id="barDemo">
+						<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="upd"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+					</script>
+				</div>
+
+			</div>
+		</div>
+
+		</body>
 		 <script src="../../../lib/layui-v2.5.5/layui.js"></script>
          <script src="../../../static/js/spare-parts-management/store-management/storeManagement.js"></script>
 </html>

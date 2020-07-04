@@ -5,43 +5,55 @@
 		<title>安装回访</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
 	<body>
-		 <style></style>
-		</head>
-		<body>
-		<div class="weadmin-body" style="margin-left: 3%;">
-		    <form class="layui-form" style="width: 1150px;">
-		        <div class="layui-row">
-		            <div class="layui-col-md8">
-		                <div class="layui-form-item layui-inline">
-		                    <div style="padding: 10px;">回访客户名称</div>
-		                    <div class="layui-input-inline">
-		                        <input type="text" name="pname" id="pname" lay-verify="title" autocomplete="off" class="layui-input">
-		                    </div>
-		                </div>
-		                <div class="layui-form-item layui-inline">
-		                    <div style="padding: 10px;">回访类型</div>
-		                    <div class="layui-input-inline">
-		                        <input type="text" name="way" id="way" lay-verify="title" autocomplete="off" class="layui-input">
-		                    </div>
-		                </div>
-						<input type="hidden" name="aftertype" value="1">
+
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<div class="layui-form layui-card-header layuiadmin-card-header-auto" style="text-align: center;">
+				<div class="layui-form-item" >
+					<div class="layui-inline">
+						<label class="layui-form-label">回访客户</label>
+						<div class="layui-input-inline">
+							<input type="text" name="pname" id="pname" lay-verify="title" autocomplete="off" class="layui-input">
 						</div>
-		            <div class="layui-col-md4">
-		                <div class="layui-form-item layui-inline" style="margin-left: 30px;margin-top: 40px;">
-		                    <button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo"><i class="layui-icon">&#xe615;搜索</i></button>
-		                    <button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
-							<button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2" onclick="WeAdminShow('录入回访记录','./addInstallBack.html',550,400)">新增</button>
-		                </div>
-		            </div>
-		        </div>
-		    </form>
-			<script type="text/html" id="barDemo">
-				<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">修改</a>
-			  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-			</script>
-		    <table class="layui-table" id="problem" lay-filter="test"></table>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">回访类型</label>
+						<div class="layui-input-inline">
+							<input type="text" name="way" id="way" lay-verify="title" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="formDemo">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+						</button>
+						<button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="layui-card-body">
+				<div style="padding-bottom: 10px;">
+					<button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2;width: 100px;" id="xz">新增</button>
+				</div>
+
+				<table class="layui-table" align="center" id="problem" lay-filter="test"></table>
+				<script type="text/html" id="barDemo">
+						<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+
+				</script>
+			</div>
+
 		</div>
+	</div>
+	</div>
+
 	</body>
 		 <script src="../../../lib/layui-v2.5.5/layui.js"></script>
 	<script>
@@ -61,7 +73,7 @@
 				elem: '#problem'
 				,id:'testReload'
 				,height: 450
-				,width:1020
+				,width:1150
 				,url: 'http://127.0.0.1:8080/Repairback/selePayareturnvisit?aftertype=1' //数据接口
 				,type:'get'
 				,dataType:'json'
@@ -103,6 +115,7 @@
 							success : function(e) {
 								if (e) {
 									layer.msg("删除成功");
+									table.reload('testReload');
 								} else {
 									layer.msg("删除失败");
 								}
@@ -110,10 +123,14 @@
 						});
 
 					});
-				}else if (obj.event === 'detail') {
+				}else if (obj.event === 'edit') {
 					WeAdminShow('修改安装回访记录','./updateInstallBack.html?pid='+data.pid,550,400);
 				}
 			});
+			$("#xz").click(function(){
+				WeAdminShow('新增安装记录','./addInstallBack.html',550,400)
+
+			})
 		    $('.btnArr .layui-btn').on('click', function(){
 		        var type = $(this).data('type');
 		        active[type] ? active[type].call(this) : '';

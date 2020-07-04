@@ -5,48 +5,57 @@
 		<title></title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
 	<style>
 		dl>dd{
 			cursor: pointer;
 		}
 	</style>
 	<body>
-		<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>新增维修回访</b></span></div>
-		<br>
-		<br>
-		<div class="weadmin-body">
-					<div class="layui-row">
-						<form class="layui-form" id="pro">
-							<br>
-							 <span style="margin-left:95px"><b>操作人：</b></span>
-							 <div class="layui-input-inline" >
-								 <input type="text"   lay-verify="title" autocomplete="off" class="layui-input" value="张某">
-								 <input type="hidden"   lay-verify="title" autocomplete="off" class="layui-input" value="1" name="operator">
-							</div>
-								<span style="margin-left:30px"><b>回访人名：</b></span>
+	<div class="weadmin-body">
+		<form class="layui-form" id="pro">
+			<blockquote class="layui-elem-quote">新增回访</blockquote>
+			<div class="layui-row">
+				<div class="layui-col-md12" style="margin-left: 70px;">
+					<div class="layui-form-item layui-inline">
+						<div style="padding: 10px;">回访人员</div>
+						<div class="layui-input-inline">
+							<input type="text" lay-reqtext="回访人名不能为空！" name="pname" lay-verify="title" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item layui-inline">
+						<div style="padding: 10px;">回访方式</div>
+						<div class="layui-input-inline">
+							<input type="text" name="way" lay-reqtext="回访方式不能为空！" lay-verify="title" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item layui-inline" >
+						<div style="padding: 10px;">操作人</div>
+						<input type="text" id="operator" name="operator"  lay-verify="title" autocomplete="off" class="layui-input">
 
-							<div class="layui-input-inline">
-								<input type="text" name="pname" lay-verify="required" lay-verify="回访人名不能为空" autocomplete="off" class="layui-input">
-							</div>
-							<br><br>
-		
-							<span style="margin-left:80px"><b>回访方式：</b></span>
-							 <div class="layui-input-inline" >
-							   <input class="layui-input" lay-verify="required" lay-reqtext="回访方式不能为空！" placeholder="回访方式" name="way">
-							</div>
-							<span style="margin-left:55px"><b>描述：</b></span>
-							<div class="layui-inline" >
-								<input class="layui-input" lay-verify="required" lay-reqtext="描述不能为空！" placeholder="描述" name="describe">
-							</div>		<br><br>
-							<input type="hidden" name="aftertype" value="2">
-
-							<br>
-							<br>
-							<br>
-							<div style="margin-left: 12.5rem;">
-								 <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo2">保存</button>
-								 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-							</div>
+						<input type="hidden" name="pid">
+					</div>
+					<div class="layui-form-item layui-inline" style="margin-left: 2%">
+						<div style="padding: 10px;">记录日期</div>
+						<div class="layui-input-inline">
+							<input type="text" name="writetime" id="test1" lay-reqtext="记录日期不能为空！" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
+								   class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item layui-inline">
+						<div style="padding: 10px;">描述</div>
+						<div class="layui-input-inline">
+							<input type="text"  lay-reqtext="描述不能为空！" name="describe" lay-verify="title" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<input type="hidden" name="aftertype" value="1">
+					<div class="layui-form-item layui-inline" style="margin-top: 11%;">
+						<div class="layui-form-item">
+							<button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="demo">保存</button>
+							<button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
+						</div>
+					</div>
+				</div>
 						</form>
 					
 					</div>
