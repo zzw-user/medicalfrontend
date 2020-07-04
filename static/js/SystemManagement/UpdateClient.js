@@ -15,17 +15,17 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
     var cid=getUrlParam("cid");
 
 
-    $.get('http://127.0.0.1:8081/Client/getClientOne',{cid:cid},function (result) {
+    $.get('http://127.0.0.1/Client/getClientOne',{'cid':cid},function (result) {
         form.val('example',result);
     });
 
     form.on('submit(demo)', function(data){
 
-        $.get( 'http://127.0.0.1:8081/Client/updateClient',$("#form").serialize(),function (result) {
+        $.get( 'http://127.0.0.1/Client/updateClient',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("修改成功！",{icon:1,time:1000},function(){
                     x_admin_close();
-                    window.parent.location.reload('testReload');
+                    parent.layui.table.reload('testReload'); //重载表格
                 });
 
             }else{

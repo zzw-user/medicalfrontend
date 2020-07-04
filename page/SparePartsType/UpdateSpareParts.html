@@ -5,11 +5,14 @@
 	<title>修改备件类型</title>
 </head>
 <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
-<body>
+<body style="padding-top: 30px;background-color: white;">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 0px;text-align: center">
+	<legend><h3>修改备件类型</h3></legend>
+</fieldset>
 <div class="weadmin-body">
-	<form class="layui-form" id="form" lay-filter="example">
-		<blockquote class="layui-elem-quote">修改备件类型</blockquote>
-		<input type="hidden" name="tid">
+	<form class="layui-form layui-form-pane" lay-filter="example" id="form" style="width: 700px;margin:0 auto">
+		<input type="hidden" name="tid"/>
+		<br/>
 		<div class="layui-row">
 			<div class="layui-form-item">
 				<label class="layui-form-label">备件名称</label>
@@ -17,12 +20,13 @@
 					<input type="text" name="tname" lay-verify="required" lay-reqtext="备件名称不能为空!" placeholder="请输入备件名称" autocomplete="off" class="layui-input">
 				</div>
 			</div>
+			<br/><br/>
 			<div class="layui-form-item">
 				<label class="layui-form-label">规格</label>
 				<div class="layui-input-block">
 					<input type="text" name="specification" lay-verify="required" lay-reqtext="规格不能为空!" placeholder="请输入规格" autocomplete="off" class="layui-input">
 				</div>
-			</div>
+			</div><br/><br/>
 			<div class="layui-form-item">
 				<div class="layui-form-item" align="center">
 					<button class="layui-btn"  lay-submit="" lay-filter="demo">保存</button>
