@@ -13,7 +13,7 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
         elem: '#date1'
     });
     var mpid=getUrlParam("mpid");
-    $("#roleid").load('http://127.0.0.1:8081/Role/getRoleId',function (result) {
+    $("#roleid").load('http://127.0.0.1/Role/getRoleId',function (result) {
         var data=eval(result);
         $(data).each(function (i,o) {
             $("#roleid").append("<option value='"+o.rid+"'>"+o.rname+"</option>")
@@ -21,17 +21,17 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
         form.render("select");
     })
 
-    $.get('http://127.0.0.1:8081/UserManagement/getUserOne',{mpid:mpid},function (result) {
+    $.get('http://127.0.0.1/UserManagement/getUserOne',{'mpid':mpid},function (result) {
         form.val('example',result);
     });
 
     form.on('submit(demo)', function(data){
 
-        $.get( 'http://127.0.0.1:8081/UserManagement/updateUser',$("#form").serialize(),function (result) {
+        $.get( 'http://127.0.0.1/UserManagement/updateUser',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("修改成功！",{icon:1,time:1000},function(){
                     x_admin_close();
-                    window.parent.location.reload('testReload');
+                    parent.layui.table.reload('testReload'); //重载表格
                 });
 
             }else{

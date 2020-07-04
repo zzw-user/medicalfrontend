@@ -12,7 +12,7 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
     laydate.render({
         elem: '#date1'
     });
-    $("#roleid").load('http://127.0.0.1:8081/Role/getRoleId',function (result) {
+    $("#roleid").load('http://127.0.0.1/Role/getRoleId',function (result) {
         var data=eval(result);
         $(data).each(function (i,o) {
             $("#roleid").append("<option value='"+o.rid+"'>"+o.rname+"</option>")
@@ -21,11 +21,11 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
     })
     
     form.on('submit(demo)', function(data){
-        $.get( 'http://127.0.0.1:8081/UserManagement/addUser',$("#form").serialize(),function (result) {
+        $.get( 'http://127.0.0.1/UserManagement/addUser',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("新增成功！",{icon:1,time:1000},function(){
                     x_admin_close();
-                    window.parent.location.reload('testReload');
+                    parent.layui.table.reload('testReload'); //重载表格
 
                 });
             }else{

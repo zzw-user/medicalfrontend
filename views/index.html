@@ -206,6 +206,8 @@
               data:{},
               dataType:"json",
               url:'http://127.0.0.1/findMenu',
+      beforeSend: function(request) {
+        request.setRequestHeader("token",localStorage.getItem("token"));},
               success:function (result) {
                $("#LAY-system-side-menu").html("");
                var a ="";
@@ -227,7 +229,7 @@
 else{
                     a += "<dl class='layui-nav-child'>";
                     a += " <dd data-name='grid'>";
-                    a += " <a  >" + this.title + "</a>";
+                    a += " <a  lay-href=" + this.href + ">" + this.title + "</a>";
                     a += " <dl class='layui-nav-child'>";
                     $(this.child).each(function () {
                       if (this.child.length <= 0) {

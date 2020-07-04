@@ -1,8 +1,9 @@
-layui.use(['form', 'layedit', 'laydate','jquery'], function() {
+layui.use(['form', 'layedit', 'laydate','table','jquery'], function() {
     var form = layui.form
         , layer = layui.layer
         , $ = layui.jquery
         , layedit = layui.layedit
+        , table = layui.table //表格
         , laydate = layui.laydate;
 
     //日期
@@ -15,11 +16,11 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function() {
 
     form.on('submit(demo)', function (data) {
 
-        $.get('http://127.0.0.1:8081/Role/addRole', $("#form").serialize(), function (result) {
+        $.get('http://127.0.0.1/Role/addRole', $("#form").serialize(), function (result) {
             if (result == true) {
                 layer.msg("新增成功！", {icon: 1, time: 1000}, function () {
                     x_admin_close();
-                    window.parent.location.reload('');
+                    parent.layui.table.reload('testReload'); //重载表格
                 });
 
             } else {
