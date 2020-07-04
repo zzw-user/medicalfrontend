@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../static/js/jquery-1.12.4.js"></script>
+<script type="text/javascript"  src="../static/user/js/jquery.js"></script>
+    <script type="text/javascript"  src="../static/user/js/GlobalProvinces_main.js"></script>
+    <script type="text/javascript"  src="../static/user/js/GlobalProvinces_extend.js"></script>
+    <script type="text/javascript"  src="../static/user/js/initLocation.js"></script>
+   <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=uQQtqikbvFwtFdK9wGKn2RkEUkYkA552">
+    </script>
+    <style type="text/css">
+        html {
+            height: 100%
+        }
+
+        body {
+            font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #menu {
+            padding: 5px 0px 0px 0px;
+            width: 100%;
+            height: 7%;
+        }
+
+        #main {
+            width: 100%;
+            height: 60%;
+            float: left;
+            position: fixed;
+        }
+    </style>
+
+
+
+</head>
+<body  onLoad="load_map()">
+
+<div id="menu">
+    <input name="button1" type="button" id="button1"
+           onClick="map_tag();" value="全国垃圾箱信息查询"
+           style="width: 150px; height: 40px; margin: 0px 0px 0px 5px"/>
+</div>
+<hr>
+<div id="main" style="height: 600px"></div>
+<script type="text/javascript">
+
+
+
+
+
+
+
+
+    var map; // 创建地图全局实例
+    var ls_City = '<%=lsCity%>';
+    var ls_City1 = '<%=lsCity1%>';
+    //创建和初始化地图
+    function load_map() {
+        //从数据库查询数据，json格式
+        map = new BMap.Map("main");
+        var point = new BMap.Point(114.398893, 27.811062);//北京
+        map.centerAndZoom(point, 7); //初始化地图,设置中心点坐标和地图级别。
+        map.enableScrollWheelZoom(true); //启用滚轮放大缩小
+        map.addControl(new BMap.NavigationControl());//向地图中添加缩放控件
+        var ctrlSca = new window.BMap.ScaleControl({
+            anchor: BMAP_ANCHOR_BOTTOM_LEFT
+        });
+        map.addControl(ctrlSca);//比例尺
+        //地图、卫星、混合模式切换
+        map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP, BMAP_HYBRID_MAP]}));
+    }
+
+    function map_tag() {
+
+        map.clearOverlays();
+        $.ajax({
+            type:"post",
+            url:"http://127.0.0.1/getAllCost",
+            data:{},
+            dataType:"json",
+            success:function(result){
+                var    objRecords = result;
+                var points = new Array();//存放标注点经纬信息的数组
+                for ( var i = 0; i < objRecords.length; i++) {
+
+                    var json = objRecords[i];
+                    var p0 = json.longitude;
+                    var p1 = json.latitude;
+
+                    var point = new BMap.Point(p0,p1);//循环生成新的地图点
+                    var marker = new BMap.Marker(point);//按照地图点坐标生成标记
+                    marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+                    var iw = createInfoWindow(i);//创建信息窗口对象
+                    var label = new window.BMap.Label("申购价格:"+json.cost+"元/月", { offset: new window.BMap.Size(20, -10) });
+                    marker.setLabel(label);//显示marker的title
+                    points.push(marker);
+                    map.addOverlay(points[i]);//把标记的点添加到地图上
+                    //添加点击事件
+                    (function(){
+                        var _json = json;
+                        var _iw = createInfoWindow(_json);
+                        var _marker = marker;
+                        _marker.addEventListener("mouseover",function(){
+                            this.openInfoWindow(_iw);
+                        });
+                    })()
+                }
+            }
+        })
+
+
+
+
+
+    }
+
+    //测试
+    function map_tag1() {
+        map.clearOverlays();
+        var objRecords1 = eval("(" + ls_City1 + ")");//后台得到的数据包含经纬度，json格式的
+        var points1 = new Array();//存放标注点经纬信息的数组
+        for ( var i = 0; i < objRecords1.length; i++) {
+
+                var json1 = objRecords1[i];
+                var p0 = json1.address;
+                var p1 = json1.searepartcost;
+            var point1 = new BMap.Point(p0,p1);//循环生成新的地图点
+            var marker1 = new BMap.Marker(point1);//按照地图点坐标生成标记
+            console.log(marker1)
+            marker1.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+            var iw = createInfoWindow(i);//创建信息窗口对象
+            var label = new window.BMap.Label("申购价格:"+json1.price+"元/月", { offset: new window.BMap.Size(20, -10) });
+            marker1.setLabel(label);//显示marker的title
+            points1.push(marker1);
+            map.addOverlay(points1[i]);//把标记的点添加到地图上
+            //添加点击事件
+            (function(){
+                var _json = json1;
+                var _iw = createInfoWindow(_json);
+                var _marker = marker1;
+                _marker.addEventListener("mouseover",function(){
+                    this.openInfoWindow(_iw);
+                });
+            })()
+        }
+    }
+
+    //创建InfoWindow
+    function createInfoWindow(json){
+        var opts1 = {title : '<span style="font-size:20px;color:#0A8021">垃圾箱信息</span>'};
+        var iw = new BMap.InfoWindow("<div style='line-height:1.8em;font-size:12px;'><b>估计价格:</b>"+json.cost+"元"+"</br></a></div>", opts1);
+        return iw;
+    }
+
+    //异步调用百度js
+    function map_load() {
+        var load = document.createElement("script");
+        load.src = "http://api.map.baidu.com/api?v=1.4&callback=load_map";
+        document.body.appendChild(load);
+    }
+    window.onload = map_load;
+
+</script>
+</body>
+</html>
