@@ -4,8 +4,15 @@
 		<meta charset="utf-8">
 		<title>新增安装费用</title>
 	</head>
-	<link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+
+	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
 	<body>
+	<style>
+		dl>dd{
+			cursor: pointer;
+		}
+	</style>
 		<div class="weadmin-body">
 			<form class="layui-form" id="pro">
 				<blockquote class="layui-elem-quote">新增安装费用</blockquote>
@@ -14,22 +21,13 @@
 						<div class="layui-form-item layui-inline">
 							<div style="padding: 10px;">产品编号</div>
 							<div class="layui-input-inline">
-								<input type="text" name="issueCoding" lay-verify="title" autocomplete="off" class="layui-input">
-							</div>
-						</div>
-						<div class="layui-form-item layui-inline">
-							<div style="padding: 10px;">安装地址</div>
-							<div class="layui-input-inline">
-								<input type="text" name="issueName" lay-verify="title" autocomplete="off" class="layui-input">
+								<input type="text" name="coding" lay-verify="required" id="coding" lay-verify="title" autocomplete="off" class="layui-input">
 							</div>
 						</div>
 						<div class="layui-form-item layui-inline" style="width: 200px;">
 							<label class="layui-form-label" style="margin-left: -30px;">安装人员</label>
 							<div class="layui-input-inline" style="width: 200px">
-								<select name="midtype" lay-verify="required">
-									<option value="启用">启用</option>
-									<option value="停用">停用</option>
-									<option value="暂停">暂停</option>
+								<select name="operator" id="operator" lay-verify="required">
 								</select>
 
 							</div>
@@ -38,34 +36,69 @@
 						<div class="layui-form-item layui-inline">
 							<div style="padding: 10px;">联系电话</div>
 							<div class="layui-input-inline">
-								<input type="text" name="issueName" lay-verify="title" autocomplete="off" class="layui-input">
+								<input type="text" name="phone" lay-verify="required|phone" lay-verify="title" autocomplete="off" class="layui-input">
 							</div>
 						</div>
 						<div class="layui-form-item layui-inline">
 							<div style="padding: 10px;">录入日期</div>
 							<div class="layui-input-inline">
-								<input type="text" name="issueName" id="test1" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
-								 class="layui-input">
+								<input type="text" name="inputtime" lay-verify="required" id="test1" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
+									   class="layui-input">
 							</div>
 						</div>
 						<div class="layui-form-item layui-inline">
 							<div style="padding: 10px;">录入人</div>
 							<div class="layui-input-inline">
-								<input type="text" name="issueName" lay-verify="title" autocomplete="off" class="layui-input">
+								<input type="text" name="dataentryclerk" lay-verify="required" lay-verify="title" autocomplete="off" class="layui-input">
 							</div>
 						</div>
+						<input name="aftertype" type="hidden" value="1">
 						<div class="layui-form-item layui-inline">
 							<div style="padding: 10px;">费用</div>
 							<div class="layui-input-inline">
-								<input type="text" name="issueName" lay-verify="title" autocomplete="off" class="layui-input">
+								<input type="text" name="cost" lay-verify="required" lay-verify="title" autocomplete="off" class="layui-input">
 							</div>
 						</div>
-						<div class="layui-form-item layui-inline" style="margin-top: 11%;">
+						<div class="layui-form-item layui-inline">
+
+							<div class="layui-form-item" id="addressDiv">
+								<div style="padding: 10px;">安装地址</div>
+								<div class="layui-input-inline" style="width: 90px;">
+									<select name="P1" lay-filter="province" id="province" style="width: 50px;">
+										<option></option>
+									</select>
+								</div>
+								<div class="layui-input-inline" style="width: 100px;">
+									<select name="C1" lay-filter="city" id="city" style="width: 50px;">
+										<option></option>
+									</select>
+								</div>
+								<div class="layui-input-inline" style="width: 100px;">
+									<select name="A1" lay-filter="area" id="area" style="width: 50px;">
+										<option></option>
+									</select>
+								</div>
+								<div class="layui-input-inline" id="addressDetail" style="width: 280px;">
+									<input id="site" type="text" name="site" style="width: 280px;"  lay-verify="title" autocomplete="off"
+										   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="安装地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
+									<dl id="addressTip" class="addressDl">
+									</dl>
+								</div>
+								<input type="hidden" name="address" id="address">
+							</div>
+						</div>
+
+
+
+						<input type="hidden" name="longitude" id="longitude">
+						<input type="hidden" name="latitude" id="latitude">
+						<div class="layui-form-item layui-inline" style="margin-top: 4%;margin-left: 65%">
 							<div class="layui-form-item">
 								<button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo2">保存</button>
 								<button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
 							</div>
 						</div>
+
 					</div>
 
 
@@ -73,7 +106,13 @@
 			</form>
 		</div>
 	</body>
-	<script src="../../lib/layui-v2.5.5/layui.js"></script>
+	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
+	<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+	<script src="../../../static/js/distpicker.data.js"></script>
+	<script src="../../../static/js/distpicker.js"></script>
+	<script src="../../../static/js/select.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../static/js/main.js"></script>
 	<script>
 		layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider', 'jquery', 'form'],
 			function() {
@@ -98,42 +137,75 @@
 				laydate.render({
 					elem: '#test1'
 				});
-				$("#informPost").load('http://127.0.0.1:8080/problemstate/getRole', function(result) {
+
+
+				$("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(result) {
 					const data = eval(result);
+					var str;
+					str+="<option value=''>请选择</option>";
 					$(data).each(function(i, o) {
-						$("#informPost").append("<option value='" + o.id + "'>" + o.roleName + "</option>")
+						str+="<option value='" + o.mpid + "'>" + o.realname + "</option>"
 					});
+					$("#operator").append(str);
 					form.render("select");
 				});
-				$("#roleList").load('http://127.0.0.1:8080/problemstate/getRole', function(result) {
-					const data = eval(result);
-					$(data).each(function(i, o) {
-						$("#roleList").append("<option value='" + o.id + "'>" + o.roleName + "</option>")
-					});
-					form.render("select");
-				});
-				$("#issueTypeId").load('http://127.0.0.1:8080/problemstate/getIssueType', function(result) {
-					const data = eval(result);
-					$(data).each(function(i, o) {
-						$("#issueTypeId").append("<option value='" + o.id + "'>" + o.issueName + "</option>")
-					});
-					form.render("select");
+				$("#coding").blur(function(){
+					var coding=$("#coding").val();
+					$.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
+						if (result==null || result==''){
+							layer.msg("对不起，没有该产品编码！");
+							var coding=$("#coding").val('');
+
+						}else {
+
+						}
+
+					})
+				})
+				$("#site").blur(function () {
+					var province = $("#province").val();
+					var area = $("#area").val();
+					var city= $("#city").val();
+					var site = $("#site").val();
+					var str = province+' '+city+' '+area+' '+site;
+					$("#address").val(str);
+
+					$.ajax({
+						type:"get",
+						data:{"address":str,"key":"389880a06e3f893ea46036f030c94700"},
+						dataJson: "json",
+						url:"http://restapi.amap.com/v3/geocode/geo",
+						success:function (result) {
+							console.log(result);
+							console.log(result.geocodes[0].location);
+							var sz=result.geocodes[0].location.split(",");
+							$("#longitude").val(sz[0]);
+							$("#latitude").val(sz[1]);
+						}
+					})
+					console.log(address);
 				})
 				form.on('submit(formDemo2)', function(data) {
+					var province = $("#province").val();
+					var area = $("#area").val();
+					var city= $("#city").val();
+					var site = $("#site").val();
+					var str = province+' '+city+' '+area+' '+site;
+					$("#address").val(str);
 					$.ajax({
-						url: 'http://127.0.0.1:8080/problemstate/addIssueStaus',
+						url: 'http://127.0.0.1:8080/Cost/addCost',
 						type: 'get',
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						data: $("#pro").serialize(),
 						dataType: 'text',
 						success: function(result) {
 
-							if (result == "ok") {
-								layer.alert("新增成功！", function() {
+							if (result) {
+								layer.msg("新增成功！", function() {
 									x_admin_close()
 								})
 							} else {
-								layer.alert("新增失败！", function() {
+								layer.msg("新增失败！", function() {
 									x_admin_close()
 								})
 							}

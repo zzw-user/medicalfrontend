@@ -5,43 +5,10 @@
 		<title>保养派单</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
-
-	<style>
-		    /*    .layui-btn {
-		            width: 100px;
-		            display: inline-block;
-		            height: 30px;
-		            line-height: 30px;
-		            padding: 0 20px;
-		            background-color: #009688;
-		            color: #fff;
-		            white-space: nowrap;
-		            text-align: center;
-		            font-size: 14px;
-		            border: none;
-		            border-radius: 2px;
-		            cursor: pointer;
-		        }
-		        .layui-nav .layui-nav-more {
-		            content: '';
-		            width: 0;
-		            height: 0;
-		            border-style: solid dashed dashed;
-		            border-color: #fff transparent transparent;
-		            overflow: hidden;
-		            cursor: pointer;
-		            transition: all .2s;
-		            -webkit-transition: all .2s;
-		            position: absolute;
-		            top: 50%;
-		            right: 15px;
-		            margin-top: -3px;
-		            border-width: 6px;
-		            border-top-color: rgba(255,255,255,.7);
-		        }*/
-		    </style>
+	<link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
 		</head>
-		<body>
+		<body><!--
 		<div class="weadmin-body" style="margin-left: 3%;">
 		    <form class="layui-form" style="width: 1150px;">
 		        <div class="layui-row">
@@ -79,12 +46,58 @@
 			<table class="layui-table" id="problem" lay-filter="demo"></table>
 
 		</div>
-	</body>
+	-->
+		<div class="layui-fluid">
+			<div class="layui-card">
+				<div class="layui-form layui-card-header layuiadmin-card-header-auto" style="text-align: center;">
+					<div class="layui-form-item" >
+						<div class="layui-inline">
+							<label class="layui-form-label">安装人</label>
+							<div class="layui-input-inline">
+								<input type="text" name="realname" id="realname" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">安装地址</label>
+							<div class="layui-input-inline">
+								<input type="text" name="address" id="address" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">产品编号</label>
+							<div class="layui-input-inline">
+								<input type="text" name="coding" id="coding" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="formDemo">
+								<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+							</button>
+							<button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+						</div>
+					</div>
 
-	<script type="text/html" id="barDemo">
-		<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">修改</a>
-		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-	</script>
+				</div>
+
+
+				<div class="layui-card-body">
+					<div style="padding-bottom: 10px;">
+						<button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2;width: 100px;" id="xz">新增</button>
+					</div>
+
+					<table class="layui-table" align="center" id="problem" lay-filter="demo"></table>
+					<script type="text/html" id="barDemo">
+						<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+
+					</script>
+				</div>
+
+			</div>
+		</div>
+		</div>
+		</body>
+
 	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
 	<script src="../../../static/js/upkeepcost/MaintainSend.js"></script>
 

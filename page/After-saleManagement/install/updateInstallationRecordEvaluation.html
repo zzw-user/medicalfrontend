@@ -5,9 +5,10 @@
     <title>修改安装记录</title>
 </head>
 <link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
 <style>
     dl>dd{
-       cursor: pointer;
+        cursor: pointer;
     }
 </style>
 <body>
@@ -86,8 +87,9 @@
                     <p>点击上传安装前图片</p>
                     <div class="layui-hide" id="beforeinstallationdiv">
                         <hr>
-                        <img src="" id="beforeinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
+                        <img src="../../../static/img/" id="beforeinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
                     </div>
+                    <div id="bimg"></div>
                 </div>
                 <input type="hidden" id="beforeinstallation" name="beforeinstallation">
                 <div class="layui-upload-drag" id="afterinstallationtest" style="width: 100px;margin-left: 18%">
@@ -97,6 +99,7 @@
                         <hr>
                         <img src="" id="afterinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
                     </div>
+                    <div id="aimg"></div>
                 </div>
                 <input type="hidden" id="afterinstallation" name="afterinstallation">
                 <input type="hidden" id="rid" name="rid">
@@ -145,8 +148,10 @@
 
             var rid=getUrlParam("rid");
             $("#rid").val(rid);
-            $.post( 'http://127.0.0.1:8081/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
+             $.post( 'http://127.0.0.1:8080/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
                 console.log(result);
+                $("#bimg").append("<img src='../../../static/img/"+result.beforeinstallation+"' style=\"max-width: 100px\">")
+                 $("#aimg").append("<img src='../../../static/img/"+result.afterinstallation+"' style=\"max-width: 100px\">")
                 form.val('example',result);
                 var str = result.address;
                 var arr=new Array();
@@ -159,33 +164,25 @@
                     $("#site").val(arr[3]);
                 pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', arr[0], arr[1], arr[2]);
 
-                $("#operator").load('http://127.0.0.1:8081/SendaSingleInstallation/getMpuser', function(result) {
-                    const data = eval(result);
+                $("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(res) {
+                    const data = eval(res);
                     $(data).each(function (i,o) {
                         $("#operator").append("<option value='"+o.mpid+"'>"+o.realname+"</option>")
                     });
+                    $("#operator").val(result.operator);
                     form.render('select');
                 });
 
             });
-            $("#operator").change(function () {
-                alert("来啦")
-                $("#site").val('');
-            });
-            $("#city").change(function () {
-                $("#site").val('');
-            });
-            $("#area").change(function () {
-                $("#site").val('');
-            });
             //拖拽上传
             upload.render({
                 elem: '#beforeinstallationtest'
-                ,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+                ,url: 'http://127.0.0.1:8080/InstallationRecordEvaluation/upload' //改成您自己的上传接口
                 ,multiple: true
                 ,before: function(obj){
                     //预读本地文件示例，不支持ie8
                     obj.preview(function(index, file, result){
+                        $("#bimg").html(" ")
                         $('#beforeinstallationimg').attr('src', result); //图片链接（base64）
                         $('#beforeinstallationdiv').removeClass();
 
@@ -204,11 +201,12 @@
             });
             upload.render({
                 elem: '#afterinstallationtest'
-                ,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+                ,url: 'http://127.0.0.1:8080/InstallationRecordEvaluation/upload' //改成您自己的上传接口
                 ,multiple: true
                 ,before: function(obj){
                     //预读本地文件示例，不支持ie8
                     obj.preview(function(index, file, result){
+                        $("#aimg").html(" ")
                         $('#afterinstallationimg').attr('src', result); //图片链接（base64）
                         $('#afterinstallationdiv').removeClass();
 
@@ -230,6 +228,17 @@
             laydate.render({
                 elem: '#test1'
             });
+            $("#coding").blur(function(){
+                var coding=$("#coding").val();
+                $.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
+                    if (result==null || result==''){
+                        layer.msg("对不起，没有该产品编码！");
+                        var coding=$("#coding").val('');
+                    }else {
+                    }
+
+                })
+            })
             form.on('submit(formDemo2)', function(data) {
                 var province = $("#province").val();
                 var area = $("#area").val();
@@ -238,7 +247,7 @@
                 var str = province+' '+city+' '+area+' '+site;
                 $("#address").val(str);
                 $.ajax({
-                    url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/updateInstallationRecordEvaluationByRid',
+                    url: 'http://127.0.0.1:8080/InstallationRecordEvaluation/updateInstallationRecordEvaluationByRid',
                     type: 'get',
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     data: $("#pro").serialize(),

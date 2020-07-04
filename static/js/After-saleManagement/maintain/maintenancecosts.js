@@ -14,23 +14,23 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#problem'
         ,id:'testReload'
         ,height: 450
-        ,width:1450
-        ,url: 'http://127.0.0.1:8081/Maintenancecosts/getCost' //数据接口
+        ,width:1150
+        ,url: 'http://127.0.0.1:8080/Maintenancecosts/getCost' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'
         ,crossDomain:true
         ,cols: [[ //表头
-              {field:'cid',width:120,title:"序号"}
-            , {field: 'mname',width:120, title: '维修人	'}
-            , {field: 'address',width:150, title: '维修地址'}
+              {type:'numbers',width:120,title:"序号"}
+            , {field: 'realname',width:120, title: '维修人	'}
+            , {field: 'address',width:300, title: '维修地址'}
             , {field: 'cost',width:120, title: '总费用'}
             , {field: 'sparepartcost',width:130, title: '备件费用'}
             , {field: 'dataentryclerk',width:150, title: '录入人'}
             , {field: 'inputtime',width:150, title: '录入时间'}
             , {field: 'pname',width:150, title: '产品名'}
             , {field: 'phone',width:150, title: '联系电话'}
-            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
+            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
         ]]
         ,page: true
     });
@@ -52,7 +52,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             if (obj.event === 'del') {
                 layer.confirm('真的删除么?',function(index) {
                     $.ajax({
-                        url : "http://127.0.0.1:8081/Maintenancecosts/delCost",
+                        url : "http://127.0.0.1:8080/Maintenancecosts/delCost",
                         type : "post",
                         data : {
                             cid: data.cid
@@ -70,7 +70,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
                 });
             } else if (obj.event === 'upd') {
-                WeAdminShow('修改费用','./updmaintenancecosts.html?cid='+data.cid,800,500);
+                WeAdminShow('修改费用','./updmaintenancecosts.html?cid='+data.cid,800,600);
             }
         });
     window.WeAdminShow = function(title, url, w, h) {

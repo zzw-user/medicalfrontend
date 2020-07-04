@@ -5,29 +5,61 @@
 		<title>保养费用</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
-
-		 <style>
-
-		        .layui-nav .layui-nav-more {
-		            content: '';
-		            width: 0;
-		            height: 0;
-		            border-style: solid dashed dashed;
-		            border-color: #fff transparent transparent;
-		            overflow: hidden;
-		            cursor: pointer;
-		            transition: all .2s;
-		            -webkit-transition: all .2s;
-		            position: absolute;
-		            top: 50%;
-		            right: 15px;
-		            margin-top: -3px;
-		            border-width: 6px;
-		            border-top-color: rgba(255,255,255,.7);
-		        }
-		    </style>
+	<link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
+	<style>
+		dl>dd{
+			cursor: pointer;
+		}
+	</style>
 		</head>
 		<body>
+		<div class="layui-fluid">
+			<div class="layui-card">
+				<div class="layui-form layui-card-header layuiadmin-card-header-auto" style="text-align: center;">
+					<div class="layui-form-item" >
+						<div class="layui-inline">
+							<label class="layui-form-label">保养人员</label>
+							<div class="layui-input-inline">
+								<input type="text" name="realname" id="realname" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">保养地址</label>
+							<div class="layui-input-inline">
+								<input type="text" name="address" id="address" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<button class="layui-btn layuiadmin-btn-comm" data-type="reload" id="reload" lay-submit lay-filter="formDemo">
+								<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+							</button>
+							<button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="layui-card-body">
+					<div style="padding-bottom: 10px;">
+						<button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2;width: 100px;" onclick="WeAdminShow('新增','./addUpkeepCost.html',700,500)">新增</button>
+					</div>
+
+					<table class="layui-table" align="center" id="problem" lay-filter="test"></table>
+					<script type="text/html" id="barDemo">
+						<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+
+					</script>
+				</div>
+
+			</div>
+		</div>
+		</div>
+
+		<!--
 		<div class="weadmin-body" style="margin-left: 3%;">
 			 <div class="layui-row">
 				 <form class="layui-form layui-col-md12 we-search layui-form-pane">
@@ -49,7 +81,7 @@
 				  </button>
 				  		</div>			 	
 				  </div>
-						   <!-- <button class="layui-btn" lay-submit="" lay-filter="sreach" style="background-color: #01AAED;"" id="reload"><i class="layui-icon">&#xe615;搜索</i></button>	 				 -->	
+						   &lt;!&ndash; <button class="layui-btn" lay-submit="" lay-filter="sreach" style="background-color: #01AAED;"" id="reload"><i class="layui-icon">&#xe615;搜索</i></button>	 				 &ndash;&gt;
 
 				 </form>
 					  </div>
@@ -59,13 +91,10 @@
 
 
 		</div>
-	</body>
+	--></body>
 	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
-		 <script src="../../../static/js/upkeepcost/UpkeepCost.js"></script>
-	<script type="text/html" id="barDemo" charset="UTF-8">
-	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-	</script>
+		<!-- <script src="../../../static/js/upkeepcost/UpkeepCost.js"></script>-->
+
 	<script>
 
 		layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider','jquery','form'], function() {
@@ -79,52 +108,77 @@
 		        , $ = layui.jquery
 		        , form = layui.form
 		        , slider = layui.slider; //滑块//执行一个laydate实例
-		    $("#issueTypeId").load('http://127.0.0.1:8080/problemstate/getIssueType',function (result) {
-		        const data=eval(result);
-		        $(data).each(function (i,o) {
-		            $("#issueTypeId").append("<option value='"+o.id+"'>"+o.issueName+"</option>")
-		        });
-		        form.render("select");
-		    })
-		    //执行一个 table 实例
-		  /*  table.render({
-		        elem: '#problem'
-		        ,id:'testReload'
-		        ,height: 450
-				,width:1250
-		        ,url: 'http://127.0.0.1:8080/problemstate/getIssueStaus' //数据接口
-		        ,title: '问题状态表'
-		        ,type:'get'
-		        ,dataType:'json'
-		        ,crossDomain:true
-		        ,cols: [[ //表头
-		            ,{type:'numbers',width:150,title:"序号"}
-		            , {field: 'problemTypesName',width:150, title: '保养人'}
-		            , {field: 'chineseRemark',width:150, title: '保养地址'}
-		            , {field: 'englishRemark',width:150, title: '费用'}
-					, {field: 'englishRemark',width:150, title: '录入时间'}
-		            , {field: 'englishRemark',width:150, title: '录入人'}
-					, {field: 'englishRemark',width:150, title: '（产品名称'}
-					, {field: 'englishRemark',width:150, title: '联系电话'}
-		            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
-		        ]]
-		        ,page: true
-		    });*/
-		    form.on('submit(formDemo)', function(data){
-		        table.reload('testReload', {
-		            where: { //设定异步数据接口的额外参数，任意设
-		                issueCoding: $("#issueCoding").val()
-		                ,issueTypeId: $("#issueTypeId").val()
-		                ,problemTypes: $("#problemTypes").val()
-		                ,issueName: $("#issueName").val()
-		                ,isStartUsing: $("#isStartUsing").val()
-		                //…
-		            }
-		            ,page: {
-		                curr: 1 //重新从第 1 页开始
-		            }
-		        });
-		})
+
+			table.render({
+				elem: '#problem'
+				,url:'http://127.0.0.1:8080/Cost/getCost'
+				,id:'toolbarDemos'
+				,limit:8
+				,height:520
+				,width:1150
+				,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+				,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+					title: '提示'
+					,layEvent: 'LAYTABLE_TIPS'
+					,icon: 'layui-icon-tips'
+				}]
+				,cols: [
+					[
+						{field:'cid',width:150,title:"序号"}
+						, {field: 'realname',width:150, title: '保养人'}
+						, {field: 'address',width:300, title: '保养地址'}
+						, {field: 'cost',width:150, title: '费用'}
+						, {field: 'inputtime',width:150, title: '录入时间'}
+						, {field: 'dataentryclerk',width:150, title: '录入人'}
+						, {field: 'coding',width:150, title: '产品编码'}
+						, {field: 'phone',width:150, title: '联系电话'}
+						,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+					]
+				]
+				,page: true
+
+			});
+			$('#reload').on('click',function(){
+
+				table.reload('toolbarDemos',{
+					where: {
+						address:$("#address").val(),
+						mname:$("#realname").val()
+					}
+				})
+				return false;
+			});
+			table.on('tool(test)', function(obj){
+				var data = obj.data;
+				//console.log(obj)
+
+				if(obj.event == 'del'){
+
+					layer.confirm('真的删除行么', function(index){
+						$.ajax({
+							url:"http://127.0.0.1:8080/Cost/delCost",
+							type:"post",
+							data:{cid:data.cid},
+							dataType:"text",
+							success:function(e){
+								if(e=='true'){
+									layer.msg("删除成功");
+									obj.del();
+								}else {
+									layer.msg("删除失败");
+								}
+							}
+
+						});
+
+					});
+				}else if(obj.event === 'edit'){
+					WeAdminShow('修改保养费用','./UpdateUpkeepCost.html?cid='+data.cid,700,500);
+				}
+
+				//工具栏事件
+
+			});
 		    $('.btnArr .layui-btn').on('click', function(){
 		        var type = $(this).data('type');
 		        active[type] ? active[type].call(this) : '';

@@ -5,6 +5,12 @@
 		<title>保养记录修改</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
+	<style>
+		dl>dd{
+			cursor: pointer;
+		}
+	</style>
 	<body>
 		<div class="weadmin-body">
 		    <form class="layui-form" id="pro" lay-filter="example">
@@ -72,6 +78,7 @@
 						<hr>
 						<img src="" id="beforeinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
 					</div>
+					<div id="bimg"></div>
 				</div>
 				<input type="hidden" id="beforeinstallation" name="beforeinstallation">
 				<div class="layui-upload-drag" id="afterinstallationtest" style="width: 100px;margin-left: 16%">
@@ -81,6 +88,7 @@
 						<hr>
 						<img src="" id="afterinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
 					</div>
+					<div id="aimg"></div>
 				</div>
 				</div>
 				<input type="hidden" id="afterinstallation" name="afterinstallation">
@@ -96,11 +104,11 @@
 		<div class="layui-form-item">
 		
 		            <div class="layui-form-item">
-		               <div class="layui-input-block">
+		               <div class="layui-input-block" style="margin-left: 60%">
 		                 <button class="layui-btn" lay-submit lay-filter="formDemo2">保存</button>
 		                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
 		               </div>
-		             </div>
+					</div></div>
 		    </form>
 		</div>
 	</body>
@@ -134,7 +142,7 @@
 							,arrupload = layui.upload
 							, pca = layui.pca;
 					//带初始值进行初始化text
-					$("#operator").load('http://127.0.0.1:8081/SendaSingleInstallation/getMpuser',function (result) {
+					$("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser',function (result) {
 						var data=eval(result);
 						$(data).each(function (i,o) {
 							$("#operator").append("<option value="+this.mpid+">"+this.realname+"</option>")
@@ -143,9 +151,11 @@
 					});
 					var rid=getUrlParam("rid");
 					$("#rid").val(rid);
-					alert(rid);
-					$.post( 'http://127.0.0.1:8081/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
+					$.post( 'http://127.0.0.1:8080/maintainrecordController/getMaintainrecordByRid',{rid:rid},function (result) {
 						console.log(result);
+						$("#bimg").append("<img src='../../../static/img/"+result.beforeinstallation+"' style=\"max-width: 100px\">")
+						$("#aimg").append("<img src='../../../static/img/"+result.afterinstallation+"' style=\"max-width: 100px\">")
+
 						form.val('example',result);
 						var str = result.address;
 						var arr=new Array();
@@ -174,11 +184,12 @@
 					//拖拽上传
 					upload.render({
 						elem: '#beforeinstallationtest'
-						,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+						,url: 'http://127.0.0.1:8080/maintainrecordController/upload' //改成您自己的上传接口
 						,multiple: true
 						,before: function(obj){
 							//预读本地文件示例，不支持ie8
 							obj.preview(function(index, file, result){
+								$("#bimg").html(" ");
 								$('#beforeinstallationimg').attr('src', result); //图片链接（base64）
 								$('#beforeinstallationdiv').removeClass();
 
@@ -197,11 +208,12 @@
 					});
 					upload.render({
 						elem: '#afterinstallationtest'
-						,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+						,url: 'http://127.0.0.1:8080/maintainrecordController/upload' //改成您自己的上传接口
 						,multiple: true
 						,before: function(obj){
 							//预读本地文件示例，不支持ie8
 							obj.preview(function(index, file, result){
+								$("#aimg").html(" ");
 								$('#afterinstallationimg').attr('src', result); //图片链接（base64）
 								$('#afterinstallationdiv').removeClass();
 
@@ -231,7 +243,7 @@
 						var str = province+' '+city+' '+area+' '+site;
 						$("#address").val(str);
 						$.ajax({
-							url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/updateInstallationRecordEvaluationByRid',
+							url: 'http://127.0.0.1:8080/maintainrecordController/updateMaintainrecordByRid',
 							type: 'get',
 							contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 							data: $("#pro").serialize(),

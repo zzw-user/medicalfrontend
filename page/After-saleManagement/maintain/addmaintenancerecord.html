@@ -5,6 +5,7 @@
 		<title>新增安装记录</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
 	<style>
 		dl>dd{
 			cursor: pointer;
@@ -16,17 +17,17 @@
 				<blockquote class="layui-elem-quote">新增维修记录</blockquote>
 				<div class="layui-row">
 					<div class="layui-col-md12" style="margin-left: 90px;">
-						<span style="margin-left:30px"><b>维修人员：</b></span>
+						<span style="margin-left:30px">维修人员：</span>
 						<div class="layui-input-inline" style="width:185px">
-							<select name="operator" id="operator">
+							<select name="operator" lay-verify="required" lay-reqtext="请选择维修人员" id="operator">
 							</select>
 						</div>
-						<span style="margin-left:20px"><b>维修日期：</b></span>
+						<span style="margin-left:20px">维修日期：</span>
 						<div class="layui-input-inline" >
-							<input class="layui-input" placeholder="维修日期" name="installationtime" id="test1" placeholder="yyyy-MM-dd" lay-reqtext="维修日期不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="维修日期" name="installationtime" id="test1" placeholder="yyyy-MM-dd" lay-reqtext="维修日期不能为空！">
 						</div>
 						<br>
-						<span style="margin-left:28px;"><b>维修地址：</b></span>
+						<span style="margin-left:28px;">维修地址：</span>
 						<div class="layui-form-item layui-inline" style="margin-top: 15px">
 							<div class="layui-form-item" id="addressDiv">
 								<div class="layui-input-inline" style="width: 90px;">
@@ -54,41 +55,41 @@
 						</div>
 						<input type="hidden" name="address" id="address">
 						<div class="layui-form-item" style="margin-left: -8px;">
-						    <label class="layui-form-label"><b>维修状态:</b></label>
+						    <label class="layui-form-label">维修状态:</label>
 						    <div class="layui-input-block">
 						      <input type="radio" name="status" value="1" title="未开始" checked="">
 						      <input type="radio" name="status" value="2" title="处理中">
 							  <input type="radio" name="status" value="3" title="已完成">
 						    </div>
 						  </div>
-						<span style="margin-left:55px"><b>区域：</b></span>
+						<span style="margin-left:55px">区域：</span>
 						<div class="layui-input-inline" style="width:185px">
-							<select name="did" id="did">
+							<select name="did" id="did" lay-verify="required" lay-reqtext="区域不能为空">
 							</select>
 						</div>
-						<span style="margin-left:28px"><b>备件编码：</b></span>
+						<span style="margin-left:28px">备件编码：</span>
 						<div class="layui-inline" >
-							<input class="layui-input" placeholder="备件编码" name="arpartcoding" id="arpartcoding" lay-reqtext="备件编码不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="备件编码" name="arpartcoding" id="arpartcoding" lay-reqtext="备件编码不能为空！">
 						</div><br><br>
-						<span style="margin-left:25px"><b>故障类型：</b></span>
+						<span style="margin-left:25px">故障类型：</span>
 						<div class="layui-input-inline" style="width:185px">
-							<input class="layui-input" placeholder="故障类型" name="faulttype" id="faulttype" lay-reqtext="故障类型不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="故障类型" name="faulttype" id="faulttype" lay-reqtext="故障类型不能为空！">
 						</div>
-						<span style="margin-left:28px"><b>故障描述：</b></span>
+						<span style="margin-left:28px">故障描述：</span>
 						<div class="layui-inline" >
-							<input class="layui-input" placeholder="故障描述" name="faultdescription" id="faultdescription"lay-reqtext="故障描述不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="故障描述" name="faultdescription" id="faultdescription"lay-reqtext="故障描述不能为空！">
 						</div>
 
 						<br>
 						<br>
 
-						<span style="margin-left:25px"><b>故障分析：</b></span>
+						<span style="margin-left:25px">故障分析：</span>
 						<div class="layui-inline" >
-							<input class="layui-input" placeholder="故障分析" name="analyze" id="analyze" lay-reqtext="故障分析不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="故障分析" name="analyze" id="analyze" lay-reqtext="故障分析不能为空！">
 						</div>
-						<span style="margin-left:25px"><b>产品编码：</b></span>
+						<span style="margin-left:25px">产品编码：</span>
 						<div class="layui-inline" >
-							<input class="layui-input" placeholder="产品编码" name="productcoding" id="productcoding"lay-reqtext="产品编码不能为空！">
+							<input class="layui-input" lay-verify="required" placeholder="产品编码" name="productcoding" id="productcoding"lay-reqtext="产品编码不能为空！">
 						</div>
 						<br>
 						<br>
@@ -114,7 +115,7 @@
 					</div>
 					<br>
 					<br>
-					<div class="" style="margin-left: 320px;margin-top: 50px;">
+					<div class="" style="margin-left: 65%;margin-top: 50px;">
 		                <div class="layui-form-item">
 		                    <button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo2">保存</button>
 		                    <button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
@@ -157,7 +158,7 @@
 				//拖拽上传
 				upload.render({
 					elem: '#beforeinstallationtest'
-					,url: 'http://127.0.0.1:8081/Maintenancerecord/upload' //改成您自己的上传接口
+					,url: 'http://127.0.0.1:8080/Maintenancerecord/upload' //改成您自己的上传接口
 					,multiple: true
 					,before: function(obj){
 						//预读本地文件示例，不支持ie8
@@ -180,7 +181,7 @@
 				});
 				upload.render({
 					elem: '#afterinstallationtest'
-					,url: 'http://127.0.0.1:8081/Maintenancerecord/upload' //改成您自己的上传接口
+					,url: 'http://127.0.0.1:8080/Maintenancerecord/upload' //改成您自己的上传接口
 					,multiple: true
 					,before: function(obj){
 						//预读本地文件示例，不支持ie8
@@ -205,17 +206,17 @@
 				laydate.render({
 					elem: '#test1'
 				});
-				$.post('http://127.0.0.1:8081/Maintenancecosts/getMpuserOne',function(result){
+				$.post('http://127.0.0.1:8080/Maintenancecosts/getMpuserOne',function(result){
 					var str="<option value='0'>--请选择--</option>";
 					$(result).each(function() {
-						str+="<option value="+this.mpid+">"+this.mname+"</option>";
+						str+="<option value="+this.mpid+">"+this.realname+"</option>";
 
 					})
 					$("#operator").append(str);
 					form.render('select');
 
 				})
-				$.post('http://127.0.0.1:8081/Maintenancerecord/getDistrict',function(result){
+				$.post('http://127.0.0.1:8080/Maintenancerecord/getDistrict',function(result){
 					var str="<option value='0'>--请选择--</option>";
 					$(result).each(function() {
 						str+="<option value="+this.did+">"+this.dname+"</option>";
@@ -227,7 +228,7 @@
 				})
 				$("#productcoding").blur(function(){
 					var coding=$("#productcoding").val();
-					$.post('http://127.0.0.1:8081/Maintenancecosts/getProductOne',{coding:coding},function(result){
+					$.post('http://127.0.0.1:8080/Maintenancecosts/getProductOne',{coding:coding},function(result){
 						if (result){
 
 						}else {
@@ -239,11 +240,11 @@
 				})
 				$("#arpartcoding").blur(function(){
 					var arpartcoding=$("#arpartcoding").val();
-					$.post('http://127.0.0.1:8081/Maintenancerecord/getArpart',{coding:arpartcoding},function(result){
+					$.post('http://127.0.0.1:8080/Maintenancerecord/getArpart',{coding:arpartcoding},function(result){
 						if (result){
 
 						}else {
-							layer.alert("对不起，没有该备件编码！");
+							layer.msg("对不起，没有该备件编码！");
 							$("#arpartcoding").val('');
 						}
 
@@ -257,18 +258,18 @@
 					var str = province+' '+city+' '+area+' '+site;
 					$("#address").val(str);
 					$.ajax({
-						url: 'http://127.0.0.1:8081/Maintenancerecord/addAmendrecord',
+						url: 'http://127.0.0.1:8080/Maintenancerecord/addAmendrecord',
 						type: 'post',
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						data: $("#pro").serialize(),
 						dataType: 'text',
 						success: function(result) {
 							if (result=="true") {
-								layer.alert("新增成功！", function() {
+								layer.msg("新增成功！", function() {
 									x_admin_close()
 								})
 							} else {
-								layer.alert("新增失败！", function() {
+								layer.msg("新增失败！", function() {
 									x_admin_close()
 								})
 							}

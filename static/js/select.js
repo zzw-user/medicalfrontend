@@ -58,6 +58,7 @@ layui.use(['form', 'layedit', 'laydate', 'upload', "jquery", "pca"], function ()
 
                     str += '<dd lay-value="" class="addressDd" onclick="ddclick(this)">' + data[i].name + '<span style="color:#9c9a9a;font-size:5px;">&nbsp' + data[i].address + '</span>' + '</dd>';
                 }
+                console.log(str)
                document.getElementById("addressTip").innerHTML = str;
                var s = document.getElementById("addressTip").innerHTML;
                if (str == "") {

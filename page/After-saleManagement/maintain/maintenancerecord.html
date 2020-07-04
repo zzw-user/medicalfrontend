@@ -5,8 +5,10 @@
 		<title>维修记录</title>
 	</head>
     <link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
 		</head>
-		<body>
+		<body><!--
 		<div class="weadmin-body" style="margin-left: 3%;">
 			 <div class="layui-row">
 				 <form class="layui-form layui-col-md12 we-search layui-form-pane">
@@ -36,20 +38,113 @@
 			</form>
 			 </div>
 			<script type="text/html" id="barDemo">
+				<div style="height: 100px;margin-top:50px">
 			  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
 			  <a class="layui-btn layui-btn-xs" lay-event="detail">评估</a>
 			  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 			  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">新增故障</a>
+				</div>
 			</script>
 			<table class="layui-table"  id="test" lay-filter="test"></table>
 		</div>
-	</body>
+	-->
+		<div class="layui-fluid">
+			<div class="layui-card">
+				<div class="layui-form layui-card-header layuiadmin-card-header-auto" style="text-align: center;">
+					<div class="layui-form-item" >
+						<div class="layui-inline">
+							<label class="layui-form-label">维修人员</label>
+							<div class="layui-input-inline">
+								<input type="text" name="realname" id="realname" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">维修地址</label>
+							<div class="layui-input-inline">
+								<input type="text" name="address" id="address" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">产品编号</label>
+							<div class="layui-input-inline">
+								<input type="text" name="coding" id="coding" lay-verify="title" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">维修状态</label>
+							<div class="layui-input-inline">
+								<select name="status" id="status" lay-filter="aihao">
+									<option value="0">请选择</option>
+									<option value="1">未开始</option>
+									<option value="2">处理中</option>
+									<option value="3">已完成</option>
+								</select> </div>
+						</div>
+						<div class="layui-inline">
+							<button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="formDemo" id="sel">
+								<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+							</button>
+							<button class="layui-btn" type="reset" style="background-color:#c2c2c2">重置</button>
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="layui-card-body">
+					<div style="padding-bottom: 10px;">
+						<button class="layui-btn layui-bg-blue" type="button" style="background-color:#c2c2c2" onclick="WeAdminShow('新增','./addmaintenancerecord.html',800,600)">新增记录</button>
+					</div>
+
+					<table class="layui-table"  id="test" lay-filter="test"></table>
+					<script type="text/html" id="barDemo">
+						<div style="height: 100px;margin-top:50px">
+							<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+							<a class="layui-btn layui-btn-xs" lay-event="detail">评估</a>
+							<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+							<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">新增故障</a>						</div>
+					</script>
+				</div>
+
+			</div>
+		</div>
+
+		</body>
 	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
 	<script type="text/html" id="beforeimgtmp">
 		<img src="../../../static/img/{{d.beforeinstallation}}">
 	</script>
 	<script type="text/html" id="afterimgtmp">
 		<img src="../../../static/img/{{d.afterinstallation}}">
+	</script>
+	<script type="text/html" id="progressTpl">
+		{{#  if(d.status == 1){ }}
+		<div class="layui-progress" >
+			<div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+		</div>
+		{{#  } }}
+
+		{{#  if(d.status == 2){ }}
+		<div class="layui-progress" >
+			<div class="layui-progress-bar layui-bg-blue"  lay-percent="50%"></div>
+		</div>
+		{{#  } }}
+		{{#  if(d.status == 3){ }}
+		<div class="layui-progress" >
+			<div class="layui-progress-bar layui-bg-green"  lay-percent="100%"></div>
+		</div>
+		{{#  } }}
+	</script>
+	<script type="text/html" id="buttonTpl">
+		{{#  if(d.status == 1){ }}
+		<button class="layui-btn layui-btn-danger layui-btn-xs">未开始</button>
+		{{#  } }}
+		{{#  if(d.status == 2){ }}
+		<button class="layui-btn layui-btn-normal layui-btn-xs">处理中</button>
+		{{#  } }}
+		{{#  if(d.status == 3){ }}
+		<button class="layui-btn layui-btn layui-btn-xs">已完成</button>
+		{{#  } }}
 	</script>
 	<style type="text/css">
 
@@ -83,7 +178,7 @@
 				,id:'testReload'
 				,height: 450
 				,width:1150
-				,url: 'http://127.0.0.1:8081/Maintenancerecord/getAmendrecord' //数据接口
+				,url: 'http://127.0.0.1:8080/Maintenancerecord/getAmendrecord' //数据接口
 				,type:'get'
 				,dataType:'json'
 				,crossDomain:true
@@ -95,18 +190,15 @@
 					, {field: 'afterinstallation',width:160, title: '维修后图片',templet:"#afterimgtmp"}
 					, {field: 'installationtime',width:150, title: '维修日期'}
 					, {field: 'productcoding',width:150, title: '产品编码'}
-					,{field:'status',width:100,title:'维修状态',templet:function(s){
-							if (s.status===1){
-								return '未开始'
-							}else if (s.status===2){
-								return '处理中'
-							}else {
-								return '已完成'
-							}
-						}}
-					,{ title:'操作', toolbar: '#barDemo', width:150}
+					,{field:'assess',width:100,title:'评估'}
+					,{field:'status',width:150,title:'维修进度',templet:"#progressTpl"}
+					,{field:'status',width:100,title:'维修状态',templet:"#buttonTpl"}
+					,{ fixed: 'right', align:'center',title:'操作', toolbar: '#barDemo', width:250}
 				]]
 				,page: true
+				,done:function (res,curr,count) {
+					element.render();
+				}
 			});
 			$("#sel").on('click',function(){
 				table.reload('testReload', {
@@ -132,7 +224,7 @@
 				//console.log(obj)
 				if(obj.event == 'del'){
 					layer.confirm('真的删除行么', function(index){
-						$.get("http://127.0.0.1:8081/Maintenancerecord/delAmendrecord?rid="+data.rid,function (ret) {
+						$.get("http://127.0.0.1:8080/Maintenancerecord/delAmendrecord?rid="+data.rid,function (ret) {
 							if (ret==true){
 								layer.msg("删除成功！")
 								table.reload('testReload');

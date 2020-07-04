@@ -5,6 +5,7 @@
 		<title>新增安装记录</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
 	<style>
 		dl>dd{
 			cursor: pointer;
@@ -33,6 +34,12 @@
 							</div>
 						</div>
 						<div class="layui-form-item layui-inline">
+							<div style="padding: 10px;">产品编号</div>
+							<div class="layui-input-inline">
+								<input type="text" name="coding" id="coding" lay-verify="required" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item layui-inline">
 
 							<div class="layui-form-item" id="addressDiv">
 								<div style="padding: 10px;">安装地址</div>
@@ -51,8 +58,8 @@
 										<option></option>
 									</select>
 								</div>
-								<div class="layui-input-inline" id="addressDetail" style="width: 150px;">
-									<input id="site" type="text" name="site" style="width: 150px;"  lay-verify="title" autocomplete="off"
+								<div class="layui-input-inline" id="addressDetail" style="width: 280px;">
+									<input id="site" type="text" name="site" style="width: 280px;"  lay-verify="title" autocomplete="off"
 										   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="安装地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
 									<dl id="addressTip" class="addressDl">
 									</dl>
@@ -68,12 +75,7 @@
 							  <input type="radio" name="status" value="3" title="已完成">
 						    </div>
 						  </div>
-						<div class="layui-form-item">
-							<div style="padding: 10px;">产品编号</div>
-							<div class="layui-input-inline">
-								<input type="text" name="coding" id="coding" lay-verify="required" autocomplete="off" class="layui-input">
-							</div>
-						</div>
+
 						<div class="layui-upload-drag" id="beforeinstallationtest" style="width: 100px;">
 							<i class="layui-icon"></i>
 							<p>点击上传安装前图片</p>
@@ -93,7 +95,7 @@
 						</div>
 						<input type="hidden" id="afterinstallation" name="afterinstallation">
 					</div>
-					<div class="" style="margin-left: 320px;margin-top: 3%;">
+					<div class="" style="margin-left: 65%;margin-top: 3%;">
 		                <div class="layui-form-item">
 		                    <button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo2">保存</button>
 		                    <button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
@@ -136,7 +138,7 @@
 				//拖拽上传
 				upload.render({
 					elem: '#beforeinstallationtest'
-					,url: 'http://127.0.0.1:8081/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+					,url: 'http://127.0.0.1:8080/InstallationRecordEvaluation/upload' //改成您自己的上传接口
 					,multiple: true
 					,before: function(obj){
 						//预读本地文件示例，不支持ie8
@@ -197,11 +199,11 @@
 				$("#coding").blur(function(){
 					var coding=$("#coding").val();
 					$.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
-						if (result){
 
-						}else {
+						if (result==null || result==''){
 							layer.msg("对不起，没有该产品编码！");
 							var coding=$("#coding").val('');
+						}else {
 						}
 
 					})
@@ -222,11 +224,11 @@
 						success: function(result) {
 
 							if (result == "ok") {
-								layer.alert("新增成功！", function() {
+								layer.msg("新增成功！", function() {
 									x_admin_close()
 								})
 							} else {
-								layer.alert("新增失败！", function() {
+								layer.msg("新增失败！", function() {
 									x_admin_close()
 								})
 							}

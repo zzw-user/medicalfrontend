@@ -27,7 +27,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     laydate.render({
         elem: '#date1'
     });
-    $("#operator").load('http://127.0.0.1:8081/Maintenancecosts/getMpuserOne',function (result) {
+    $("#operator").load('http://127.0.0.1:8080/Maintenancecosts/getMpuserOne',function (result) {
         var data=eval(result);
         $(data).each(function (i,o) {
             $("#operator").append("<option value="+this.mpid+">"+this.realname+"</option>")
@@ -35,9 +35,31 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         form.render("select");
     })
     var cid=getUrlParam("cid");
+        $("#site").blur(function () {
+            var province = $("#province").val();
+            var area = $("#area").val();
+            var city= $("#city").val();
+            var site = $("#site").val();
+            var str = province+' '+city+' '+area+' '+site;
+            $("#address").val(str);
 
+            $.ajax({
+                type:"get",
+                data:{"address":str,"key":"389880a06e3f893ea46036f030c94700"},
+                dataJson: "json",
+                url:"http://restapi.amap.com/v3/geocode/geo",
+                success:function (result) {
+                    console.log(result);
+                    console.log(result.geocodes[0].location);
+                    var sz=result.geocodes[0].location.split(",");
+                    $("#longitude").val(sz[0]);
+                    $("#latitude").val(sz[1]);
+                }
+            })
+            console.log(address);
+        })
 
-    $.get('http://127.0.0.1:8081/Maintenancecosts/getCostOne',{cid:cid},function (result) {
+    $.get('http://127.0.0.1:8080/Maintenancecosts/getCostOne',{cid:cid},function (result) {
         form.val('example',result);
         var str = result.address;
         var arr=new Array();
@@ -51,11 +73,11 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     });
     $("#coding").blur(function(){
         var coding=$("#coding").val();
-        $.post('http://127.0.0.1:8081/Maintenancecosts/getProductOne',{coding:coding},function(result){
+        $.post('http://127.0.0.1:8080/Maintenancecosts/getProductOne',{coding:coding},function(result){
             if (result){
 
             }else {
-                layer.alert("对不起，没有该产品编码！");
+                layer.msg("对不起，没有该产品编码！");
                 var coding=$("#coding").val('');
             }
 
@@ -69,7 +91,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         var site = $("#site").val();
         var str = province+' '+city+' '+area+' '+site;
         $("#address").val(str);
-        $.get( 'http://127.0.0.1:8081/Maintenancecosts/updCost',$("#form").serialize(),function (result) {
+        $.get( 'http://127.0.0.1:8080/Maintenancecosts/updCost',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("修改成功！",{icon:1,time:1000},function(){
                     x_admin_close();

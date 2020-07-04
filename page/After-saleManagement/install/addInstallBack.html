@@ -5,49 +5,50 @@
 		<title>录入回访记录</title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
+	<style>
+		dl>dd{
+			cursor: pointer;
+		}
+	</style>
 	<body>
 		<div class="weadmin-body">
-			<form class="layui-form" id="pro">
-				<blockquote class="layui-elem-quote">新增安装费用</blockquote>
+			<form class="layui-form" id="pro" lay-filter="example">
+				<blockquote class="layui-elem-quote">录入回访记录</blockquote>
 				<div class="layui-row">
 					<div class="layui-col-md12" style="margin-left: 70px;">
 						<div class="layui-form-item layui-inline">
 							<div style="padding: 10px;">回访人员</div>
 							<div class="layui-input-inline">
-								<input type="text" name="issueCoding" lay-verify="title" autocomplete="off" class="layui-input">
+								<input type="text" lay-reqtext="回访人名不能为空！" name="pname" lay-verify="title" autocomplete="off" class="layui-input">
 							</div>
 						</div>
 						<div class="layui-form-item layui-inline">
 							<div style="padding: 10px;">回访方式</div>
 							<div class="layui-input-inline">
-								<input type="text" name="issueName" lay-verify="title" autocomplete="off" class="layui-input">
+								<input type="text" name="way" lay-reqtext="回访方式不能为空！" lay-verify="title" autocomplete="off" class="layui-input">
 							</div>
 						</div>
-						<div class="layui-form-item layui-inline" style="width: 200px;">
-							<label class="layui-form-label" style="margin-left: -50px;">操作员</label>
-							<div class="layui-input-inline" style="width: 200px">
-								<select name="midtype" lay-verify="required">
-									<option value="启用">启用</option>
-									<option value="停用">停用</option>
-									<option value="暂停">暂停</option>
-								</select>
+						<div class="layui-form-item layui-inline" >
+							<div style="padding: 10px;">操作人</div>
+							<input type="text" id="operator" name="operator"  lay-verify="title" autocomplete="off" class="layui-input">
 
-							</div>
-
+							<input type="hidden" name="pid">
 						</div>
 						<div class="layui-form-item layui-inline">
 							<div style="padding: 10px;">记录日期</div>
 							<div class="layui-input-inline">
-								<input type="text" name="issueName" id="test1" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
+								<input type="text" name="writetime" id="test1" lay-reqtext="记录日期不能为空！" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
 								 class="layui-input">
 							</div>
 						</div>
 						<div class="layui-form-item layui-inline">
 							<div style="padding: 10px;">描述</div>
 							<div class="layui-input-inline">
-								<input type="text" name="issueName" lay-verify="title" autocomplete="off" class="layui-input">
+								<input type="text"  lay-reqtext="描述不能为空！" name="describe" lay-verify="title" autocomplete="off" class="layui-input">
 							</div>
 						</div>
+						<input type="hidden" name="aftertype" value="1">
 						<div class="layui-form-item layui-inline" style="margin-top: 11%;">
 							<div class="layui-form-item">
 								<button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo2">保存</button>
@@ -86,42 +87,20 @@
 				laydate.render({
 					elem: '#test1'
 				});
-				$("#informPost").load('http://127.0.0.1:8080/problemstate/getRole', function(result) {
-					const data = eval(result);
-					$(data).each(function(i, o) {
-						$("#informPost").append("<option value='" + o.id + "'>" + o.roleName + "</option>")
-					});
-					form.render("select");
-				});
-				$("#roleList").load('http://127.0.0.1:8080/problemstate/getRole', function(result) {
-					const data = eval(result);
-					$(data).each(function(i, o) {
-						$("#roleList").append("<option value='" + o.id + "'>" + o.roleName + "</option>")
-					});
-					form.render("select");
-				});
-				$("#issueTypeId").load('http://127.0.0.1:8080/problemstate/getIssueType', function(result) {
-					const data = eval(result);
-					$(data).each(function(i, o) {
-						$("#issueTypeId").append("<option value='" + o.id + "'>" + o.issueName + "</option>")
-					});
-					form.render("select");
-				})
 				form.on('submit(formDemo2)', function(data) {
 					$.ajax({
-						url: 'http://127.0.0.1:8080/problemstate/addIssueStaus',
-						type: 'get',
-						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+						url: 'http://127.0.0.1:8080/Repairback/addPayareturnvisit',
+						type: 'post',
 						data: $("#pro").serialize(),
-						dataType: 'text',
-						success: function(result) {
-
-							if (result == "ok") {
-								layer.alert("新增成功！", function() {
+						dataType:'text',
+						success: function (result) {
+							if (result) {
+								layer.msg("新增成功！", function () {
 									x_admin_close()
+
 								})
 							} else {
-								layer.alert("新增失败！", function() {
+								layer.msg("新增失败！", function () {
 									x_admin_close()
 								})
 							}

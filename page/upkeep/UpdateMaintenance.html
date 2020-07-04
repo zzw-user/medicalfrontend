@@ -33,7 +33,7 @@
 				         <input type="text" name="writetime" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
 				       </div>
 				</div>
-				<input type="hidden" name="aftertype" value="2">
+				<input type="hidden" name="aftertype" value="3">
 		<div class="layui-form-item">
 		       <label class="layui-form-label">描述：</label>
 		       <div class="layui-input-inline">
@@ -98,7 +98,7 @@
 	  
 	  //监听提交
 	  form.on('submit(demo1)', function(data){
-	    layer.alert(JSON.stringify(data.field), {
+	    layer.msg(JSON.stringify(data.field), {
 	      title: '最终的提交信息'
 	    })
 	    return false;
@@ -120,7 +120,7 @@
 	  //表单取值
 	  layui.$('#LAY-component-form-getval').on('click', function(){
 	    var data = form.val('example');
-	    alert(JSON.stringify(data));
+	    msg(JSON.stringify(data));
 	  });
 	  
 	});

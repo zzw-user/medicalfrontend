@@ -14,17 +14,17 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#problem'
         ,id:'testReload'
         ,height: 450
-        ,width:1395
-        ,url: 'http://127.0.0.1:8081/delivery/getDelivery' //数据接口
+        ,width:1150
+        ,url: 'http://127.0.0.1:8080/delivery/getDelivery' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'
         ,crossDomain:true
         ,cols: [[ //表头
-            {field:'did',width:180,title:"序号"}
-            , {field: 'mname',width:200, title: '操作人'}
-            , {field: 'phone',width:200, title: '联系电话'}
-            , {field: 'address',width:230, title: '联系地址'}
+            {type:'numbers',title:"序号",width:100}
+            , {field: 'mname',width:100, title: '维修人'}
+            , {field: 'phone',width:180, title: '联系电话'}
+            , {field: 'address',width:300, title: '联系地址'}
             , {field: 'coding',width:200, title: '产品编码'}
             , {field: 'deliverytime',width:225, title: '派送时间'}
             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
@@ -49,7 +49,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             if (obj.event === 'del') {
                 layer.confirm('真的删除么?',function(index) {
                     $.ajax({
-                        url : "http://127.0.0.1:8081/delivery/delDelivery",
+                        url : "http://127.0.0.1:8080/delivery/delDelivery",
                         type : "post",
                         data : {
                             did: data.did
@@ -57,17 +57,17 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
                         dataType : "text",
                         success : function(e) {
                             if (e) {
-                                layer.alert("删除成功");
+                                layer.msg("删除成功");
                                 obj.del();
                             } else {
-                                layer.alert("删除失败");
+                                layer.msg("删除失败");
                             }
                         }
                     });
 
                 });
             }else if (obj.event === 'upd') {
-                WeAdminShow('修改派单','./updmaintainsendorders.html?did='+data.did,800,400);
+                WeAdminShow('修改派单','./updmaintainsendorders.html?did='+data.did,600,500);
             }
         });
     window.WeAdminShow = function(title, url, w, h) {

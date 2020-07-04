@@ -10,6 +10,7 @@ layui.define(['table', 'form', 'layer', 'jquery', 'element'], function (exports)
         var form = layui.form;
         if (!province || !$(province).length) return;
         $(province).html('');
+
         $(province).append('<option selected>全部</option>');
         for (var i in citys) {
             $(province).append('<option>' + citys[i].name + '</option>');
@@ -38,6 +39,7 @@ layui.define(['table', 'form', 'layer', 'jquery', 'element'], function (exports)
         });
         if (initprovince) $(province).next().find('[lay-value="' + initprovince + '"]').click();
         if (initcity) $(city).next().find('[lay-value="' + initcity + '"]').click();
+
         if (!area || !$(area).length) return;
         pca.formRender(area);
         form.on('select(city)', function (data) {

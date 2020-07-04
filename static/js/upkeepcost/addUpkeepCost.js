@@ -10,7 +10,7 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
     });
     $("#coding").blur(function(){
         var coding=$("#coding").val();
-        $.post('http://127.0.0.1:8081/Cost/getProductOne',{coding:coding},function(result){
+        $.post('http://127.0.0.1:8080/Cost/getProductOne',{coding:coding},function(result){
             if (result){
                   alert(coding);
             }else {
@@ -20,7 +20,30 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
 
         })
     })
-    $.post('http://127.0.0.1:8081/Cost/getMpuser',function(result){
+    $("#site").blur(function () {
+        var province = $("#province").val();
+        var area = $("#area").val();
+        var city= $("#city").val();
+        var site = $("#site").val();
+        var str = province+' '+city+' '+area+' '+site;
+        $("#address").val(str);
+
+        $.ajax({
+            type:"get",
+            data:{"address":str,"key":"389880a06e3f893ea46036f030c94700"},
+            dataJson: "json",
+            url:"http://restapi.amap.com/v3/geocode/geo",
+            success:function (result) {
+                console.log(result);
+                console.log(result.geocodes[0].location);
+                var sz=result.geocodes[0].location.split(",");
+                $("#longitude").val(sz[0]);
+                $("#latitude").val(sz[1]);
+            }
+        })
+        console.log(address);
+    })
+    $.post('http://127.0.0.1:8080/Cost/getMpuser',function(result){
         var str="<option value='0'>--请选择--</option>";
         $(result).each(function() {
             str+="<option value="+this.mpid+">"+this.realname+"</option>";
@@ -39,7 +62,7 @@ layui.use(['form', 'laydate','table','layer','jquery'], function(){
         $("#address").val(str);
         var userInfo=$("#form").serialize();
         $.ajax({
-            url:"http://127.0.0.1:8081/Cost/addCost",
+            url:"http://127.0.0.1:8080/Cost/addCost",
             type:"post",
             data:userInfo,
             dataType:"text",

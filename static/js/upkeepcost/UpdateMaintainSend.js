@@ -14,7 +14,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             ,
             element = layui.element //元素操作
 
-            ,pca = layui.pca;
+            ,pca = layui.pca,
             $ = layui.jquery,
             form = layui.form,
             slider = layui.slider; //滑块//执行一个laydate实例
@@ -29,7 +29,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
 
 
-        $("#operator").load('http://127.0.0.1:8081/SendaSingleInstallation/getMpuser',function (result) {
+        $("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser',function (result) {
         var data=eval(result);
         $(data).each(function (i,o) {
             $("#operator").append("<option value="+this.mpid+">"+this.realname+"</option>")
@@ -38,11 +38,12 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     })
 
     var did=getUrlParam("did");
-    $.get('http://127.0.0.1:8081/SendaSingleInstallation/getDeliveryByDid',{did:did},function (result) {
+    $.get('http://127.0.0.1:8080/SendaSingleInstallation/getDeliveryByDid',{did:did},function (result) {
         form.val('example',result);
         var str = result.address;
         var arr=new Array();
         arr=str.split(' ');
+
         //  $("#province").val(arr[0]);
         $("#province").val(arr[0]);
         $("#city").val(arr[1]);
@@ -52,8 +53,15 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
     });
 
-    form.on('submit(formDem)', function(data){
-        $.get( 'http://127.0.0.1:8081/SendaSingleInstallation/updateDeliveryByAid',$("#pro").serialize(),function (result) {
+    form.on('submit(formDemo)', function(data){
+        var province = $("#province").val();
+        var area = $("#area").val();
+        var city= $("#city").val();
+        var site = $("#site").val();
+        var str = province+' '+city+' '+area+' '+site;
+        $("#address").val(str);
+        $.get( 'http://127.0.0.1:8080/SendaSingleInstallation/updateDeliveryByAid',$("#pro").serialize(),function (result) {
+
             if (result=="ok"){
                 layer.msg("修改成功！",{icon:1,time:1000},function(){
                     x_admin_close();

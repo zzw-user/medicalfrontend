@@ -14,7 +14,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#problem'
         ,id:'testReload'
         ,height: 450
-        ,url: 'http://127.0.0.1:8081/SendaSingleInstallation/getDeliveryByAid' //数据接口
+        ,url: 'http://127.0.0.1:8080/SendaSingleInstallation/getDeliveryByAid?aftertype=3' //数据接口
         ,type:'get'
         ,dataType:'json'
         ,crossDomain:true
@@ -47,10 +47,10 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     table.on('tool(demo)', function(obj){
         var data = obj.data;
         if(obj.event === 'detail'){
-            WeAdminShow('修改派单','./UpdateMaintainSend.html?did='+data.did,800,500);
+            WeAdminShow('修改派单','./UpdateMaintainSend.html?did='+data.did,600,500);
         } else if(obj.event === 'del'){
             layer.confirm('真的删除行么', function(index){
-                $.get("http://127.0.0.1:8081/SendaSingleInstallation/deleteDeliveryByDid?did="+data.did,function (ret) {
+                $.get("http://127.0.0.1:8080/SendaSingleInstallation/deleteDeliveryByDid?did="+data.did,function (ret) {
                     if (ret=="ok"){
                         layer.msg("删除成功！")
                         table.reload('testReload');
@@ -66,7 +66,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         active[type] ? active[type].call(this) : '';
     });
     $("#xz").click(function(){
-        WeAdminShow('新增','./addMaintainSend.html',620,400)
+        WeAdminShow('新增','./addMaintainSend.html',600,500)
 
     })
 

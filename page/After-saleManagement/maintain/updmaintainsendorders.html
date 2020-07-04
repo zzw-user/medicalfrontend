@@ -5,12 +5,97 @@
 		<title></title>
 	</head>
 	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
 	<style>
-
-	
+		dl>dd{
+			cursor: pointer;
+		}
 	</style>
 	<body>
-		<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>修改维修派单</b></span></div>
+
+	<div class="weadmin-body">
+		<form class="layui-form" id="form" lay-filter="example">
+			<blockquote class="layui-elem-quote">修改维修派单</blockquote>
+			<div class="layui-row">
+				<div class="layui-col-md12" style="margin-left: 70px;">
+					<div class="layui-form-item layui-inline" style="width: 200px;">
+						<label class="layui-form-label" style="margin-left: -40px;">维修人员</label>
+						<div class="layui-input-inline" style="width: 200px">
+							<select name="operator" id="operator" lay-verify="required">
+							</select>
+
+						</div>
+
+					</div>
+					<input name="did" type="hidden">
+
+					<div class="layui-form-item layui-inline" style="margin-left: 5%">
+						<div style="padding: 10px;">维修日期</div>
+						<div class="layui-input-inline">
+							<input type="text" name="deliverytime" class="layui-input" lay-verify="required" id="test1" placeholder="yyyy-MM-dd">
+						</div>
+					</div>
+					<div class="layui-form-item layui-inline" >
+						<div style="padding: 10px;">联系电话</div>
+						<div class="layui-input-inline">
+							<input type="text" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item layui-inline" style="margin-left: 5%">
+						<div style="padding: 10px;">产品编码</div>
+						<div class="layui-input-inline">
+							<input type="text" id="coding" name="coding" lay-verify="required" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item layui-inline">
+
+						<div class="layui-form-item" id="addressDiv">
+							<div style="padding: 10px;">维修地址</div>
+							<div class="layui-input-inline" style="width: 90px;">
+								<select name="P1" lay-filter="province" id="province" style="width: 50px;">
+									<option></option>
+								</select>
+							</div>
+							<div class="layui-input-inline" style="width: 100px;">
+								<select name="C1" lay-filter="city" id="city" style="width: 50px;">
+									<option></option>
+								</select>
+							</div>
+							<div class="layui-input-inline" style="width: 100px;">
+								<select name="A1" lay-filter="area" id="area" style="width: 50px;">
+									<option></option>
+								</select>
+							</div>
+							<div class="layui-input-inline" id="addressDetail" style="width: 150px;">
+								<input id="site" type="text" name="site" style="width: 150px;"  lay-verify="title" autocomplete="off"
+									   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="维修地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
+								<dl id="addressTip" class="addressDl">
+								</dl>
+							</div>
+						</div>
+					</div>
+					<input type="hidden" name="aftertype" value="2">
+					<input type="hidden" name="address" id="address">
+
+
+					<div class="layui-form-item layui-inline" style="margin-top: 5%;margin-left: 65%">
+						<div class="layui-form-item">
+							<button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="demo1">保存</button>
+							<button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+			</div>
+		</form>
+	</div>
+
+		<!--<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>修改维修派单</b></span></div>
 		<br>
 		<br>
 		<div class="weadmin-body">
@@ -21,7 +106,7 @@
 							 <div style="margin-left: 6.75rem;">
 							 <span><b>维修人员：</b></span>
 							 <div class="layui-input-inline" style="width:185px">
-								 <select lay-filter="aihao" name="operator" id="operator">
+								 <select lay-filter="aihao" lay-verify="required" lay-reqtext="请选择维修人员" name="operator" id="operator">
 
 								 </select>
 							</div>
@@ -47,7 +132,7 @@
 									</div>
 									<div class="layui-input-inline" id="addressDetail" style="width: 150px;">
 										<input id="site" type="text" name="site" style="width: 150px;"  lay-verify="title" autocomplete="off"
-											   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="安装地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
+											   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="维修地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
 										<dl id="addressTip" class="addressDl">
 										</dl>
 									</div>
@@ -57,21 +142,22 @@
 						   <div style="margin-left: 6.75rem;">
 						   	<span><b>联系电话：</b></span>
 						   <div class="layui-inline" >
-							   <input class="layui-input" placeholder="联系电话" name="phone" lay-verify="required|phone" lay-reqtext="联系电话不能为空！">
+							   <input class="layui-input" lay-verify="required" placeholder="联系电话" name="phone" lay-verify="required|phone" lay-reqtext="联系电话不能为空！">
 						   </div>
 						   </div><br>
 						   <div style="margin-left: 6.75rem;">
 						   	<span><b>产品编号：</b></span>
 						   <div class="layui-inline" >
-							   <input class="layui-input" placeholder="产品编码" name="coding" lay-reqtext="产品编码不能为空！" id="coding">
+							   <input class="layui-input" lay-verify="required" placeholder="产品编码" name="coding" lay-reqtext="产品编码不能为空！" id="coding">
                                <input type="hidden" name="aftertype">
 						   </div>
 						   </div><br>
                             <span style="margin-left:105px"><b>录入时间：</b></span>
                             <div class="layui-inline" >
-                                <input class="layui-input" placeholder="录入时间" name="deliverytime" lay-reqtext="录入时间不能为空！">
+                                <input class="layui-input" lay-verify="required" placeholder="录入时间" name="deliverytime" lay-reqtext="录入时间不能为空！">
 
                             </div>
+							<input type="hidden" id="aftertype" value="2">
 							<br>
 							<br>
 							<br>
@@ -81,7 +167,7 @@
 							</div>
 						</form>
 					</div>
-					</div>
+					</div>-->
 	          </body>
 	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
 	<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>

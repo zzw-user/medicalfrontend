@@ -16,19 +16,19 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
     form.on('submit(formDemo2)', function(data){
         $.ajax({
-            url: 'http://127.0.0.1:8081/Repairback/addPayareturnvisit',
+            url: 'http://127.0.0.1:8080/Repairback/addPayareturnvisit',
             type: 'post',
             data: $("#pro").serialize(),
             dataType:'text',
             success: function (result) {
                 if (result) {
-                    layer.alert("新增成功！", function () {
+                    layer.msg("新增成功！", function () {
                         window.parent.location.reload('testReload');
                         x_admin_close()
 
                     })
                 } else {
-                    layer.alert("新增失败！", function () {
+                    layer.msg("新增失败！", function () {
                         x_admin_close()
                     })
                 }

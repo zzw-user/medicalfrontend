@@ -13,13 +13,21 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
         elem: '#date1'
     });
     var pid=getUrlParam("pid");
-    $.get('http://127.0.0.1:8081/Repairback/getPayareturnvisitOne',{pid:pid},function (result) {
+    $.get('http://127.0.0.1:8080/Repairback/getPayareturnvisitOne',{pid:pid},function (result) {
+        $("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(res) {
+            const data = eval(res);
+            $(data).each(function(i, o) {
+                if(result.operator==o.mpid){
+                    $("#realname").val(o.realname);
+                }
+            });
+        });
         form.val('example',result);
     });
 
     form.on('submit(demo)', function(data){
 
-        $.get( 'http://127.0.0.1:8081/Repairback/updPayareturnvisit',$("#form").serialize(),function (result) {
+        $.get( 'http://127.0.0.1:8080/Repairback/updPayareturnvisit',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("修改成功！",{icon:1,time:1000},function(){
                     x_admin_close();
