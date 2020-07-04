@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
+	<body style="padding-top: 30px;background-color: white;">
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 0px;text-align: center">
+		<legend><h3>新增备件</h3></legend>
+	</fieldset>
+
+		<form class="layui-form layui-form-pane" action="" lay-filter="formFilter"  style="width: 800px;margin:0 auto">
+<input type="hidden" name="aid"/>
+
+
+			<div class="layui-form-item ">
+				<label class="layui-form-label">备件编码</label>
+				<div class="layui-input-block">
+					<input type="text" name="coding" id="faultdescription" lay-verify="required" lay-reqtext="故障描述不能为空！" placeholder="请输入故障描述" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<br/>
+			<div class="layui-form-item ">
+				<label class="layui-form-label">备件名称</label>
+				<div class="layui-input-block">
+					<input type="text"  name="aname" id="analyze" lay-verify="required" lay-reqtext="故障分析不能为空！" placeholder="请输入故障分析" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<br/>
+			<div class="layui-form-item ">
+				<label class="layui-form-label">所属仓库</label>
+				<div class="layui-input-block">
+					<select name="wid" id="wid">
+					</select></div>
+			</div>
+			<br/>
+			<div class="layui-form-item ">
+				<label class="layui-form-label">备件类型</label>
+				<div class="layui-input-block">
+					<select name="tid" id="tid">
+					</select></div>
+			</div>
+			<br/>
+			<div class="layui-form-item ">
+				<label class="layui-form-label">入库日期</label>
+				<div class="layui-input-block">
+					<input type="text"  name="intime" id="intime" lay-verify="required" autocomplete="off" class="layui-input ">
+				</div>
+				<div class="layui-form-mid layui-word-aux" id="ts"></div>
+			</div>
+			<br/>
+			<br/>
+			<div class="layui-form-item" align="center">
+				<button class="layui-btn" type="submit"  id="bth" lay-submit="" lay-filter="demo1">保存</button>
+				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			</div>
+			<br/>
+			<br/>
+
+		</form>
+	          </body>
+	<script src="../../lib/layui-v2.5.5/layui.js"></script>
+				<script>
+					var fid;
+					function getId(id){
+
+						fid=id;
+					}
+					layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider','jquery','form'], function() {
+						var laydate = layui.laydate //日期
+								, laypage = layui.laypage //分页
+								, layer = layui.layer //弹层
+								, table = layui.table //表格
+								, carousel = layui.carousel //轮播
+								, upload = layui.upload //上传
+								, element = layui.element //元素操作
+								, $ = layui.jquery
+								, form = layui.form
+								, slider = layui.slider; //滑块//执行一个laydate实例
+						laydate.render({
+							elem: '#intime' //指定元素
+						});
+
+
+						$.get('http://127.0.0.1/selectTypecyh', function (result) {
+							var str = "<option value=''>请选择</option>";
+							$(result).each(function () {
+								str += "<option value=" + this.tid + ">" + this.tname + "</option>";
+							})
+							$("#tid").html(str);
+
+
+							form.render('select');
+							$.get('http://127.0.0.1/selectWarehousecyh', function (result) {
+										var str = "<option value=''>请选择</option>";
+										$(result).each(function () {
+											str += "<option value=" + this.wid + ">" + this.wname + "</option>";
+										})
+										$("#wid").html(str);
+								form.render('select');
+									}
+
+							)
+							$.post("http://127.0.0.1/selectOneArpartcyh", {"aid": fid}, function (result) {
+								form.val("formFilter", result);
+							});
+							});
+						form.on('submit(demo1)', function (data) {
+							var Faultanalysis = $('form').serialize();
+							$.ajax({
+								type: "post",
+								data: Faultanalysis,
+								url: "http://127.0.0.1/addArpartcyh",
+								dataType: "text",
+								success: function (result) {
+									if (result == 'true') {
+										layer.msg("新增成功", {time: '1000'}, function () {
+											parent.layui.table.reload('userTable'); //重载表格
+											parent.layer.close(parent.layer.index);
+										});
+
+									} else {
+										layer.msg("新增失败");
+									}
+								}
+							})
+							return false;
+						});
+						$("#aid").blur(function () {
+							var rid = $("#aid").val();
+
+							var ts = "该维修记录未找到"
+							$.get("http://127.0.0.1/panduan", {"rid": rid}, function (result) {
+								if (result == "false") {
+									$("#ts").html(ts)
+									$("#bth").attr("disabled",true);
+									$("#bth").addClass("layui-disabled");
+								}else {$("#ts").html("")
+									$("#bth").attr("disabled",false);
+									$("#bth").removeClass("layui-disabled");
+								}
+							})
+						})
+
+					})
+				</script>
+</html>

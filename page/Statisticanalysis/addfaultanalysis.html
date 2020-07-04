@@ -4,48 +4,44 @@
 		<meta charset="utf-8">
 		<title></title>
 	</head>
-	<link rel="stylesheet" href="../layui/css/layui.css"/>
+	<link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
 	<body>
 		<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>新增故障分析</b></span></div>
 		<br>
-		<br=
+		<br>
 		
 		<div class="weadmin-body">
 					<div class="layui-row">
 						<form class="layui-form layui-col-md12 we-search">
 							<br>
-							 <div style="margin-left: 6.75rem;">
-							 <span><b>故障类型：</b></span>
+							<div class="layui-form-item">
+								<label class="layui-form-label" ><b>故障类型：</b></label>
 							 <div class="layui-input-inline" >
-								<select name="cateid">
-									<option>请选择</option>
-									<option>管理员角色</option>
-									<option>操作员角色</option>
+								<select name="faulttypeid" id="id">
+
 								</select>
 							</div>
 							</div>
 							<br>
-							<div style="margin-left: 6.75rem;">
-								<span><b>故障描述：</b></span>
-							<div class="layui-inline" >
-								<input class="layui-input" placeholder="故障描述" name="start" id="start">
+							<div class="layui-form-item">
+								<label class="layui-form-label" ><b>故障描述：</b></label>
+							<div class="layui-input-inline" >
+								<input class="layui-input" placeholder="故障描述" name="faultdescription" id="faultdescription">
 							</div>
 							</div><br>
-						   <div style="margin-left: 6.75rem;">
-						   	<span><b>故障分析：</b></span>
-						   <div class="layui-inline" >
-						   	<input class="layui-input" placeholder="故障分析" name="start" id="start">
+							<div class="layui-form-item">
+							   <label class="layui-form-label" ><b>故障分析：</b></label>
+						   <div class="layui-input-inline" >
+						   	<input class="layui-input" placeholder="故障分析" name="analyze" id="analyze">
 						   </div>
 						   </div><br>
-							<div style="margin-left: 8.5625rem">
-							<span><b>区域：</b></span>
-							 <div class="layui-input-inline" >
-								<select name="cateid">
-									<option>请选择</option>
-									<option>管理员角色</option>
-									<option>操作员角色</option>
-								</select>
+							<div class="layui-form-item">
+							<label class="layui-form-label" ><b >维修记录：</b></label>
+								<div class="layui-input-inline" >
+							 <input class="layui-input" placeholder="维修记录ID" type="text" name="aid" id="aid">
+
 							</div>
+								<div class="layui-form-mid layui-word-aux" id="ts"></div>
 							</div>
 							<br>
 							<br>
@@ -57,24 +53,76 @@
 						</form>
 					
 					</div>
-	          </body>     
-	            <script src="../layui/layui.js" charset="utf-8"></script>
+		</div>
+	          </body>
+	<script src="../../lib/layui-v2.5.5/layui.js"></script>
 				<script>
-					layui.use(['form', 'layedit', 'laydate'], function(){
-						var form = layui.form
-								,layer = layui.layer
-								,layedit = layui.layedit
-								,laydate = layui.laydate;
-	
-						//日期
+					layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider','jquery','form'], function() {
+						var laydate = layui.laydate //日期
+								, laypage = layui.laypage //分页
+								, layer = layui.layer //弹层
+								, table = layui.table //表格
+								, carousel = layui.carousel //轮播
+								, upload = layui.upload //上传
+								, element = layui.element //元素操作
+								, $ = layui.jquery
+								, form = layui.form
+								, slider = layui.slider; //滑块//执行一个laydate实例
+						laydate.render({
+							elem: '#installationtime' //指定元素
+						});
 						laydate.render({
 							elem: '#date'
 						});
 						laydate.render({
 							elem: '#date1'
 						});
-	
-	
+						$.get('http://127.0.0.1:8080/allFaulttype',function(result){
+							var str="<option value=''>请选择</option>";
+							$(result).each(function() {
+								str+="<option value="+this.id+">"+this.faulttype+"</option>";
+							})
+							$("#id").html(str);
+							form.render('select');
+
+						});
+
+						$("#aid").blur(function () {
+							var aid=$("#aid").val();
+							var ts="该维修记录未找到"
+							$.get("http://127.0.0.1:8080/panduan",{"rid":aid},function (result) {
+								if (result=="false"){
+									$("#ts").html(ts)
+									$("#bth").attr("disabled",true);
+									$("#bth").addClass("layui-disabled");
+								}else {$("#ts").html("")
+									$("#bth").attr("disabled",false);
+								}
+
+							})
+						})
+						form.on('submit(demo1)', function(data){
+							var Faultanalysis = $('form').serialize();
+							$.ajax({
+								type:"post",
+								data:Faultanalysis,
+								url:"http://127.0.0.1:8080/addFau",
+								dataType:"text",
+								success:function(result){
+									if(result=='true'){
+										layer.msg("新增成功",{time:'1000'},function(){
+
+											parent.layer.close(parent.layer.index);
+										});
+
+									}else{
+										layer.msg("新增失败");
+									}
+								}
+							})
+							return false;
+						});
+
 					});
 				</script>
 </html>
