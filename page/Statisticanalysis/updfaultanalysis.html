@@ -6,11 +6,12 @@
 	</head>
 	<link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
 	<body>
-		<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>新增故障分析</b></span></div>
+		<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>修改故障分析</b></span></div>
 		<br>
 		<br>
-		
+		<form class="layui-form layui-form-pane" action="" lay-filter="formFilter">
 		<div class="weadmin-body">
+			<input type="hidden" name="fid">
 					<div class="layui-row">
 						<form class="layui-form layui-col-md12 we-search">
 							<br>
@@ -18,7 +19,6 @@
 								<label class="layui-form-label" ><b>故障类型：</b></label>
 							 <div class="layui-input-inline" >
 								<select name="faulttypeid" id="id">
-
 								</select>
 							</div>
 							</div>
@@ -47,16 +47,22 @@
 							<br>
 							<br>
 							<div style="margin-left: 12.5rem;">
-								 <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+								<button type="submit" class="layui-btn " id="bth" lay-submit="" lay-filter="demo1">保存</button>
 								 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
 							</div>
 						</form>
 					
 					</div>
 		</div>
+		</form>
 	          </body>
 	<script src="../../lib/layui-v2.5.5/layui.js"></script>
 				<script>
+					var fid;
+					function getId(id){
+
+						fid=id;
+					}
 					layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider','jquery','form'], function() {
 						var laydate = layui.laydate //日期
 								, laypage = layui.laypage //分页
@@ -77,52 +83,58 @@
 						laydate.render({
 							elem: '#date1'
 						});
-						$.get('http://127.0.0.1:8080/allFaulttype',function(result){
-							var str="<option value=''>请选择</option>";
-							$(result).each(function() {
-								str+="<option value="+this.id+">"+this.faulttype+"</option>";
+
+						$.get('http://127.0.0.1:8080/allFaulttype', function (result) {
+							var str = "<option value=''>请选择</option>";
+							$(result).each(function () {
+								str += "<option value=" + this.id + ">" + this.faulttype + "</option>";
 							})
 							$("#id").html(str);
 							form.render('select');
+							$.post("http://127.0.0.1:8080/selectOneFau", {"fid": fid}, function (result) {
+								form.val("formFilter", result);
 
-						});
 
-						$("#aid").blur(function () {
-							var aid=$("#aid").val();
-							var ts="该维修记录未找到"
-							$.get("http://127.0.0.1:8080/panduan",{"rid":aid},function (result) {
-								if (result=="false"){
-									$("#ts").html(ts)
-									$("#bth").attr("disabled",true);
-									$("#bth").addClass("layui-disabled");
-								}else {$("#ts").html("")
-									$("#bth").attr("disabled",false);
-								}
 
-							})
-						})
-						form.on('submit(demo1)', function(data){
+							});
+							});
+						form.on('submit(demo1)', function (data) {
 							var Faultanalysis = $('form').serialize();
 							$.ajax({
-								type:"post",
-								data:Faultanalysis,
-								url:"http://127.0.0.1:8080/addFau",
-								dataType:"text",
-								success:function(result){
-									if(result=='true'){
-										layer.msg("新增成功",{time:'1000'},function(){
+								type: "post",
+								data: Faultanalysis,
+								url: "http://127.0.0.1:8080/updFau",
+								dataType: "text",
+								success: function (result) {
+									if (result == 'true') {
+										layer.msg("修改成功", {time: '1000'}, function () {
 
 											parent.layer.close(parent.layer.index);
 										});
 
-									}else{
-										layer.msg("新增失败");
+									} else {
+										layer.msg("修改失败");
 									}
 								}
 							})
 							return false;
 						});
+						$("#aid").blur(function () {
+							var rid = $("#aid").val();
 
-					});
+							var ts = "该维修记录未找到"
+							$.get("http://127.0.0.1:8080/panduan", {"rid": rid}, function (result) {
+								if (result == "false") {
+									$("#ts").html(ts)
+									$("#bth").attr("disabled",true);
+									$("#bth").addClass("layui-disabled");
+								}else {$("#ts").html("")
+									$("#bth").attr("disabled",false);
+									$("#bth").removeClass("layui-disabled");
+								}
+							})
+						})
+
+					})
 				</script>
 </html>

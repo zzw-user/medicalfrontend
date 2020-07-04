@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css"/>
+<style>
+
+
+</style>
+<body>
+<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>单据查询</b></span></div>
+<br>
+<br>
+<div class="weadmin-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 we-search">
+            <br>
+            <span style="margin-left:80px"><b>订单编号:</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input"  placeholder="订单编号" id="serialnumber" name="serialnumber">
+            </div>
+            <span style="margin-left:30px"><b>销售人员:</b></span>
+            <div class="layui-inline" >
+                <select id="operator" name="operator" id="operator" lay-filter="aihao" >
+                </select>
+            </div>
+            <span style="margin-left:80px"><b>产品编码:</b></span>
+            <div class="layui-inline" >
+                <input class="layui-input" id="coding" placeholder="产品编码" name="coding" >
+            </div>
+                <button type="button" class="layui-btn" lay-filter="demo1" id="bth">搜索</button>
+            <table id="test" lay-filter="test"></table>
+        </form>
+
+    </div>
+</div>
+</body>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" id="del">删除</a>
+</script>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate','upload','table'], function() {
+        var form = layui.form
+            , table = layui.table
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , $ = layui.jquery
+            , upload = layui.upload;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+        table.render({
+            elem: '#test'
+            , height: 312
+            , url: 'http://127.0.0.1:8080/selectOrderform' //数据接口
+            , page: true //开启分页
+            , id: "userTable"
+            , cols: [[ //表头
+                {field: 'oid', title: '序号', width: 170, sort: true, fixed: 'left'}
+                , {field: 'serialnumber', title: '订单编号', width: 170}
+                , {field: 'coding', title: '产品编号', width: 170, sort: true}
+                , {field: 'buyeraddress', title: '买家地址', width: 170}
+                , {field: 'buyerphone', title: '买家电话', width: 170}
+                , {field: 'saleprice', title: '销售价格', width: 170, sort: true}
+                , {
+                    field: 'selldatedatetime  ',
+                    title: '销售日期',
+                    width: 170,
+                    sort: true,
+                    templet: '<div>{{ layui.util.toDateString(d.latestTime, "yyyy-MM-dd") }}</div>'
+                }
+                , {field: 'mname', title: '销售人', width: 170}
+                , {field: 'classify', title: '操作', toolbar: '#barDemo', width: 170}
+
+            ]]
+            , page: true
+            , limit: 5
+        });
+        $("#bth").on("click", function () {
+            table.reload('userTable', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    serialnumber: $("#serialnumber").val(),
+                    coding: $("#coding").val(),
+                    operator: $("#operator").val(),
+                }
+                , page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+
+            });
+
+
+        })
+        $.get('http://127.0.0.1:8080/allMpuser', function (result) {
+            var str = "<option value=''>请选择</option>";
+            $(result).each(function () {
+                str += "<option value=" + this.mpid + ">" + this.mname + "</option>";
+            })
+            $("#operator").html(str);
+
+            form.render('select');
+
+        });
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            if (obj.event == 'del') {
+                layer.confirm("确定要删除该行数据吗？", function (index) {
+                    $.ajax({
+                        type: "get",
+                        url: "http://127.0.0.1:8080/delOrderform",
+                        data: {"oid": data.oid},
+                        dataType: "text",
+                        success: function (result) {
+                            if (result == 'true') {
+                                layer.msg("删除成功");
+                            } else {
+                                layer.msg("删除失败");
+                            }
+                        }
+                    })
+                    obj.del();
+                    layer.close(index);
+                })
+            } else if (obj.event == 'edit') {
+                layer.open({
+                    type: 2
+                    , title: '修改订单'
+                    , content: "updstylesheet.html"
+                    , area: ['800px', '600px']
+                    , offset: 'auto'
+                    , success: function (layero, index) {
+                        // 获取子页面的iframe
+                        var iframe = window['layui-layer-iframe' + index];
+                        // 向子页面的全局函数child传参
+                        iframe.getId(data.oid);
+                    }
+                    , end: function (layero, index) {
+                        table.reload('userTable');
+                    }
+                });
+            }
+        })
+    });
+
+</script>
+</html>

@@ -2,15 +2,14 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>新增产品</title>
-    <link rel="stylesheet" href="layui/layui.js" />
-    <link rel="stylesheet" href="layui/css/layui.css">
+    <title>修改产品</title>
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css">
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
     <legend>新增产品</legend>
 </fieldset>
-<form class="layui-form layui-form-pane" action="">
+<form class="layui-form layui-form-pane" action="" lay-filter="formFilter">
     <div class="layui-form-item">
         <label class="layui-form-label">产品编码</label>
         <div class="layui-input-block">
@@ -27,7 +26,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">入库日期</label>
             <div class="layui-input-block">
-                <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
+                <input type="text" name="createtime" id="date1" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -43,22 +42,50 @@
             <input type="text" name="model" autocomplete="off" placeholder="请输入规格型号" class="layui-input">
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">入库金额</label>
+        <div class="layui-input-block">
+            <input type="text" name="inmoney" autocomplete="off" placeholder="请输入入库金额" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品类型</label>
+        <div class="layui-input-block">
+            <select id="typeid" name="typeid" lay-filter="aihao" >
 
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">仓库名称</label>
+        <div class="layui-input-block">
+            <select id="wid" name="wid" lay-filter="aihao" >
+
+            </select>
+        </div>
+    </div>
+    <input type="hidden" id="pid" name="pid">
 
     <div class="layui-form-item" align="center">
-        <button class="layui-btn"  lay-submit="" lay-filter="demo2">保存</button>
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+
         <button class="layui-btn"  lay-submit="" lay-filter="demo2">关闭</button>
     </div>
 
 </form>
-<script src="./layui/layui.js" charset="utf-8"></script>
+<script src="../../lib/layui-v2.5.5/layui.js"></script>
 <script>
-    layui.use(['form', 'layedit', 'laydate'], function(){
-        var form = layui.form
-                ,layer = layui.layer
-                ,layedit = layui.layedit
-                ,laydate = layui.laydate;
+    var uid;
+    function getId(id){
 
+        uid=id;
+    }
+
+    layui.use(['form','layer','laydate','jquery'],function(){
+        var form =layui.form
+            ,layer=layui.layer
+            ,$=layui.jquery
+            ,laydate=layui.laydate;
         //日期
         laydate.render({
             elem: '#date'
@@ -68,8 +95,53 @@
         });
 
 
+        $.get('http://127.0.0.1:8080/selectProducttype',function(result){
+            var str="<option value=''>请选择</option>";
+            $(result).each(function() {
+                str+="<option value="+this.id+">"+this.typename+"</option>";
+            })
+            $("#typeid").html(str);
 
-    });
+            form.render('select');
+            $.get('http://127.0.0.1:8080/selectWarehouse',function(result){
+                var str="<option value=''>请选择</option>";
+                $(result).each(function() {
+                    str+="<option value="+this.wid+">"+this.wname+"</option>";
+                })
+                $("#wid").html(str);
+
+                form.render('select');
+
+            });
+
+        });
+
+
+        form.on('submit(demo1)', function(data){
+            var Product = $('form').serialize();
+            $.ajax({
+                type:"post",
+                data:Product,
+                url:"http://127.0.0.1:8080/addProduct",
+                dataType:"text",
+                success:function(result){
+                    if(result=='true'){
+                        layer.msg("新增成功",{time:'1000'},function(){
+
+                            parent.layer.close(parent.layer.index);
+                        });
+
+                    }else{
+                        layer.msg("新增失败");
+                    }
+                }
+            })
+            return false;
+        });
+
+
+    })
+
 
 </script>
 </body>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css"/>
+<style>
+
+
+</style>
+<body>
+<div><span style="font-size: 1.875rem; margin-left: 3.125rem;"><b>修改销售单记录</b></span></div>
+<br>
+<br>
+<form class="layui-form layui-form-pane" action="" lay-filter="formFilter">
+    <div class="weadmin-body">
+        <div class="layui-row">
+            <form class="layui-form layui-col-md12 we-search">
+                <input type="hidden" name="oid">
+                <br>
+                <span style="margin-left:80px"><b>订单编号:</b></span>
+                <div class="layui-inline" >
+                    <input class="layui-input" placeholder="订单编号" name="serialnumber" id="start">
+                </div>
+                <span style="margin-left:30px"><b>销售人员:</b></span>
+                <div class="layui-inline" >
+                    <select id="operator" name="operator" lay-filter="aihao" >
+
+                    </select>
+                </div><br><br><br>
+                <span style="margin-left:80px"><b>产品编码:</b></span>
+                <div class="layui-inline" >
+                    <input class="layui-input" placeholder="产品编码" name="coding" id="start1">
+                </div>
+                <span style="margin-left:30px"><b>买家地址:</b></span>
+                <div class="layui-inline" >
+                    <input class="layui-input" placeholder="买家地址" name="buyeraddress" id="start2">
+                </div><br><br><br>
+                <span style="margin-left:80px"><b>买家电话:</b></span>
+                <div class="layui-inline" >
+                    <input class="layui-input" placeholder="买家电话" name="buyerphone" id="star3t">
+                </div>
+                <span style="margin-left:30px"><b>销售价格:</b></span>
+                <div class="layui-inline" >
+                    <input class="layui-input" placeholder="销售价格" name="saleprice" id="star5t">
+                </div><br><br><br>
+                <span style="margin-left:80px"><b>销售日期:</b></span>
+                <div class="layui-inline" >
+                    <input type="text" name="selldatedatetime" id="date1" autocomplete="off" class="layui-input">
+                </div>
+                <br><br><br>
+                <div style="margin-left: 12.5rem;">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</form>
+</body>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    var oid;
+    function getId(id){
+
+        oid=id;
+    }
+
+    layui.use(['form', 'layedit', 'laydate','upload'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,$ = layui.jquery
+            ,upload = layui.upload;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+        form.on('submit(demo1)', function(data){
+            var Orderform = $('form').serialize();
+            $.ajax({
+                type:"post",
+                data:Orderform,
+                url:"http://127.0.0.1:8080/updOrderform",
+                dataType:"text",
+                success:function(result){
+                    if(result=='true'){
+                        layer.msg("修改成功",{time:'1000'},function(){
+
+                            parent.layer.close(parent.layer.index);
+                        });
+
+                    }else{
+                        layer.msg("修改失败");
+                    }
+                }
+            })
+            return false;
+        });
+        $.get('http://127.0.0.1:8080/allMpuser',function(result){
+            var str="<option value=''>请选择</option>";
+            $(result).each(function() {
+                str+="<option value="+this.mpid+">"+this.mname+"</option>";
+            })
+            $("#operator").html(str);
+
+            form.render('select');
+            $.post("http://127.0.0.1:8080/selectOneOriderform",{"oid":oid},function(result){
+
+                form.val("formFilter",result);
+            })
+        });
+
+    });
+</script>
+</html>
