@@ -121,7 +121,7 @@
 
             var rid=getUrlParam("rid");
             $("#rid").val(rid);
-            $.post( 'http://127.0.0.1:8080/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
+            $.post( 'http://127.0.0.1/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
                 console.log(result);
                 $("#bimg").append("<img src='../../../static/img/"+result.beforeinstallation+"' style=\"max-width: 100px\">")
                 $("#aimg").append("<img src='../../../static/img/"+result.afterinstallation+"' style=\"max-width: 100px\">")

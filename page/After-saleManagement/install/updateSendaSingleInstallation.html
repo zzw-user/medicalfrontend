@@ -129,14 +129,14 @@
 				});
 				var did=getUrlParam("did");
 				$("#did").val(did);
-				$("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(result) {
+				$("#operator").load('http://127.0.0.1/SendaSingleInstallation/getMpuser', function(result) {
 					const data = eval(result);
 					$(data).each(function(i, o) {
 						$("#operator").append("<option value=" + o.mpid + ">" + o.realname + "</option>")
 					});
 					form.render("select");
 				});
-				$.get( 'http://127.0.0.1:8080/SendaSingleInstallation/getDeliveryByDid',{did:did},function (result) {
+				$.get( 'http://127.0.0.1/SendaSingleInstallation/getDeliveryByDid',{did:did},function (result) {
 					console.log(result);
 					form.val('example',result);
 					var str = result.address;
@@ -154,7 +154,7 @@
 				});
 				$("#coding").blur(function(){
 					var coding=$("#coding").val();
-					$.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
+					$.post('http://127.0.0.1/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
 						if (result==null || result==''){
 							layer.msg("对不起，没有该产品编码！");
 							var coding=$("#coding").val('');
@@ -171,7 +171,7 @@
 					var str = province+' '+city+' '+area+' '+site;
 					$("#address").val(str);
 					$.ajax({
-						url: 'http://127.0.0.1:8080/SendaSingleInstallation/updateDeliveryByAid',
+						url: 'http://127.0.0.1/SendaSingleInstallation/updateDeliveryByAid',
 						type: 'get',
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						data: $("#pro").serialize(),

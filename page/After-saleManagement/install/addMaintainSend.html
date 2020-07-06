@@ -113,7 +113,7 @@
 					elem: '#test1'
 					,type: 'datetime'
 				});
-				$("#operator").load('http://127.0.0.1:8081/SendaSingleInstallation/getMpuser', function(result) {
+				$("#operator").load('http://127.0.0.1/SendaSingleInstallation/getMpuser', function(result) {
 					const data = eval(result);
 					var str;
 					str+="<option value=''>请选择</option>";
@@ -125,7 +125,7 @@
 				});
 				$("#coding").blur(function(){
 					var coding=$("#coding").val();
-					$.post('http://127.0.0.1:8081/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
+					$.post('http://127.0.0.1/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
 						if (result){
 
 						}else {
@@ -143,7 +143,7 @@
 					var str = province+' '+city+' '+area+' '+site;
 					$("#address").val(str);
 					$.ajax({
-						url: 'http://127.0.0.1:8081/SendaSingleInstallation/addDeliveryByAid',
+						url: 'http://127.0.0.1/SendaSingleInstallation/addDeliveryByAid',
 						type: 'get',
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						data: $("#pro").serialize(),

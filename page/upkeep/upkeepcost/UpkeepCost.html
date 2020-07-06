@@ -111,7 +111,7 @@
 
 			table.render({
 				elem: '#problem'
-				,url:'http://127.0.0.1:8080/Cost/getCost'
+				,url:'http://127.0.0.1/Cost/getCost'
 				,id:'toolbarDemos'
 				,limit:8
 				,height:520
@@ -156,7 +156,7 @@
 
 					layer.confirm('真的删除行么', function(index){
 						$.ajax({
-							url:"http://127.0.0.1:8080/Cost/delCost",
+							url:"http://127.0.0.1/Cost/delCost",
 							type:"post",
 							data:{cid:data.cid},
 							dataType:"text",

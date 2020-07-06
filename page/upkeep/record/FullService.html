@@ -139,7 +139,7 @@
 			,id:'testReload'
 			,height: 450
 			,width:1250
-			,url: 'http://127.0.0.1:8080/maintainrecordController/getFullMaintainrecord' //数据接口
+			,url: 'http://127.0.0.1/maintainrecordController/getFullMaintainrecord' //数据接口
 			,type:'get'
 			,dataType:'json'
 			,crossDomain:true
@@ -188,7 +188,7 @@
 			//console.log(obj)
 			if(obj.event == 'del'){
 				layer.confirm('真的删除行么', function(index){
-					$.get("http://127.0.0.1:8080/maintainrecordController/deleteMaintainrecordByRid?rid="+data.rid,function (ret) {
+					$.get("http://127.0.0.1/maintainrecordController/deleteMaintainrecordByRid?rid="+data.rid,function (ret) {
 						if (ret=="ok"){
 							layer.msg("删除成功！")
 							table.reload('testReload');

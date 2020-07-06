@@ -22,7 +22,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             elem: '#test1'
             ,type: 'datetime'
         });
-        $("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(result) {
+        $("#operator").load('http://127.0.0.1/SendaSingleInstallation/getMpuser', function(result) {
             const data = eval(result);
             var str;
             str+="<option value=''>请选择</option>";
@@ -34,7 +34,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         });
         $("#coding").blur(function(){
             var coding=$("#coding").val();
-            $.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
+            $.post('http://127.0.0.1/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
                 if (result){
 
                 }else {
@@ -52,7 +52,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             var str = province+' '+city+' '+area+' '+site;
             $("#address").val(str);
             $.ajax({
-                url: 'http://127.0.0.1:8080/SendaSingleInstallation/addDeliveryByAid',
+                url: 'http://127.0.0.1/SendaSingleInstallation/addDeliveryByAid',
                 type: 'get',
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 data: $("#pro").serialize(),

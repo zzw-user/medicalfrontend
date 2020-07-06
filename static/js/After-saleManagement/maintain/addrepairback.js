@@ -16,7 +16,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
     form.on('submit(formDemo2)', function(data){
         $.ajax({
-            url: 'http://127.0.0.1:8080/Repairback/addPayareturnvisit',
+            url: 'http://127.0.0.1/Repairback/addPayareturnvisit',
             type: 'post',
             data: $("#pro").serialize(),
             dataType:'text',

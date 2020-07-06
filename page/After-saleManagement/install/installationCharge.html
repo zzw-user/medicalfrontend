@@ -128,7 +128,7 @@
 		        ,id:'testReload'
 		        ,height: 450
 				,width:1150
-		        ,url: 'http://127.0.0.1:8080/Cost/getCost' //数据接口
+		        ,url: 'http://127.0.0.1/Cost/getCost' //数据接口
 		        ,title: '问题状态表'
 		        ,type:'get'
 		        ,dataType:'json'
@@ -163,7 +163,7 @@
 				//console.log(obj)
 				if(obj.event == 'del'){
 					layer.confirm('真的删除行么', function(index){
-						$.get("http://127.0.0.1:8080/Cost/delCost?cid="+data.cid,function (ret) {
+						$.get("http://127.0.0.1/Cost/delCost?cid="+data.cid,function (ret) {
 							if (ret){
 								layer.msg("删除成功！");
 								table.reload('testReload');

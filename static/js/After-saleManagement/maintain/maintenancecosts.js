@@ -15,7 +15,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,id:'testReload'
         ,height: 450
         ,width:1150
-        ,url: 'http://127.0.0.1:8080/Maintenancecosts/getCost' //数据接口
+        ,url: 'http://127.0.0.1/Maintenancecosts/getCost' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'
@@ -52,7 +52,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             if (obj.event === 'del') {
                 layer.confirm('真的删除么?',function(index) {
                     $.ajax({
-                        url : "http://127.0.0.1:8080/Maintenancecosts/delCost",
+                        url : "http://127.0.0.1/Maintenancecosts/delCost",
                         type : "post",
                         data : {
                             cid: data.cid

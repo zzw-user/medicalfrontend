@@ -15,7 +15,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,id:'testReload'
         ,height: 450
         ,width:1150
-        ,url: 'http://127.0.0.1:8080/Repairback/selePayareturnvisit?aftertype=3' //数据接口
+        ,url: 'http://127.0.0.1/Repairback/selePayareturnvisit?aftertype=3' //数据接口
         ,type:'get'
         ,dataType:'json'
         ,crossDomain:true
@@ -48,7 +48,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             if (obj.event === 'del') {
                 layer.confirm('真的删除么?',function(index) {
                     $.ajax({
-                        url : "http://127.0.0.1:8080/Repairback/delPayareturnvisit",
+                        url : "http://127.0.0.1/Repairback/delPayareturnvisit",
                         type : "post",
                         data : {
                             pid: data.pid

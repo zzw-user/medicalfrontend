@@ -14,14 +14,14 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
     });
     var pid=getUrlParam("pid");
 
-    $.get('http://127.0.0.1:8080/Repairback/getPayareturnvisitOne',{pid:pid},function (result) {
+    $.get('http://127.0.0.1/Repairback/getPayareturnvisitOne',{pid:pid},function (result) {
 
         form.val('example',result);
     });
 
     form.on('submit(demo)', function(data){
 
-        $.get( 'http://127.0.0.1:8080/Repairback/updPayareturnvisit',$("#form").serialize(),function (result) {
+        $.get( 'http://127.0.0.1/Repairback/updPayareturnvisit',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("修改成功！",{icon:1,time:1000},function(){
                     x_admin_close();
