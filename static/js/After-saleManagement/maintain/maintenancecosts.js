@@ -15,7 +15,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,id:'testReload'
         ,height: 450
         ,width:1150
-        ,url: 'http://127.0.0.1/Maintenancecosts/getCost' //数据接口
+        ,url: 'http://127.0.0.1/Maintenancecosts/getCost?aftertype=2' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'

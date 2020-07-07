@@ -147,16 +147,23 @@
 				});
 				$("#coding").blur(function(){
 					var coding=$("#coding").val();
-					$.post('http://127.0.0.1/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
-						if (result==null || result==''){
-							layer.msg("对不起，没有该产品编码！");
-							var coding=$("#coding").val('');
+					$.ajax({
+						type:"post",
+						url:"http://127.0.0.1/SendaSingleInstallation/getproductByCoding",
+						data:{coding:coding},
+						dataType:'text',
+						success:function (result) {
 
-						}else {
+							if (result=="false"){
+								layer.msg("对不起，没有该产品编码！");
+								var coding=$("#coding").val('');
 
+							}else {
+
+							}
 						}
-
 					})
+
 				})
 				var cid=getUrlParam("cid");
 				$("#cid").val(cid);

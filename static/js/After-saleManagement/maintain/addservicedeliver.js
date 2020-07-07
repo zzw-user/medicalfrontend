@@ -25,15 +25,23 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     })
     $("#coding").blur(function(){
         var coding=$("#coding").val();
-        $.post('http://127.0.0.1/Maintenancecosts/getProductOne',{coding:coding},function(result){
-            if (result){
+        $.ajax({
+            type:"post",
+            url:"http://127.0.0.1/SendaSingleInstallation/getproductByCoding",
+            data:{coding:coding},
+            dataType:'text',
+            success:function (result) {
 
-            }else {
-                layer.alert("对不起，没有该产品编码！");
-                var coding=$("#coding").val('');
+                if (result=="false"){
+                    layer.msg("对不起，没有该产品编码！");
+                    var coding=$("#coding").val('');
+
+                }else {
+
+                }
             }
-
         })
+
     })
     form.on('submit(demo1)', function(data){
         var province = $("#province").val();

@@ -28,7 +28,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#date1'
     });
     var wid=getUrlParam("wid");
-    $.get('http://127.0.0.1:8080/Warehouse/getWarehouseOne',{wid:wid},function (result) {
+    $.get('http://127.0.0.1/Warehouse/getWarehouseOne',{wid:wid},function (result) {
         form.val('example',result);
         var str = result.address;
         var arr=new Array();
@@ -48,7 +48,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         var site = $("#site").val();
         var str = province+' '+city+' '+area+' '+site;
         $("#address").val(str);
-        $.get( 'http://127.0.0.1:8080/Warehouse/updWarehouse',$("#form").serialize(),function (result) {
+        $.get( 'http://127.0.0.1/Warehouse/updWarehouse',$("#form").serialize(),function (result) {
             if (result==true){
                 layer.msg("修改成功！",{icon:1,time:1000},function(){
                     x_admin_close();

@@ -14,7 +14,8 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#test1'
     });
 
-    form.on('submit(formDemo2)', function(data){
+    form.on('submit(demo)', function(data){
+        alert("无语")
         $.ajax({
             url: 'http://127.0.0.1/Repairback/addPayareturnvisit',
             type: 'post',
