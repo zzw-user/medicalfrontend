@@ -14,19 +14,18 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#problem'
         ,id:'testReload'
         ,height: 450
-        ,width:1150
         ,url: 'http://127.0.0.1/delivery/getDelivery?aftertype=2' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'
         ,crossDomain:true
         ,cols: [[ //表头
-            {type:'numbers',title:"序号",width:100}
-            , {field: 'mname',width:100, title: '维修人'}
-            , {field: 'phone',width:180, title: '联系电话'}
-            , {field: 'address',width:300, title: '联系地址'}
+            {type:'numbers',title:"序号",width:140}
+            , {field: 'mname',width:150, title: '维修人'}
+            , {field: 'phone',width:200, title: '联系电话'}
+            , {field: 'address',width:400, title: '联系地址'}
             , {field: 'coding',width:200, title: '产品编码'}
-            , {field: 'deliverytime',width:225, title: '派送时间'}
+            , {field: 'deliverytime',width:230, title: '派送时间'}
             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
         ]]
         ,page: true

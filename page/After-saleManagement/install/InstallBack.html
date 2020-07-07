@@ -73,16 +73,15 @@
 				elem: '#problem'
 				,id:'testReload'
 				,height: 450
-				,width:1150
 				,url: 'http://127.0.0.1/Repairback/selePayareturnvisit?aftertype=1' //数据接口
 				,type:'get'
 				,dataType:'json'
 				,crossDomain:true
 				,cols: [[ //表头
-		            {type:'numbers',title:"序号"}
+		            {type:'numbers',width:200,title:"序号"}
 		            , {field: 'pname',width:200, title: '回访客户名称'}
 		            , {field: 'way',width:200, title: '回访方式'}
-		            , {field: 'describe',width:200, title: '描述'}
+		            , {field: 'describe',width:300, title: '描述'}
 		            , {field: 'realname',width:200, title: '记录人员'}
 					, {field: 'writetime',width:200, title: '记录时间'}
 		            , {fixed: 'right', width:178, align:'center',title:'操作',toolbar: '#barDemo'}
@@ -124,11 +123,11 @@
 
 					});
 				}else if (obj.event === 'edit') {
-					WeAdminShow('修改安装回访记录','./updateInstallBack.html?pid='+data.pid,550,400);
+					WeAdminShow('修改安装回访记录','./updateInstallBack.html?pid='+data.pid,550,500);
 				}
 			});
 			$("#xz").click(function(){
-				WeAdminShow('新增安装记录','./addInstallBack.html',550,400)
+				WeAdminShow('新增安装记录','./addInstallBack.html',550,500)
 
 			})
 		    $('.btnArr .layui-btn').on('click', function(){

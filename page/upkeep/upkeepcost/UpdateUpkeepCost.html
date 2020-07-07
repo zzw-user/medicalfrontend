@@ -16,6 +16,19 @@
 		<form class="layui-form" id="form" lay-filter="example">
 			<blockquote class="layui-elem-quote">修改保养费用</blockquote>
 			<div class="layui-form-item">
+
+
+				<label class="layui-form-label">产品编号：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="coding" required  lay-verify="required" placeholder="请输入编号" autocomplete="off" class="layui-input">
+
+				</div>
+				<label class="layui-form-label">录入日期：</label>
+				<div class="layui-input-inline">
+					<input type="text" name="inputtime" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+				</div>
+			</div></br>
+			<div class="layui-form-item">
 				<label class="layui-form-label">保养人员</label>
 				<div class="layui-input-inline">
 					<select name="operator" lay-filter="aihao" id="cid" >
@@ -33,6 +46,7 @@
 					<input type="text" name="address" required  lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input">
 				</div>-->
 			</div></br>
+
 			<div class="layui-form-item layui-inline">
 				<div class="layui-form-item" id="addressDiv">
 
@@ -61,19 +75,7 @@
 				</div>
 			</div></br>
 			<input type="hidden" name="address" id="address">
-			<div class="layui-form-item">
 
-
-				<label class="layui-form-label">产品编号：</label>
-				<div class="layui-input-inline">
-					<input type="text" name="coding" required  lay-verify="required" placeholder="请输入编号" autocomplete="off" class="layui-input">
-
-				</div>
-				<label class="layui-form-label">录入日期：</label>
-				<div class="layui-input-inline">
-					<input type="text" name="inputtime" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-				</div>
-			</div></br>
 			<div class="layui-form-item">
 
 

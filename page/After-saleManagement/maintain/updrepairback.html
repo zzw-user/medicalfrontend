@@ -16,6 +16,7 @@
 			<form class="layui-form" lay-filter="example" id="form">
 				<blockquote class="layui-elem-quote">修改维修回访</blockquote>
 			<div class="layui-row">
+
 				<div class="layui-col-md12" style="margin-left: 70px;">
 					<div class="layui-form-item layui-inline">
 						<div style="padding: 10px;">回访人员</div>
@@ -23,10 +24,12 @@
 							<input type="text" lay-reqtext="回访人名不能为空！" name="pname" lay-verify="title" autocomplete="off" class="layui-input">
 						</div>
 					</div>
-					<div class="layui-form-item layui-inline">
-						<div style="padding: 10px;">回访方式</div>
+
+					<div class="layui-form-item layui-inline" style="margin-left: 2%">
+						<div style="padding: 10px;">记录日期</div>
 						<div class="layui-input-inline">
-							<input type="text" name="way" lay-reqtext="回访方式不能为空！" lay-verify="title" autocomplete="off" class="layui-input">
+							<input type="text" name="writetime" id="test1" lay-reqtext="记录日期不能为空！" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
+								   class="layui-input">
 						</div>
 					</div>
 					<div class="layui-form-item layui-inline" >
@@ -35,11 +38,10 @@
 						<input type="text" name="realname" id="realname" lay-verify="title" autocomplete="off" class="layui-input">
 						<input type="hidden" name="pid">
 					</div>
-					<div class="layui-form-item layui-inline" style="margin-left: 2%">
-						<div style="padding: 10px;">记录日期</div>
+					<div class="layui-form-item layui-inline">
+						<div style="padding: 10px;">回访方式</div>
 						<div class="layui-input-inline">
-							<input type="text" name="writetime" id="test1" lay-reqtext="记录日期不能为空！" placeholder="yyyy-MM-dd" lay-verify="title" autocomplete="off"
-								   class="layui-input">
+							<input type="text" name="way" lay-reqtext="回访方式不能为空！" lay-verify="title" autocomplete="off" class="layui-input">
 						</div>
 					</div>
 					<div class="layui-form-item layui-inline">

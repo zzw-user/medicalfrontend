@@ -177,7 +177,6 @@
 				elem: '#test'
 				,id:'testReload'
 				,height: 450
-				,width:1150
 				,url: 'http://127.0.0.1/Maintenancerecord/getAmendrecord' //数据接口
 				,type:'get'
 				,dataType:'json'
@@ -185,7 +184,7 @@
 				,cols: [[ //表头
 					{field:'rid',width:80,title:"序号"}
 					, {field: 'realname',width:120, title: '维修人	'}
-					, {field: 'address',width:150, title: '维修地址'}
+					, {field: 'address',width:400, title: '维修地址'}
 					, {field: 'beforeinstallation',width:160, title: '维修前图片',templet:"#beforeimgtmp"}
 					, {field: 'afterinstallation',width:160, title: '维修后图片',templet:"#afterimgtmp"}
 					, {field: 'installationtime',width:150, title: '维修日期'}

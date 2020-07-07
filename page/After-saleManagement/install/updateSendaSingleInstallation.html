@@ -17,6 +17,18 @@
 			<blockquote class="layui-elem-quote">修改安装派单</blockquote>
 			<div class="layui-row">
 				<div class="layui-col-md12" style="margin-left: 70px;">
+					<div class="layui-form-item layui-inline">
+						<div style="padding: 10px;">安装日期</div>
+						<div class="layui-input-inline">
+							<input type="text" name="sj" class="layui-input" lay-verify="required" id="test1" placeholder="yyyy-MM-dd">
+						</div>
+					</div>
+					<div class="layui-form-item layui-inline" style="margin-left: 5%">
+						<div style="padding: 10px;">产品编码</div>
+						<div class="layui-input-inline">
+							<input type="text" id="coding" name="coding" lay-verify="required" autocomplete="off" class="layui-input">
+						</div>
+					</div>
 					<div class="layui-form-item layui-inline" style="width: 200px;">
 						<label class="layui-form-label" style="margin-left: -40px;">安装人员</label>
 						<div class="layui-input-inline" style="width: 200px">
@@ -27,21 +39,9 @@
 
 					</div>
 					<div class="layui-form-item layui-inline" style="margin-left: 5%">
-						<div style="padding: 10px;">安装日期</div>
-						<div class="layui-input-inline">
-							<input type="text" name="sj" class="layui-input" lay-verify="required" id="test1" placeholder="yyyy-MM-dd">
-						</div>
-					</div>
-					<div class="layui-form-item layui-inline" >
 						<div style="padding: 10px;">联系电话</div>
 						<div class="layui-input-inline">
 							<input type="text" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
-						</div>
-					</div>
-					<div class="layui-form-item layui-inline" style="margin-left: 5%">
-						<div style="padding: 10px;">产品编码</div>
-						<div class="layui-input-inline">
-							<input type="text" id="coding" name="coding" lay-verify="required" autocomplete="off" class="layui-input">
 						</div>
 					</div>
 

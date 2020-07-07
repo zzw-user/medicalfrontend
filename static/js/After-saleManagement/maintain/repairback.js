@@ -14,17 +14,16 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#problem'
         ,id:'testReload'
         ,height: 450
-        ,width:1150
         ,url: 'http://127.0.0.1/Repairback/selePayareturnvisit?aftertype=2' //数据接口
         ,title: '问题状态表'
         ,type:'get'
         ,dataType:'json'
         ,crossDomain:true
         ,cols: [[ //表头
-            {type:'numbers',title:"序号"}
+            {type:'numbers',width:200,title:"序号"}
             , {field: 'pname',width:200, title: '回访客户名称'}
             , {field: 'way',width:200, title: '回访方式'}
-            , {field: 'describe',width:200, title: '描述'}
+            , {field: 'describe',width:300, title: '描述'}
             , {field: 'realname',width:200, title: '记录人员'}
             , {field: 'writetime',width:200, title: '记录时间'}
             , {fixed: 'right', width:178, align:'center',title:'操作',toolbar: '#barDemo'}
@@ -67,7 +66,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
                 });
             }else if (obj.event === 'upd') {
-                WeAdminShow('修改回访','./updrepairback.html?pid='+data.pid,600,400);
+                WeAdminShow('修改回访','./updrepairback.html?pid='+data.pid,600,500);
             }
         });
     window.WeAdminShow = function(title, url, w, h) {

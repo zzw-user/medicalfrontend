@@ -14,7 +14,6 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         elem: '#problem'
         ,id:'testReload'
         ,height: 450
-        ,width:1150
         ,url: 'http://127.0.0.1/Maintenancecosts/getCost?aftertype=2' //数据接口
         ,title: '问题状态表'
         ,type:'get'
@@ -23,7 +22,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         ,cols: [[ //表头
               {type:'numbers',width:120,title:"序号"}
             , {field: 'realname',width:120, title: '维修人	'}
-            , {field: 'address',width:300, title: '维修地址'}
+            , {field: 'address',width:400, title: '维修地址'}
             , {field: 'cost',width:120, title: '总费用'}
             , {field: 'sparepartcost',width:130, title: '备件费用'}
             , {field: 'dataentryclerk',width:150, title: '录入人'}
