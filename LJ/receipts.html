@@ -17,7 +17,7 @@
 
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto" style="text-align: center;">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto" style="margin:  0 auto">
             <div class="layui-form-item" >
                 <div class="layui-inline">
                     <label class="layui-form-label">订单编号</label>
@@ -147,7 +147,7 @@
         $.get('http://127.0.0.1/allMpuser', function (result) {
             var str = "<option value=''>请选择</option>";
             $(result).each(function () {
-                str += "<option value=" + this.mpid + ">" + this.mname + "</option>";
+                str += "<option value=" + this.mpid + ">" + this.realname + "</option>";
             })
             $("#operator").html(str);
 

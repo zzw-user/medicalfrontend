@@ -110,7 +110,7 @@
         $.get('http://127.0.0.1/allMpuser',function(result){
             var str="<option value=''>请选择</option>";
             $(result).each(function() {
-                str+="<option value="+this.mpid+">"+this.mname+"</option>";
+                str+="<option value="+this.mpid+">"+this.realname+"</option>";
             })
             $("#operator").html(str);
 

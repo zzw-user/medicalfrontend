@@ -1,180 +1,173 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>新增安装记录</title>
-	</head>
-	<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
-	<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
-	<style>
-		dl>dd{
-			cursor: pointer;
-		}
-	</style>
-	<body>
-		<div class="weadmin-body">
-			<form class="layui-form" id="pro" lay-filter="example">
-				<blockquote class="layui-elem-quote">修改维修记录</blockquote>
-				<div class="layui-row">
-					<div class="layui-col-md12" style="margin-left: 90px;">
-						<input type="hidden" name="rid">
-						<span style="margin-left:30px">维修人员：</span>
-						<div class="layui-input-inline" style="width:185px">
-							<select name="operator" lay-verify="required" lay-reqtext="请选择维修人员" id="operator">
+<head>
+	<meta charset="utf-8">
+	<title>维修记录评估</title>
+</head>
+<link rel="stylesheet" href="../../../lib/layui-v2.5.5/css/layui.css">
+<link rel="stylesheet" type="text/css" href="../../../static/css/select.css" />
+<style>
+	dl>dd{
+		cursor: pointer;
+	}
+</style>
+<body>
+<div class="weadmin-body">
+	<form class="layui-form" id="pro" lay-filter="example">
+		<blockquote class="layui-elem-quote">维修记录评估</blockquote>
+		<div class="layui-row">
+			<div class="layui-col-md12" style="margin-left: 90px;">
+				<input type="hidden" name="rid">
+				<span style="margin-left:30px">维修人员：</span>
+				<div class="layui-input-inline" style="width:185px">
+					<select name="operator" id="operator" lay-verify="required" lay-reqtext="请选择维修人员">
+					</select>
+				</div>
+				<span style="margin-left:20px">维修日期：</span>
+				<div class="layui-input-inline" >
+					<input class="layui-input" lay-verify="required" placeholder="维修日期" name="installationtime" id="test1" placeholder="yyyy-MM-dd" lay-reqtext="维修日期不能为空！">
+				</div>
+				<br>
+				<span style="margin-left:28px;">维修地址：</span>
+				<div class="layui-form-item layui-inline" style="margin-top: 15px">
+					<div class="layui-form-item" id="addressDiv">
+						<div class="layui-input-inline" style="width: 90px;">
+							<select name="P1" lay-filter="province" id="province" style="width: 50px;">
+								<option></option>
 							</select>
 						</div>
-						<span style="margin-left:20px">维修日期：</span>
-						<div class="layui-input-inline" >
-							<input class="layui-input" lay-verify="required" placeholder="维修日期" name="installationtime" id="test1" placeholder="yyyy-MM-dd" lay-reqtext="维修日期不能为空！">
-						</div>
-						<br>
-						<span style="margin-left:28px;">维修地址：</span>
-						<div class="layui-form-item layui-inline"style="margin-top: 20px">
-
-							<div class="layui-form-item" id="addressDiv">
-								<div class="layui-input-inline" style="width: 90px;">
-									<select name="P1" lay-filter="province" id="province" style="width: 50px;">
-										<option></option>
-									</select>
-								</div>
-								<div class="layui-input-inline" style="width: 100px;">
-									<select name="C1" lay-filter="city" id="city" style="width: 50px;">
-										<option></option>
-									</select>
-								</div>
-								<div class="layui-input-inline" style="width: 100px;">
-									<select name="A1" lay-filter="area" id="area" style="width: 50px;">
-										<option></option>
-									</select>
-								</div>
-								<div class="layui-input-inline" id="addressDetail" style="width: 150px;">
-									<input id="site" type="text" name="site" style="width: 150px;"  lay-verify="title" autocomplete="off"
-										   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="维修地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
-									<dl id="addressTip" class="addressDl">
-									</dl>
-								</div>
-							</div>
-						</div>
-						<input type="hidden" name="address" id="address">
-						<div class="layui-form-item" style="margin-left: -8px;">
-						    <label class="layui-form-label">维修状态:</label>
-						    <div class="layui-input-block">
-						      <input type="radio" name="status" value="1" title="未开始" checked="">
-						      <input type="radio" name="status" value="2" title="处理中">
-							  <input type="radio" name="status" value="3" title="已完成">
-						    </div>
-						  </div>
-						<span style="margin-left:55px">区域：</span>
-						<div class="layui-input-inline" style="width:185px">
-							<select name="did" id="did" lay-verify="required" lay-reqtext="区域不能为空">
+						<div class="layui-input-inline" style="width: 100px;">
+							<select name="C1" lay-filter="city" id="city" style="width: 50px;">
+								<option></option>
 							</select>
 						</div>
-						<span style="margin-left:28px">备件编码：</span>
-						<div class="layui-inline" >
-							<input class="layui-input" lay-verify="required" placeholder="备件编码" name="arpartcoding" id="arpartcoding" lay-reqtext="备件编码不能为空！">
-						</div><br><br>
-						<span style="margin-left:25px">故障类型：</span>
-						<div class="layui-input-inline" style="width:185px">
-							<input class="layui-input" lay-verify="required" placeholder="故障类型" name="faulttype" id="faulttype" lay-reqtext="故障类型不能为空！">
+						<div class="layui-input-inline" style="width: 100px;">
+							<select name="A1" lay-filter="area" id="area" style="width: 50px;">
+								<option></option>
+							</select>
 						</div>
-						<span style="margin-left:28px">故障描述：</span>
-						<div class="layui-inline" >
-							<input class="layui-input" lay-verify="required" placeholder="故障描述" name="faultdescription" id="faultdescription"lay-reqtext="故障描述不能为空！">
-						</div>
-
-						<br>
-						<br>
-
-						<span style="margin-left:25px">故障分析：</span>
-						<div class="layui-inline" >
-							<input class="layui-input" lay-verify="required" placeholder="故障分析" name="analyze" id="analyze" lay-reqtext="故障分析不能为空！">
-						</div>
-						<span style="margin-left:25px">产品编码：</span>
-						<div class="layui-inline" >
-							<input class="layui-input" lay-verify="required" placeholder="产品编码" name="productcoding" id="productcoding"lay-reqtext="产品编码不能为空！">
-						</div>
-						<br>
-						<br>
-						<br>
-						<div class="layui-upload-drag" id="beforeinstallationtest" style="width: 100px; margin-left: 100px;">
-							<i class="layui-icon"></i>
-							<p>点击上传维修前图片</p>
-							<div class="layui-hide" id="beforeinstallationdiv">
-								<hr>
-								<img src="" id="beforeinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
-							</div>
-							<div id="bimg"></div>
-						</div>
-						<input type="hidden" id="beforeinstallation" name="beforeinstallation">
-						<div class="layui-upload-drag" id="afterinstallationtest" style="width: 100px;margin-left: 5%">
-							<i class="layui-icon"></i>
-							<p>点击上传维修后图片</p>
-							<div class="layui-hide" id="afterinstallationdiv">
-								<hr>
-								<img src="" id="afterinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
-							</div>
-							<div id="aimg"></div>
-						</div>
-						<input type="hidden" id="afterinstallation" name="afterinstallation">
-						<br><br><br>
-						<br>
-						<span style="margin-left:40px">评估：</span>
-						<div class="layui-inline" >
-							<input class="layui-input"  placeholder="评估" name="assess"  lay-reqtext="评估不能为空！">
+						<div class="layui-input-inline" id="addressDetail" style="width: 150px;">
+							<input id="site" type="text" name="site" style="width: 150px;"  lay-verify="title" autocomplete="off"
+								   placeholder="请输入具体地址" lay-verify="required" lay-reqtext="安装地址是必填项，岂能为空？" class="layui-input" style="width: 120%;">
+							<dl id="addressTip" class="addressDl">
+							</dl>
 						</div>
 					</div>
-					<br>
-					<br>
-					<div class="" style="margin-left: 65%;margin-top: 50px;">
-		                <div class="layui-form-item">
-		                    <button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo2">保存</button>
-		                    <button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
-		                </div>
-		            </div>
-
 				</div>
-			</form>
+				<input type="hidden" name="address" id="address">
+				<div class="layui-form-item" style="margin-left: -8px;">
+					<label class="layui-form-label">维修状态:</label>
+					<div class="layui-input-block">
+						<input type="radio" name="status" value="1" title="未开始" checked="">
+						<input type="radio" name="status" value="2" title="处理中">
+						<input type="radio" name="status" value="3" title="已完成">
+					</div>
+				</div>
+				<span style="margin-left:55px">区域：</span>
+				<div class="layui-input-inline" style="width:185px">
+					<select name="did" id="did" lay-verify="required" lay-reqtext="区域不能为空">
+					</select>
+				</div>
+				<span style="margin-left:28px">备件编码：</span>
+				<div class="layui-inline" >
+					<input class="layui-input" placeholder="备件编码" lay-verify="required" name="arpartcoding" id="arpartcoding" lay-reqtext="备件编码不能为空！">
+				</div><br><br>
+				<span style="margin-left:25px">故障类型：</span>
+				<div class="layui-input-inline" style="width:185px">
+					<input class="layui-input" lay-verify="required" placeholder="故障类型" name="faulttype" id="faulttype" lay-reqtext="故障类型不能为空！">
+				</div>
+				<span style="margin-left:28px">故障描述：</span>
+				<div class="layui-inline" >
+					<input class="layui-input" lay-verify="required" placeholder="故障描述" name="faultdescription" id="faultdescription"lay-reqtext="故障描述不能为空！">
+				</div>
+
+				<br>
+				<br>
+
+				<span style="margin-left:25px">故障分析：</span>
+				<div class="layui-inline" >
+					<input class="layui-input" placeholder="故障分析" name="analyze" id="analyze" lay-reqtext="故障分析不能为空！">
+				</div>
+				<span style="margin-left:25px">产品编码：</span>
+				<div class="layui-inline" >
+					<input class="layui-input" placeholder="产品编码" name="productcoding" id="productcoding"lay-reqtext="产品编码不能为空！">
+				</div>
+				<br>
+				<br>
+				<br>
+				<div class="layui-upload-drag" id="beforeinstallationtest" style="width: 100px; margin-left: 100px;">
+					<i class="layui-icon"></i>
+					<p>点击上传维修前图片</p>
+					<div class="layui-hide" id="beforeinstallationdiv">
+						<hr>
+						<img src="" id="beforeinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
+					</div>
+					<div id="bimg"></div>
+				</div>
+				<input type="hidden" id="beforeinstallation" name="beforeinstallation">
+				<div class="layui-upload-drag" id="afterinstallationtest" style="width: 100px;margin-left: 5%">
+					<i class="layui-icon"></i>
+					<p>点击上传维修后图片</p>
+					<div class="layui-hide" id="afterinstallationdiv">
+						<hr>
+						<img src="" id="afterinstallationimg" alt="上传成功后渲染" style="max-width: 100px">
+					</div>
+					<div id="aimg"></div>
+				</div>
+				<input type="hidden" id="afterinstallation" name="afterinstallation">
+			</div>
+			<br>
+			<br>
+			<div class="" style="margin-left: 65%;margin-top: 50px;">
+				<div class="layui-form-item">
+					<button class="layui-btn layui-bg-blue" type="button" lay-submit lay-filter="formDemo2">保存</button>
+					<button class="layui-btn layui-bg-gray" type="reset" onclick="x_admin_close()">关闭</button>
+				</div>
+			</div>
+
 		</div>
-	</body>
-	<script src="../../../lib/layui-v2.5.5/layui.js"></script>
-	<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>
-	<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
-	<script src="../../../static/js/distpicker.data.js"></script>
-	<script src="../../../static/js/distpicker.js"></script>
-	<script src="../../../static/js/select.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../../../static/js/main.js"></script>
-	<script>
-		layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider', 'jquery', 'form', "pca"],
+	</form>
+</div>
+</body>
+<script src="../../../lib/layui-v2.5.5/layui.js"></script>
+<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+<script src="../../../static/js/distpicker.data.js"></script>
+<script src="../../../static/js/distpicker.js"></script>
+<script src="../../../static/js/select.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../static/js/main.js"></script>
+<script>
+	layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider', 'jquery', 'form', "pca"],
 			function() {
 				var laydate = layui.laydate //日期
-					,
-					laypage = layui.laypage //分页
-					,
-					layer = layui.layer //弹层
-					,
-					table = layui.table //表格
-					,
-					carousel = layui.carousel //轮播
-					,
-					upload = layui.upload //上传
-					,
-					element = layui.element //元素操作
-					,
-					$ = layui.jquery,
-					form = layui.form,
-					slider = layui.slider //滑块//执行一个laydate实例
-					 ,upload = layui.upload
+						,
+						laypage = layui.laypage //分页
+						,
+						layer = layui.layer //弹层
+						,
+						table = layui.table //表格
+						,
+						carousel = layui.carousel //轮播
+						,
+						upload = layui.upload //上传
+						,
+						element = layui.element //元素操作
+						,
+						$ = layui.jquery,
+						form = layui.form,
+						slider = layui.slider //滑块//执行一个laydate实例
+						,upload = layui.upload
 						,pca = layui.pca;
 
 				//拖拽上传
 				upload.render({
 					elem: '#beforeinstallationtest'
-					,url: 'http://127.0.0.1:8080/Maintenancerecord/upload' //改成您自己的上传接口
+					,url: 'http://127.0.0.1/Maintenancerecord/upload' //改成您自己的上传接口
 					,multiple: true
 					,before: function(obj){
 						//预读本地文件示例，不支持ie8
 						obj.preview(function(index, file, result){
-							$("#bimg").html(" ");
+							$("#bimg").html(" ")
 							$('#beforeinstallationimg').attr('src', result); //图片链接（base64）
 							$('#beforeinstallationdiv').removeClass();
 
@@ -187,18 +180,18 @@
 						}
 						//上传成功
 						layer.msg(res.msg);
-						// msg("上传成功"+res.msg);
+						// alert("上传成功"+res.msg);
 						$("#beforeinstallation").val(res.msg);
 					}
 				});
 				upload.render({
 					elem: '#afterinstallationtest'
-					,url: 'http://127.0.0.1:8080/Maintenancerecord/upload' //改成您自己的上传接口
+					,url: 'http://127.0.0.1/Maintenancerecord/upload' //改成您自己的上传接口
 					,multiple: true
 					,before: function(obj){
 						//预读本地文件示例，不支持ie8
 						obj.preview(function(index, file, result){
-							$("#aimg").html(" ");
+							$("#aimg").html(" ")
 							$('#afterinstallationimg').attr('src', result); //图片链接（base64）
 							$('#afterinstallationdiv').removeClass();
 
@@ -211,7 +204,7 @@
 						}
 						//上传成功
 						layer.msg(res.msg);
-						// msg("上传成功"+res.msg);
+						// alert("上传成功"+res.msg);
 						$("#afterinstallation").val(res.msg);
 					}
 				});
@@ -219,14 +212,15 @@
 				laydate.render({
 					elem: '#test1'
 				});
-				$("#operator").load('http://127.0.0.1:8080/Maintenancecosts/getMpuserOne',function (result) {
+				$("#operator").load('http://127.0.0.1/Maintenancecosts/getMpuserOne',function (result) {
 					var data=eval(result);
 					$(data).each(function (i,o) {
 						$("#operator").append("<option value="+this.mpid+">"+this.realname+"</option>")
 					});
 					form.render("select");
 				})
-				$("#did").load('http://127.0.0.1:8080/Maintenancerecord/getDistrict',function (result) {
+
+				$("#did").load('http://127.0.0.1/Maintenancerecord/getDistrict',function (result) {
 					var data=eval(result);
 					$(data).each(function (i,o) {
 						$("#did").append("<option value="+this.did+">"+this.dname+"</option>")
@@ -234,10 +228,11 @@
 					form.render("select");
 				})
 				var rid=getUrlParam("rid");
-				$.get('http://127.0.0.1:8080/Maintenancerecord/getAmendrecordOne',{rid:rid},function (result) {
+				$.get('http://127.0.0.1/Maintenancerecord/getAmendrecordOne',{rid:rid},function (result) {
 					form.val('example',result);
 					$("#bimg").append("<img src='../../../static/img/"+result.beforeinstallation+"' style=\"max-width: 100px\">")
 					$("#aimg").append("<img src='../../../static/img/"+result.afterinstallation+"' style=\"max-width: 100px\">")
+
 					var str = result.address;
 					var arr=new Array();
 					arr=str.split(' ');
@@ -251,19 +246,27 @@
 				});
 				$("#productcoding").blur(function(){
 					var coding=$("#productcoding").val();
-					$.post('http://127.0.0.1:8080/Maintenancecosts/getProductOne',{coding:coding},function(result){
-						if (result){
+					$.ajax({
+						type:"post",
+						url:"http://127.0.0.1/SendaSingleInstallation/getproductByCoding",
+						data:{coding:coding},
+						dataType:'text',
+						success:function (result) {
 
-						}else {
-							layer.msg("对不起，没有该产品编码！");
-							$("#productcoding").val('');
+							if (result=="false"){
+								layer.msg("对不起，没有该产品编码！");
+								var coding=$("#coding").val('');
+
+							}else {
+
+							}
 						}
-
 					})
+
 				})
 				$("#arpartcoding").blur(function(){
 					var arpartcoding=$("#arpartcoding").val();
-					$.post('http://127.0.0.1:8080/Maintenancerecord/getArpart',{coding:arpartcoding},function(result){
+					$.post('http://127.0.0.1/Maintenancerecord/getArpart',{coding:arpartcoding},function(result){
 						if (result){
 
 						}else {
@@ -281,7 +284,7 @@
 					var str = province+' '+city+' '+area+' '+site;
 					$("#address").val(str);
 					$.ajax({
-						url: 'http://127.0.0.1:8080/Maintenancerecord/updAmendrecord',
+						url: 'http://127.0.0.1/Maintenancerecord/updAmendrecord',
 						type: 'post',
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						data: $("#pro").serialize(),
@@ -302,17 +305,17 @@
 				});
 
 			})
-		/*关闭弹出框口*/
-		function x_admin_close() {
-			var index = parent.layer.getFrameIndex(window.name);
-			parent.layer.close(index);
-		}
+	/*关闭弹出框口*/
+	function x_admin_close() {
+		var index = parent.layer.getFrameIndex(window.name);
+		parent.layer.close(index);
+	}
 
-		function getUrlParam(name) {
-			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-			r = window.location.search.substr(1).match(reg); // 匹配目标参数
-			if (r != null) return decodeURI(r[2]); // 返回参数值
-			return null; // 如果不存在，返回null
-		}
-	</script>
+	function getUrlParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		r = window.location.search.substr(1).match(reg); // 匹配目标参数
+		if (r != null) return decodeURI(r[2]); // 返回参数值
+		return null; // 如果不存在，返回null
+	}
+</script>
 </html>

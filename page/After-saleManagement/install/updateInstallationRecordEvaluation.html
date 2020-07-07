@@ -148,7 +148,7 @@
 
             var rid=getUrlParam("rid");
             $("#rid").val(rid);
-             $.post( 'http://127.0.0.1:8080/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
+             $.post( 'http://127.0.0.1/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
                 console.log(result);
                 $("#bimg").append("<img src='../../../static/img/"+result.beforeinstallation+"' style=\"max-width: 100px\">")
                  $("#aimg").append("<img src='../../../static/img/"+result.afterinstallation+"' style=\"max-width: 100px\">")
@@ -164,7 +164,7 @@
                     $("#site").val(arr[3]);
                 pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', arr[0], arr[1], arr[2]);
 
-                $("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(res) {
+                $("#operator").load('http://127.0.0.1/SendaSingleInstallation/getMpuser', function(res) {
                     const data = eval(res);
                     $(data).each(function (i,o) {
                         $("#operator").append("<option value='"+o.mpid+"'>"+o.realname+"</option>")
@@ -177,7 +177,7 @@
             //拖拽上传
             upload.render({
                 elem: '#beforeinstallationtest'
-                ,url: 'http://127.0.0.1:8080/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+                ,url: 'http://127.0.0.1/InstallationRecordEvaluation/upload' //改成您自己的上传接口
                 ,multiple: true
                 ,before: function(obj){
                     //预读本地文件示例，不支持ie8
@@ -201,7 +201,7 @@
             });
             upload.render({
                 elem: '#afterinstallationtest'
-                ,url: 'http://127.0.0.1:8080/InstallationRecordEvaluation/upload' //改成您自己的上传接口
+                ,url: 'http://127.0.0.1/InstallationRecordEvaluation/upload' //改成您自己的上传接口
                 ,multiple: true
                 ,before: function(obj){
                     //预读本地文件示例，不支持ie8
@@ -230,14 +230,23 @@
             });
             $("#coding").blur(function(){
                 var coding=$("#coding").val();
-                $.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
-                    if (result==null || result==''){
-                        layer.msg("对不起，没有该产品编码！");
-                        var coding=$("#coding").val('');
-                    }else {
-                    }
+                $.ajax({
+                    type:"post",
+                    url:"http://127.0.0.1/SendaSingleInstallation/getproductByCoding",
+                    data:{coding:coding},
+                    dataType:'text',
+                    success:function (result) {
 
+                        if (result=="false"){
+                            layer.msg("对不起，没有该产品编码！");
+                            var coding=$("#coding").val('');
+
+                        }else {
+
+                        }
+                    }
                 })
+
             })
             form.on('submit(formDemo2)', function(data) {
                 var province = $("#province").val();
@@ -247,7 +256,7 @@
                 var str = province+' '+city+' '+area+' '+site;
                 $("#address").val(str);
                 $.ajax({
-                    url: 'http://127.0.0.1:8080/InstallationRecordEvaluation/updateInstallationRecordEvaluationByRid',
+                    url: 'http://127.0.0.1/InstallationRecordEvaluation/updateInstallationRecordEvaluationByRid',
                     type: 'get',
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     data: $("#pro").serialize(),

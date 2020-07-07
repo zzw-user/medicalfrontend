@@ -11,7 +11,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         , slider = layui.slider; //滑块//执行一个laydate实例
     table.render({
         elem: '#test'
-        ,url:'http://127.0.0.1:8080/Warehouse/seleWarehouse'
+        ,url:'http://127.0.0.1/Warehouse/seleWarehouse'
         ,toolbar: true
         ,cols: [[
               {field:'wid',width:172,title:"序号"}
@@ -44,7 +44,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
             if (obj.event === 'del') {
                 layer.confirm('真的删除么?',function(index) {
                     $.ajax({
-                        url : "http://127.0.0.1:8080/Warehouse/delWarehouse",
+                        url : "http://127.0.0.1/Warehouse/delWarehouse",
                         type : "post",
                         data : {
                             wid: data.wid

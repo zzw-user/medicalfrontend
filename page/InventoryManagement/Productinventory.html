@@ -76,7 +76,7 @@
         });
         table.render({
             elem: '#test'
-            , height: 312
+            , height: 450
             , url: 'http://127.0.0.1/pageinfoproductAndInventory' //数据接口
             , page: true //开启分页
             , id: "userTable"
@@ -88,7 +88,7 @@
 
             ]]
             , page: true
-            , limit: 3
+            , limit: 9
         });
         $("#bth").on("click", function () {
             table.reload('userTable', {

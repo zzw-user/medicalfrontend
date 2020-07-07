@@ -196,7 +196,7 @@
             ,id:'testReload'
             ,height: 450
             ,width:1150
-            ,url: 'http://127.0.0.1:8080/InstallationRecordEvaluation/getInstallationRecordEvaluation' //数据接口
+            ,url: 'http://127.0.0.1/InstallationRecordEvaluation/getInstallationRecordEvaluation' //数据接口
             ,type:'get'
             ,dataType:'json'
             ,crossDomain:true
@@ -246,7 +246,7 @@
             //console.log(obj)
             if(obj.event == 'del'){
                 layer.confirm('真的删除行么', function(index){
-                        $.get("http://127.0.0.1:8080/InstallationRecordEvaluation/deleteInstallationRecordEvaluationByRid?rid="+data.rid,function (ret) {
+                        $.get("http://127.0.0.1/InstallationRecordEvaluation/deleteInstallationRecordEvaluationByRid?rid="+data.rid,function (ret) {
                             if (ret=="ok"){
                                 layer.msg("删除成功！")
                                 table.reload('testReload');

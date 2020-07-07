@@ -113,7 +113,7 @@
 					elem: '#test1'
 					,type: 'datetime'
 				});
-				$("#operator").load('http://127.0.0.1:8081/SendaSingleInstallation/getMpuser', function(result) {
+				$("#operator").load('http://127.0.0.1/SendaSingleInstallation/getMpuser', function(result) {
 					const data = eval(result);
 					var str;
 					str+="<option value=''>请选择</option>";
@@ -125,15 +125,23 @@
 				});
 				$("#coding").blur(function(){
 					var coding=$("#coding").val();
-					$.post('http://127.0.0.1:8081/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
-						if (result){
+					$.ajax({
+						type:"post",
+						url:"http://127.0.0.1/SendaSingleInstallation/getproductByCoding",
+						data:{coding:coding},
+						dataType:'text',
+						success:function (result) {
 
-						}else {
-							layer.msg("对不起，没有该产品编码！");
-							var coding=$("#coding").val('');
+							if (result=="false"){
+								layer.msg("对不起，没有该产品编码！");
+								var coding=$("#coding").val('');
+
+							}else {
+
+							}
 						}
-
 					})
+
 				})
 				form.on('submit(formDemo2)', function(data) {
 					var province = $("#province").val();
@@ -143,7 +151,7 @@
 					var str = province+' '+city+' '+area+' '+site;
 					$("#address").val(str);
 					$.ajax({
-						url: 'http://127.0.0.1:8081/SendaSingleInstallation/addDeliveryByAid',
+						url: 'http://127.0.0.1/SendaSingleInstallation/addDeliveryByAid',
 						type: 'get',
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						data: $("#pro").serialize(),

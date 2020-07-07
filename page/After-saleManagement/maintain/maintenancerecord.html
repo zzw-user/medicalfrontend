@@ -178,7 +178,7 @@
 				,id:'testReload'
 				,height: 450
 				,width:1150
-				,url: 'http://127.0.0.1:8080/Maintenancerecord/getAmendrecord' //数据接口
+				,url: 'http://127.0.0.1/Maintenancerecord/getAmendrecord' //数据接口
 				,type:'get'
 				,dataType:'json'
 				,crossDomain:true
@@ -189,7 +189,7 @@
 					, {field: 'beforeinstallation',width:160, title: '维修前图片',templet:"#beforeimgtmp"}
 					, {field: 'afterinstallation',width:160, title: '维修后图片',templet:"#afterimgtmp"}
 					, {field: 'installationtime',width:150, title: '维修日期'}
-					, {field: 'productcoding',width:150, title: '产品编码'}
+					, {field: 'arpartcoding',width:150, title: '产品编码'}
 					,{field:'assess',width:100,title:'评估'}
 					,{field:'status',width:150,title:'维修进度',templet:"#progressTpl"}
 					,{field:'status',width:100,title:'维修状态',templet:"#buttonTpl"}
@@ -224,7 +224,7 @@
 				//console.log(obj)
 				if(obj.event == 'del'){
 					layer.confirm('真的删除行么', function(index){
-						$.get("http://127.0.0.1:8080/Maintenancerecord/delAmendrecord?rid="+data.rid,function (ret) {
+						$.get("http://127.0.0.1/Maintenancerecord/delAmendrecord?rid="+data.rid,function (ret) {
 							if (ret==true){
 								layer.msg("删除成功！")
 								table.reload('testReload');

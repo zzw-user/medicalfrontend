@@ -158,7 +158,7 @@
 				//拖拽上传
 				upload.render({
 					elem: '#beforeinstallationtest'
-					,url: 'http://127.0.0.1:8080/Maintenancerecord/upload' //改成您自己的上传接口
+					,url: 'http://127.0.0.1/Maintenancerecord/upload' //改成您自己的上传接口
 					,multiple: true
 					,before: function(obj){
 						//预读本地文件示例，不支持ie8
@@ -181,7 +181,7 @@
 				});
 				upload.render({
 					elem: '#afterinstallationtest'
-					,url: 'http://127.0.0.1:8080/Maintenancerecord/upload' //改成您自己的上传接口
+					,url: 'http://127.0.0.1/Maintenancerecord/upload' //改成您自己的上传接口
 					,multiple: true
 					,before: function(obj){
 						//预读本地文件示例，不支持ie8
@@ -206,7 +206,7 @@
 				laydate.render({
 					elem: '#test1'
 				});
-				$.post('http://127.0.0.1:8080/Maintenancecosts/getMpuserOne',function(result){
+				$.post('http://127.0.0.1/Maintenancecosts/getMpuserOne',function(result){
 					var str="<option value='0'>--请选择--</option>";
 					$(result).each(function() {
 						str+="<option value="+this.mpid+">"+this.realname+"</option>";
@@ -216,7 +216,7 @@
 					form.render('select');
 
 				})
-				$.post('http://127.0.0.1:8080/Maintenancerecord/getDistrict',function(result){
+				$.post('http://127.0.0.1/Maintenancerecord/getDistrict',function(result){
 					var str="<option value='0'>--请选择--</option>";
 					$(result).each(function() {
 						str+="<option value="+this.did+">"+this.dname+"</option>";
@@ -228,19 +228,27 @@
 				})
 				$("#productcoding").blur(function(){
 					var coding=$("#productcoding").val();
-					$.post('http://127.0.0.1:8080/Maintenancecosts/getProductOne',{coding:coding},function(result){
-						if (result){
+					$.ajax({
+						type:"post",
+						url:"http://127.0.0.1/SendaSingleInstallation/getproductByCoding",
+						data:{coding:coding},
+						dataType:'text',
+						success:function (result) {
 
-						}else {
-							layer.alert("对不起，没有该产品编码！");
-							$("#productcoding").val('');
+							if (result=="false"){
+								layer.msg("对不起，没有该产品编码！");
+								var coding=$("#coding").val('');
+
+							}else {
+
+							}
 						}
-
 					})
+
 				})
 				$("#arpartcoding").blur(function(){
 					var arpartcoding=$("#arpartcoding").val();
-					$.post('http://127.0.0.1:8080/Maintenancerecord/getArpart',{coding:arpartcoding},function(result){
+					$.post('http://127.0.0.1/Maintenancerecord/getArpart',{coding:arpartcoding},function(result){
 						if (result){
 
 						}else {
@@ -258,7 +266,7 @@
 					var str = province+' '+city+' '+area+' '+site;
 					$("#address").val(str);
 					$.ajax({
-						url: 'http://127.0.0.1:8080/Maintenancerecord/addAmendrecord',
+						url: 'http://127.0.0.1/Maintenancerecord/addAmendrecord',
 						type: 'post',
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						data: $("#pro").serialize(),

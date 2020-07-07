@@ -121,12 +121,12 @@
 
             var rid=getUrlParam("rid");
             $("#rid").val(rid);
-            $.post( 'http://127.0.0.1:8080/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
+            $.post( 'http://127.0.0.1/InstallationRecordEvaluation/getInstallationRecordEvaluationByRid',{rid:rid},function (result) {
                 console.log(result);
                 $("#bimg").append("<img src='../../../static/img/"+result.beforeinstallation+"' style=\"max-width: 100px\">")
                 $("#aimg").append("<img src='../../../static/img/"+result.afterinstallation+"' style=\"max-width: 100px\">")
                 form.val('example',result);
-                $.post('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(res) {
+                $.post('http://127.0.0.1/SendaSingleInstallation/getMpuser', function(res) {
 
                     const data = eval(res);
                     $(data).each(function(i, o) {
@@ -149,7 +149,7 @@
                 var str = province+area+city+site;
                 $("#address").val(str);
                 $.ajax({
-                    url: 'http://127.0.0.1:8080/InstallationRecordEvaluation/updateInstallrecordByRid',
+                    url: 'http://127.0.0.1/InstallationRecordEvaluation/updateInstallrecordByRid',
                     type: 'get',
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     data: $("#pro").serialize(),

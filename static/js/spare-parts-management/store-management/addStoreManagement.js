@@ -22,7 +22,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         var str = province+' '+city+' '+area+' '+site;
         $("#address").val(str);
         $.ajax({
-            url: 'http://127.0.0.1:8080/Warehouse/addWarehouse',
+            url: 'http://127.0.0.1/Warehouse/addWarehouse',
             type: 'get',
             contentType:'application/x-www-form-urlencoded; charset=UTF-8',
             data: $("#pro").serialize(),

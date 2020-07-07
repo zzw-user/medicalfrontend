@@ -135,7 +135,7 @@
 				laydate.render({
 					elem: '#test1'
 				});
-				$("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(result) {
+				$("#operator").load('http://127.0.0.1/SendaSingleInstallation/getMpuser', function(result) {
 					const data = eval(result);
 					var str;
 					str+="<option value=''>请选择</option>";
@@ -147,20 +147,27 @@
 				});
 				$("#coding").blur(function(){
 					var coding=$("#coding").val();
-					$.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
-						if (result==null || result==''){
-							layer.msg("对不起，没有该产品编码！");
-							var coding=$("#coding").val('');
+					$.ajax({
+						type:"post",
+						url:"http://127.0.0.1/SendaSingleInstallation/getproductByCoding",
+						data:{coding:coding},
+						dataType:'text',
+						success:function (result) {
 
-						}else {
+							if (result=="false"){
+								layer.msg("对不起，没有该产品编码！");
+								var coding=$("#coding").val('');
 
+							}else {
+
+							}
 						}
-
 					})
+
 				})
 				var cid=getUrlParam("cid");
 				$("#cid").val(cid);
-				$.post( 'http://127.0.0.1:8080/Cost/getRoleOne',{cid:cid},function (result) {
+				$.post( 'http://127.0.0.1/Cost/getRoleOne',{cid:cid},function (result) {
 
 					console.log(result);
 					form.val('example',result);
@@ -175,7 +182,7 @@
 					$("#site").val(arr[3]);
 					pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', arr[0], arr[1], arr[2]);
 
-					$("#operator").load('http://127.0.0.1:8080/SendaSingleInstallation/getMpuser', function(res) {
+					$("#operator").load('http://127.0.0.1/SendaSingleInstallation/getMpuser', function(res) {
 						const data = eval(res);
 						$(data).each(function (i,o) {
 							$("#operator").append("<option value='"+o.mpid+"'>"+o.realname+"</option>")
@@ -193,7 +200,7 @@
 					var str = province+' '+city+' '+area+' '+site;
 					$("#address").val(str);
 					$.ajax({
-						url: 'http://127.0.0.1:8080/Cost/updateCost',
+						url: 'http://127.0.0.1/Cost/updateCost',
 						type: 'get',
 						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 						data: $("#pro").serialize(),

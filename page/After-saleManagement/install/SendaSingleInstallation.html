@@ -115,7 +115,7 @@
 		        elem: '#problem'
 		        ,id:'testReload'
 		        ,height: 450
-		        ,url: 'http://127.0.0.1:8080/SendaSingleInstallation/getDeliveryByAid?aftertype=1' //数据接口
+		        ,url: 'http://127.0.0.1/SendaSingleInstallation/getDeliveryByAid?aftertype=1' //数据接口
 		        ,type:'get'
 		        ,dataType:'json'
 		        ,crossDomain:true
@@ -149,7 +149,7 @@
 				if (obj.event === 'del') {
 					layer.confirm('真的删除么?',function(index) {
 						$.ajax({
-							url : "http://127.0.0.1:8080/SendaSingleInstallation/deleteDeliveryByDid",
+							url : "http://127.0.0.1/SendaSingleInstallation/deleteDeliveryByDid",
 							type : "post",
 							data : {
 								did: data.did

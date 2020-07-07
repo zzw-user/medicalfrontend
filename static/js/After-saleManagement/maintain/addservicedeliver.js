@@ -13,7 +13,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     laydate.render({
         elem: '#test1'
     });
-    $.post('http://127.0.0.1:8080/Maintenancecosts/getMpuserOne',function(result){
+    $.post('http://127.0.0.1/Maintenancecosts/getMpuserOne',function(result){
         var str="<option value='0'>--请选择--</option>";
         $(result).each(function() {
             str+="<option value="+this.mpid+">"+this.realname+"</option>";
@@ -25,15 +25,23 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     })
     $("#coding").blur(function(){
         var coding=$("#coding").val();
-        $.post('http://127.0.0.1:8080/Maintenancecosts/getProductOne',{coding:coding},function(result){
-            if (result){
+        $.ajax({
+            type:"post",
+            url:"http://127.0.0.1/SendaSingleInstallation/getproductByCoding",
+            data:{coding:coding},
+            dataType:'text',
+            success:function (result) {
 
-            }else {
-                layer.alert("对不起，没有该产品编码！");
-                var coding=$("#coding").val('');
+                if (result=="false"){
+                    layer.msg("对不起，没有该产品编码！");
+                    var coding=$("#coding").val('');
+
+                }else {
+
+                }
             }
-
         })
+
     })
     form.on('submit(demo1)', function(data){
         var province = $("#province").val();
@@ -43,7 +51,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
         var str = province+' '+city+' '+area+' '+site;
         $("#address").val(str);
         $.ajax({
-            url: 'http://127.0.0.1:8080/delivery/addDelivery',
+            url: 'http://127.0.0.1/delivery/addDelivery',
             type: 'post',
             data: $("#pro").serialize(),
             dataType:'text',
