@@ -87,7 +87,7 @@
 								<input type="hidden" name="address" id="address">
 							</div>
 						</div>
-
+<input type="hidden" name="aftertype" value="1">
 
 
 						<input type="hidden" name="longitude" id="longitude">
@@ -152,6 +152,7 @@
 				$("#coding").blur(function(){
 					var coding=$("#coding").val();
 					$.post('http://127.0.0.1:8080/SendaSingleInstallation/getproductByCoding',{coding:coding},function(result){
+						alert(result)
 						if (result==null || result==''){
 							layer.msg("对不起，没有该产品编码！");
 							var coding=$("#coding").val('');
